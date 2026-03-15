@@ -234,7 +234,16 @@ a{text-decoration:none}
 #nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(15,17,23,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 2rem}
 .nav-brand{font-size:1.05rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 /* HERO */
-#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 2rem 5rem;background:radial-gradient(ellipse 90% 60% at 50% -10%,rgba(108,99,255,.2) 0%,transparent 70%)}
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 2rem 5rem;background:radial-gradient(ellipse 90% 60% at 50% -10%,rgba(108,99,255,.2) 0%,transparent 70%);position:relative}
+/* SCROLL INDICATOR */
+.scroll-hint{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;transition:opacity .5s ease;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.scroll-hint-label{font-size:.66rem;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;font-weight:600}
+.scroll-chevrons{display:flex;flex-direction:column;align-items:center;gap:-2px}
+.scroll-chevrons span{display:block;width:14px;height:14px;border-right:2px solid var(--text3);border-bottom:2px solid var(--text3);transform:rotate(45deg);animation:chevronFade 1.6s ease-in-out infinite}
+.scroll-chevrons span:nth-child(1){animation-delay:0s;opacity:.3}
+.scroll-chevrons span:nth-child(2){animation-delay:.2s;opacity:.6}
+.scroll-chevrons span:nth-child(3){animation-delay:.4s;opacity:1}
+@keyframes chevronFade{0%,100%{opacity:.2;transform:rotate(45deg) translate(-2px,-2px)}50%{opacity:1;transform:rotate(45deg) translate(2px,2px)}}
 .hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--surface);border:1px solid var(--border);padding:.35rem 1.1rem;border-radius:999px;font-size:.78rem;color:var(--accent2);margin-bottom:1.5rem;box-shadow:0 0 20px rgba(108,99,255,.15)}
 h1{font-size:clamp(2.5rem,7vw,4.5rem);font-weight:800;line-height:1.1;margin-bottom:1.2rem}
 .title-line1{background:linear-gradient(135deg,#fff 20%,rgba(255,255,255,.7));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
@@ -332,7 +341,17 @@ footer{padding:3rem 2rem;text-align:center;color:var(--text3);font-size:.83rem;b
 footer .links{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;margin-bottom:.75rem}
 footer a{color:var(--accent2)}
 @media(max-width:640px){.stats-row{gap:1.5rem}.cta-primary,.cta-secondary{width:100%;justify-content:center}}
+
+/* ── AdSense ad units ──────────────────────────────────────────────────── */
+.adsense-unit{margin:2.5rem auto;max-width:970px;padding:0 1.5rem;text-align:center;clear:both}
+.adsense-unit-sm{margin:1.5rem auto;max-width:970px;padding:0 1.5rem;text-align:center;clear:both}
+.adsense-label{display:block;font-size:.62rem;color:var(--text3,#64748b);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem;font-family:inherit}
+.adsense-unit ins,.adsense-unit-sm ins{border-radius:8px;overflow:hidden}
 </style>
+  <!-- ▼ Google AdSense — replace ca-pub-3381823794459030 with your publisher ID -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3381823794459030"
+       crossorigin="anonymous"></script>
+  <!-- ▲ AdSense auto-ads: Google will also place ads automatically once approved -->
 </head>
 <body>
 
@@ -362,6 +381,13 @@ footer a{color:var(--accent2)}
     <div class="stat"><div class="stat-num">6</div><div class="stat-label">Model profiles compared</div></div>
     <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Free — no sign-up needed</div></div>
   </div>
+  <!-- Animated scroll indicator -->
+  <div class="scroll-hint" id="scroll-hint" onclick="document.getElementById('about-intro').scrollIntoView({behavior:'smooth'})" aria-hidden="true">
+    <span class="scroll-hint-label">Scroll to explore</span>
+    <div class="scroll-chevrons">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
 </section>
 
 <!-- SEO CONTENT BLOCK: Keyword-rich intro for crawlers and featured snippets -->
@@ -385,6 +411,18 @@ footer a{color:var(--accent2)}
   </div>
 </section>
 
+
+<!-- ADSENSE: Responsive Display Ad — slot 1111111111 -->
+<div class="adsense-unit">
+  <span class="adsense-label">Advertisement</span>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-3381823794459030"
+       data-ad-slot="1111111111"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 <section id="modules" aria-label="Learning modules">
   <div class="modules-header">
     <h2>8 Free AI Learning Modules — From Beginner to Expert</h2>
@@ -484,6 +522,18 @@ footer a{color:var(--accent2)}
   </div>
 </section>
 
+
+<!-- ADSENSE: In-Article Ad — slot 2222222222 -->
+<div class="adsense-unit">
+  <span class="adsense-label">Advertisement</span>
+  <ins class="adsbygoogle"
+       style="display:block;text-align:center;"
+       data-ad-layout="in-article"
+       data-ad-format="fluid"
+       data-ad-client="ca-pub-3381823794459030"
+       data-ad-slot="2222222222"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 <section id="why-ailiterateonline" aria-label="Why AI Literate" style="padding:4rem 2rem;max-width:1060px;margin:0 auto;">
   <h2 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:800;text-align:center;margin-bottom:.6rem;">Why Learn AI at ai-literate.online?</h2>
   <p style="color:var(--text2);text-align:center;font-size:.95rem;max-width:600px;margin:0 auto 2.5rem;">Most AI resources are either too shallow or too dense. AI Literate hits the sweet spot — technical enough to actually understand, plain enough to actually enjoy.</p>
@@ -493,26 +543,62 @@ footer a{color:var(--accent2)}
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;"><div style="font-size:1.8rem;margin-bottom:.6rem;">🎯</div><h3 style="font-size:1rem;font-weight:700;margin-bottom:.4rem;">Current & Practical</h3><p style="font-size:.85rem;color:var(--text2);line-height:1.6;">Covers GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, Llama 3, Mistral and emerging patterns like agentic RAG and multi-agent orchestration.</p></div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;"><div style="font-size:1.8rem;margin-bottom:.6rem;">🔍</div><h3 style="font-size:1rem;font-weight:700;margin-bottom:.4rem;">Myth Busting Included</h3><p style="font-size:.85rem;color:var(--text2);line-height:1.6;">Does ChatGPT search the internet? Is hallucination solvable? Is bigger always better? Every module confronts the most common misconceptions head-on.</p></div>
   </div>
+  <!-- Explore topics: real links to module pages — SEO-rich, AdSense-safe, useful to readers -->
   <div style="padding:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:14px;">
-    <h3 style="font-size:1rem;font-weight:700;margin-bottom:.75rem;color:var(--text);">Every Topic Covered at AI Literate (ai-literate.online)</h3>
-    <p style="font-size:.8rem;color:var(--text3);line-height:2.1;">
-      What is artificial intelligence · How does ChatGPT work · Large language models explained · What is a transformer · Self-attention mechanism · Neural network for beginners · Deep learning explained · Machine learning guide ·
-      Prompt engineering guide · Zero-shot prompting · Few-shot prompting · Chain-of-thought prompting · System prompt tutorial · Meta-prompting · How to write better AI prompts ·
-      GPT-4 vs Claude · ChatGPT vs Claude · Claude vs Gemini · AI model comparison 2025 · GPT-4o guide · Claude 3.5 Sonnet · Gemini 1.5 Pro · Llama 3 guide · Mistral AI explained ·
-      RAG explained · Retrieval-Augmented Generation guide · How RAG works · Vector database explained · Embeddings guide · Semantic search · Pinecone · Weaviate · pgvector ·
-      AI agents tutorial · What are AI agents · Agentic AI · LangChain explained · LangGraph tutorial · Multi-agent systems · Tool use in AI · Function calling ·
-      Claude Code guide · Agentic coding · CLAUDE.md · AI coding agent · Anthropic Claude Code tutorial ·
-      MCP server explained · Model Context Protocol guide · AI tool integration ·
-      AI hallucination explained · Token explained · Tokenization · Context window AI · Long-context LLMs ·
-      RLHF explained · Fine-tuning LLMs · LoRA explained · QLoRA · Parameter-efficient fine-tuning ·
-      Enterprise AI strategy · AI governance · AI compliance · AI security · MLOps guide · AI observability · AI cost management ·
-      AI use cases · AI for developers · AI for business · AI for marketing · AI for students · AI productivity ·
-      Generative AI explained · Diffusion models · Image generation AI · Multimodal AI · Vision language models ·
-      Open source AI · Run AI locally · Ollama guide · Llama vs GPT · Open source LLM ·
-      AI safety · AI alignment · Responsible AI · Ethical AI · AI bias · AI risk ·
-      Scaling laws · Emergent AI capabilities · Foundation models · Pretraining · Instruction tuning · FLAN ·
-      ai-literate.online · AI Literate · free AI course · learn AI online free · AI learning roadmap 2025
-    </p>
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:1rem;color:var(--text);">Explore by Topic</h3>
+    <div style="display:flex;flex-direction:column;gap:.75rem;">
+      <div>
+        <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:.45rem;">Foundations</div>
+        <div style="display:flex;flex-wrap:wrap;gap:.35rem;">
+          <a href="terminology.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">What is AI?</a>
+          <a href="terminology.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">Large Language Models</a>
+          <a href="terminology.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">Neural Networks</a>
+          <a href="terminology.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">How ChatGPT Works</a>
+          <a href="core-ai.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">Transformer Architecture</a>
+          <a href="core-ai.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">Self-Attention Explained</a>
+          <a href="terminology.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">Tokens &amp; Tokenization</a>
+          <a href="terminology.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">AI Hallucination</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:.45rem;">Prompting &amp; Models</div>
+        <div style="display:flex;flex-wrap:wrap;gap:.35rem;">
+          <a href="prompting.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">Prompt Engineering</a>
+          <a href="prompting.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">Chain-of-Thought Prompting</a>
+          <a href="prompting.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">System Prompts</a>
+          <a href="comparisons.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">GPT-4 vs Claude</a>
+          <a href="comparisons.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">Claude vs Gemini</a>
+          <a href="comparisons.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">AI Model Comparison 2025</a>
+          <a href="comparisons.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">Llama 3 vs GPT-4o</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:.45rem;">Building &amp; Integrating AI</div>
+        <div style="display:flex;flex-wrap:wrap;gap:.35rem;">
+          <a href="ai-integration.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">RAG Pipelines</a>
+          <a href="ai-integration.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">AI Agents</a>
+          <a href="ai-integration.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">MCP Servers</a>
+          <a href="ai-integration.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">LangChain &amp; LangGraph</a>
+          <a href="ai-integration.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">Vector Databases</a>
+          <a href="claude-code.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">Claude Code</a>
+          <a href="claude-code.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">Agentic Coding</a>
+          <a href="terminology.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">Embeddings Guide</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:.45rem;">Advanced &amp; Enterprise</div>
+        <div style="display:flex;flex-wrap:wrap;gap:.35rem;">
+          <a href="enterprise-ai.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">Enterprise AI Strategy</a>
+          <a href="enterprise-ai.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">AI Governance</a>
+          <a href="enterprise-ai.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">MLOps Guide</a>
+          <a href="enterprise-ai.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">AI Compliance &amp; Security</a>
+          <a href="core-ai.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">Fine-tuning LLMs</a>
+          <a href="core-ai.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">RLHF &amp; Alignment</a>
+          <a href="use-cases.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">AI for Business</a>
+          <a href="use-cases.html" style="font-size:.78rem;padding:.2rem .65rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);text-decoration:none;">AI Use Cases 2025</a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -683,6 +769,18 @@ function toggleFaq(btn){
 </section>
 
 <!-- FOOTER -->
+
+<!-- ADSENSE: Responsive Display Ad — slot 3333333333 -->
+<div class="adsense-unit">
+  <span class="adsense-label">Advertisement</span>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-3381823794459030"
+       data-ad-slot="3333333333"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 <footer role="contentinfo">
   <div class="links" style="margin-bottom:1.2rem;">
     <a href="terminology.html">AI Terminology</a>
@@ -710,7 +808,18 @@ function toggleFaq(btn){
     <span style="margin-top:.4rem;display:inline-block;">© <span id="yr"></span> AI Literate. All rights reserved.</span>
   </div>
 </footer>
-<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+<script>
+document.getElementById('yr').textContent=new Date().getFullYear();
+// Fade scroll hint on scroll
+(function(){
+  const hint = document.getElementById('scroll-hint');
+  if (!hint) return;
+  window.addEventListener('scroll', function(){
+    hint.style.opacity = window.scrollY > 80 ? '0' : '1';
+    hint.style.pointerEvents = window.scrollY > 80 ? 'none' : 'auto';
+  }, {passive:true});
+})();
+</script>
 
 </body>
 </html>

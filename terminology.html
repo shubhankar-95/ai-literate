@@ -176,15 +176,42 @@ a{color:var(--accent2)}a:hover{text-decoration:underline}
 .attn-info{margin-top:.75rem;padding:.75rem;background:var(--surface);border-radius:8px;font-size:.83rem;color:var(--text2);min-height:44px;line-height:1.5}
 .emb-canvas-wrap{background:var(--surface);border-radius:8px;padding:.5rem;margin-top:.75rem}
 /* MOBILE */
+/* ── Mobile back button (hidden on desktop) ───────────── */
+.mob-back{display:none;align-items:center;gap:.5rem;padding:.75rem 1.1rem;background:var(--surface);border-bottom:1px solid var(--border);color:var(--accent2);font-size:.88rem;font-weight:700;cursor:pointer;position:sticky;top:0;z-index:20;-webkit-tap-highlight-color:transparent;user-select:none}
+.mob-back svg{flex-shrink:0}
+/* ── Mobile term count pill in sidebar ───────────────── */
+.mob-count-bar{display:none;align-items:center;justify-content:space-between;padding:.5rem 1rem .25rem;font-size:.75rem;color:var(--text3)}
 @media(max-width:768px){
-  #layout{flex-direction:column;overflow:auto}
-  #sidebar{width:100%;min-width:unset;max-height:45vh;border-right:none;border-bottom:1px solid var(--border)}
-  #content{flex:unset;overflow:visible}
   body{height:auto;overflow:auto}
-  #term-detail{padding:1.5rem 1rem 3rem}
+  #layout{flex-direction:column;overflow:visible;height:auto;min-height:calc(100vh - 56px)}
+  /* Sidebar = full viewport height list by default on mobile */
+  #sidebar{
+    width:100%;min-width:unset;border-right:none;border-bottom:none;
+    height:calc(100vh - 56px);min-height:calc(100vh - 56px);
+    display:flex;flex-direction:column;overflow:hidden;
+  }
+  #sidebar-top{flex-shrink:0}
+  #term-list{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  /* Content pane hidden on mobile until term selected */
+  #content{display:none;flex:1;overflow:visible;min-height:calc(100vh - 56px)}
+  /* When content is active on mobile, sidebar hides */
+  body.mob-content #sidebar{display:none}
+  body.mob-content #content{display:block}
+  body.mob-content .mob-back{display:flex}
+  .mob-count-bar{display:flex}
+  #term-detail{padding:1.5rem 1rem 4rem}
   .td-name{font-size:1.5rem}
   .mc-item{grid-template-columns:1fr}
+  /* Bigger tap targets in term list on mobile */
+  .tl-item{padding:1rem 1rem;min-height:72px}
+  .tl-name{font-size:.95rem}
 }
+
+/* ── AdSense ad units ──────────────────────────────────────────────────── */
+.adsense-unit{margin:2.5rem auto;max-width:970px;padding:0 1.5rem;text-align:center;clear:both}
+.adsense-unit-sm{margin:1.5rem auto;max-width:970px;padding:0 1.5rem;text-align:center;clear:both}
+.adsense-label{display:block;font-size:.62rem;color:var(--text3,#64748b);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem;font-family:inherit}
+.adsense-unit ins,.adsense-unit-sm ins{border-radius:8px;overflow:hidden}
 </style>
 <script type="application/ld+json">
 {
@@ -196,6 +223,10 @@ a{color:var(--accent2)}a:hover{text-decoration:underline}
   ]
 }
 </script>
+  <!-- ▼ Google AdSense — replace ca-pub-3381823794459030 with your publisher ID -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3381823794459030"
+       crossorigin="anonymous"></script>
+  <!-- ▲ AdSense auto-ads: Google will also place ads automatically once approved -->
 </head>
 <body>
 
@@ -212,6 +243,10 @@ a{color:var(--accent2)}a:hover{text-decoration:underline}
 
   <!-- SIDEBAR -->
   <div id="sidebar">
+    <div class="mob-count-bar">
+      <span id="mob-count-label">Tap any topic to read</span>
+      <span id="nav-count" style="font-size:.75rem;color:var(--text3)"></span>
+    </div>
     <div id="sidebar-top">
       <div class="search-box">
         <span class="si">🔍</span>
@@ -231,6 +266,11 @@ a{color:var(--accent2)}a:hover{text-decoration:underline}
 
   <!-- CONTENT -->
   <div id="content">
+    <!-- Mobile back button — visible only on mobile when a term is open -->
+    <div class="mob-back" onclick="showSidebar()" role="button" aria-label="Back to topic list">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to all topics
+    </div>
     <div id="welcome">
       <div class="big">👈</div>
       <h2>Select a term to explore</h2>
@@ -239,6 +279,18 @@ a{color:var(--accent2)}a:hover{text-decoration:underline}
     <div id="term-detail"></div>
   </div>
 
+
+<!-- ADSENSE: Responsive Display Ad — slot 1111111111 -->
+<div class="adsense-unit">
+  <span class="adsense-label">Advertisement</span>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-3381823794459030"
+       data-ad-slot="1111111111"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 </div>
 
 <script>
@@ -726,6 +778,7 @@ function renderList() {
     return matchCat && matchSearch;
   });
   const _nc=document.getElementById('nav-count'); if(_nc) _nc.textContent = `${filtered.length} term${filtered.length!==1?'s':''}`;
+  const _ml=document.getElementById('mob-count-label'); if(_ml) _ml.textContent = filtered.length ? `Tap any topic to read` : 'No results';
   list.innerHTML = filtered.map(t => `
     <div class="tl-item ${activeTerm===t.id?'active':''}" onclick="loadTerm('${t.id}')">
       <div class="tl-item-header">
@@ -753,6 +806,19 @@ function filterTerms(q) {
   renderList();
 }
 
+// Mobile: show content panel, hide sidebar
+function showContent() {
+  if (window.innerWidth <= 768) {
+    document.body.classList.add('mob-content');
+    document.getElementById('content').scrollTop = 0;
+  }
+}
+// Mobile: back to sidebar list
+function showSidebar() {
+  document.body.classList.remove('mob-content');
+  window.scrollTo(0,0);
+}
+
 function loadTerm(id) {
   const t = TERMS.find(x => x.id === id);
   if (!t) return;
@@ -762,6 +828,8 @@ function loadTerm(id) {
   const welcome = document.getElementById('welcome');
   welcome.style.display = 'none';
   detail.style.display = 'block';
+  // Mobile: switch to content panel
+  showContent();
 
   const levelClass = {'beginner':'b-beginner','intermediate':'b-intermediate','advanced':'b-advanced-d'}[t.level]||'b-beginner';
   const catColors = {'foundations':'tag-purple','technical':'tag-blue','process':'tag-green','concepts':'tag-yellow','advanced':'tag-pink'};
@@ -848,10 +916,10 @@ function loadTerm(id) {
 
   // Initialize visualizations for specific terms
   initViz(t.id);
-  // Scroll content to top
-  document.getElementById('content').scrollTo({top:0,behavior:'smooth'});
-  // On mobile scroll into view
-  if(window.innerWidth < 768) detail.scrollIntoView({behavior:'smooth'});
+  // Scroll content to top (desktop) — on mobile the panel swap handles it
+  if (window.innerWidth > 768) {
+    document.getElementById('content').scrollTo({top:0,behavior:'smooth'});
+  }
 }
 
 function answerQuiz(termId, chosen, correct) {
@@ -1088,6 +1156,18 @@ if (window.innerWidth >= 768) loadTerm('ai');
 </script>
 
 <!-- FOOTER -->
+
+<!-- ADSENSE: Responsive Display Ad — slot 3333333333 -->
+<div class="adsense-unit">
+  <span class="adsense-label">Advertisement</span>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-3381823794459030"
+       data-ad-slot="3333333333"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 <footer role="contentinfo" style="padding:3rem 2rem;text-align:center;color:var(--text3);font-size:.83rem;border-top:1px solid var(--border);">
   <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.9rem;">
     <a href="index.html" style="color:var(--accent2);">← Back to All Modules</a>

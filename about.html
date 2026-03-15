@@ -69,7 +69,17 @@ p{color:var(--text2);margin-bottom:1rem;font-size:.97rem}
 footer{padding:3rem 2rem;text-align:center;color:var(--text3);font-size:.83rem;border-top:1px solid var(--border)}
 footer .links{display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.75rem}
 footer a{color:var(--accent2)}
+
+/* ── AdSense ad units ──────────────────────────────────────────────────── */
+.adsense-unit{margin:2.5rem auto;max-width:970px;padding:0 1.5rem;text-align:center;clear:both}
+.adsense-unit-sm{margin:1.5rem auto;max-width:970px;padding:0 1.5rem;text-align:center;clear:both}
+.adsense-label{display:block;font-size:.62rem;color:var(--text3,#64748b);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem;font-family:inherit}
+.adsense-unit ins,.adsense-unit-sm ins{border-radius:8px;overflow:hidden}
 </style>
+  <!-- ▼ Google AdSense — replace ca-pub-3381823794459030 with your publisher ID -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3381823794459030"
+       crossorigin="anonymous"></script>
+  <!-- ▲ AdSense auto-ads: Google will also place ads automatically once approved -->
 </head>
 <body>
 
@@ -125,6 +135,18 @@ footer a{color:var(--accent2)}
   <p>Have a correction, suggestion, or question? We'd love to hear from you. <a href="contact.html">Use the contact page</a> to reach us.</p>
 </main>
 
+
+<!-- ADSENSE: Responsive Display Ad — slot 3333333333 -->
+<div class="adsense-unit">
+  <span class="adsense-label">Advertisement</span>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-3381823794459030"
+       data-ad-slot="3333333333"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 <footer role="contentinfo">
   <div class="links">
     <a href="index.html">Home</a>
