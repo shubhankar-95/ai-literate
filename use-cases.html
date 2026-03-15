@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Use Cases by Industry: Software, Marketing, Finance, Healthcare & More — AI Literate</title>
+<meta name="description" content="Discover real-world AI use cases across every industry — software development, marketing, finance, healthcare, legal, education, and HR. With step-by-step workflows, productivity data, and future AI predictions for 2026–2030.">
+<meta name="keywords" content="AI use cases, AI in healthcare, AI for marketing, AI in software development, AI productivity, AI in finance, AI legal tools, enterprise AI, AI ROI, generative AI applications, AI workflow automation">
+<meta name="robots" content="index, follow">
+<meta name="author" content="AI Literate">
+<meta property="og:title" content="AI Use Cases by Industry — AI Literate">
+<meta property="og:description" content="Real-world AI applications for every industry: software, marketing, healthcare, finance, legal, education. Productivity data, workflow templates, and 2026–2030 predictions.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ai-literate.online/use-cases.html">
+<meta property="og:site_name" content="AI Literate">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Use Cases by Industry — AI Literate">
+<meta name="twitter:description" content="How AI is transforming every industry — with specific use cases, workflows, data points, and future predictions.">
+<link rel="canonical" href="https://ai-literate.online/use-cases.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI Use Cases by Industry: Software, Marketing, Finance, Healthcare & More",
+  "description": "Comprehensive guide to real-world AI applications across industries, with productivity data and workflow templates.",
+  "author": {"@type": "Organization", "name": "AI Literate"},
+  "publisher": {"@type": "Organization", "name": "AI Literate", "url": "https://ai-literate.online"},
+  "url": "https://ai-literate.online/use-cases.html",
+  "inLanguage": "en-US"
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a28;--surface3:#22223a;
+  --border:#2a2a40;--accent:#e06840;--accent2:#5b8ef0;--accent3:#3ecfcf;
+  --green:#3ecf8e;--yellow:#f0c040;--red:#ef5050;--orange:#f07040;
+  --text:#e8e8f0;--text2:#9090b0;--radius:12px;--radius-sm:8px;
+  --mono:'Fira Code',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;}
+
+.topnav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:20px;height:56px;}
+.nav-brand{font-weight:700;font-size:1rem;color:var(--accent);text-decoration:none;white-space:nowrap;}
+.nav-brand span{color:var(--text2);font-weight:400;}
+.nav-tabs{display:flex;gap:4px;overflow-x:auto;flex:1;}
+.nav-tab{padding:6px 14px;border-radius:var(--radius-sm);cursor:pointer;font-size:0.82rem;font-weight:500;color:var(--text2);border:none;background:none;white-space:nowrap;transition:all 0.2s;}
+.nav-tab:hover{background:var(--surface2);color:var(--text);}
+.nav-tab.active{background:var(--accent);color:#fff;}
+.nav-back{font-size:0.82rem;color:var(--text2);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);transition:all 0.2s;white-space:nowrap;}
+.nav-back:hover{border-color:var(--accent);color:var(--accent);}
+
+.page{display:none;padding:40px 24px;max-width:1100px;margin:0 auto;}
+.page.active{display:block;}
+
+.hero{text-align:center;margin-bottom:48px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);padding:6px 14px;border-radius:40px;font-size:0.8rem;color:var(--accent);margin-bottom:20px;}
+.hero h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;margin-bottom:16px;}
+.hero h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero p{font-size:1.1rem;color:var(--text2);max-width:600px;margin:0 auto;}
+
+.level-bar{display:flex;gap:8px;margin-bottom:32px;padding:4px;background:var(--surface);border:1px solid var(--border);border-radius:40px;width:fit-content;}
+.level-btn{padding:8px 20px;border-radius:40px;border:none;cursor:pointer;font-size:0.85rem;font-weight:600;transition:all 0.2s;color:var(--text2);background:none;}
+.level-btn.active{background:var(--accent);color:#fff;}
+[data-level]{display:none;}
+[data-level].show{display:block;}
+
+.section-title{font-size:1.5rem;font-weight:700;margin-bottom:8px;}
+.section-sub{color:var(--text2);margin-bottom:28px;}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;}
+.card-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.card-title{font-size:1.05rem;font-weight:700;}
+.card-sub{font-size:0.85rem;color:var(--text2);}
+.card p{color:var(--text2);font-size:0.9rem;line-height:1.7;margin-bottom:10px;}
+.card p:last-child{margin-bottom:0;}
+
+.domain-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+.domain-tab{padding:8px 16px;border-radius:var(--radius-sm);cursor:pointer;font-size:0.82rem;font-weight:600;color:var(--text2);border:1px solid var(--border);background:var(--surface);transition:all 0.2s;}
+.domain-tab:hover{border-color:var(--accent);color:var(--accent);}
+.domain-tab.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+
+.domain-panel{display:none;}
+.domain-panel.active{display:block;}
+
+.use-case-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:24px;}
+.uc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:all 0.2s;cursor:pointer;}
+.uc-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.uc-card h3{font-size:1rem;font-weight:700;margin-bottom:6px;}
+.uc-card p{font-size:0.85rem;color:var(--text2);line-height:1.6;margin-bottom:12px;}
+.uc-tag-row{display:flex;flex-wrap:wrap;gap:6px;}
+.uc-tag{padding:3px 8px;border-radius:4px;font-size:0.72rem;font-weight:600;}
+.tag-easy{background:#0d2e20;color:var(--green);}
+.tag-med{background:#2e2a0d;color:var(--yellow);}
+.tag-hard{background:#2e0d0d;color:var(--red);}
+.tag-domain{background:var(--surface2);color:var(--text2);border:1px solid var(--border);}
+
+.timeline{position:relative;padding-left:32px;}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),var(--accent2));}
+.tl-item{position:relative;margin-bottom:28px;}
+.tl-item::before{content:'';position:absolute;left:-28px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);}
+.tl-date{font-size:0.78rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.tl-title{font-size:1rem;font-weight:700;margin-bottom:4px;}
+.tl-body{font-size:0.87rem;color:var(--text2);line-height:1.6;}
+
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:32px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;}
+.stat-num{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-label{font-size:0.75rem;color:var(--text2);margin-top:4px;}
+
+.callout{padding:16px 20px;border-radius:var(--radius-sm);margin:16px 0;display:flex;gap:12px;align-items:flex-start;}
+.callout.tip{background:#0d2e20;border-left:3px solid var(--green);}
+.callout.warn{background:#2e1a0d;border-left:3px solid var(--orange);}
+.callout.info{background:#0d1e3e;border-left:3px solid var(--accent2);}
+.callout-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.callout p{font-size:0.87rem;color:var(--text2);margin:0;}
+.callout strong{color:var(--text);}
+
+.prompt-box{background:#0d0d18;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;margin:12px 0;position:relative;}
+.prompt-box pre{font-family:var(--mono);font-size:0.82rem;color:#c9d1d9;white-space:pre-wrap;word-break:break-word;}
+.copy-btn{position:absolute;top:8px;right:8px;padding:4px 10px;background:var(--surface3);border:1px solid var(--border);border-radius:6px;font-size:0.75rem;cursor:pointer;color:var(--text2);transition:all 0.2s;}
+.copy-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:24px;}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px;}
+
+.future-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px;}
+.future-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;border-top:3px solid var(--accent);}
+.future-card h4{font-size:0.95rem;font-weight:700;margin-bottom:8px;}
+.future-card p{font-size:0.83rem;color:var(--text2);line-height:1.6;}
+.future-card .year{font-size:0.75rem;font-weight:700;color:var(--accent);margin-bottom:8px;}
+
+.steps{display:flex;flex-direction:column;gap:16px;}
+.step{display:flex;gap:20px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:0.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-body{flex:1;}
+.step-body h3{font-size:1rem;font-weight:700;margin-bottom:6px;}
+.step-body p{font-size:0.88rem;color:var(--text2);line-height:1.65;}
+
+.impact-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;}
+.impact-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.impact-name{font-size:0.9rem;font-weight:600;}
+.impact-pct{font-size:0.85rem;font-weight:700;color:var(--accent);}
+.bar-track{background:var(--surface2);border-radius:4px;height:8px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 1.5s ease;}
+
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--accent);}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://ai-literate.online/"},
+    {"@type":"ListItem","position":2,"name":"AI Use Cases","item":"https://ai-literate.online/use-cases.html"}
+  ]
+}
+</script>
+</head>
+<body>
+
+<nav id="nav" aria-label="Main navigation">
+  <a href="index.html" style="font-size:1.05rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;">🤖 AI Literate</a>
+  <div style="display:flex;gap:1.5rem;margin-left:auto;align-items:center;">
+    <a href="index.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">All Modules</a>
+    <a href="about.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">About</a>
+    <a href="contact.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">Contact</a>
+  </div>
+</nav>
+
+<!-- ═══ OVERVIEW ═══ -->
+<div id="overview" class="page active">
+  <div class="hero">
+    <div class="hero-badge">💡 Real Applications</div>
+    <h1>AI <span>Use Cases</span></h1>
+    <p>From personal productivity to enterprise transformation — where AI creates the most value today and tomorrow.</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num">40%</div><div class="stat-label">Avg productivity gain (knowledge workers)</div></div>
+    <div class="stat-card"><div class="stat-num">$4.4T</div><div class="stat-label">Annual value AI could add globally (McKinsey)</div></div>
+    <div class="stat-card"><div class="stat-num">77%</div><div class="stat-label">Enterprises piloting or deploying AI (2024)</div></div>
+    <div class="stat-card"><div class="stat-num">10x</div><div class="stat-label">Faster first draft for complex documents</div></div>
+    <div class="stat-card"><div class="stat-num">3.5B</div><div class="stat-label">ChatGPT monthly users (2024)</div></div>
+    <div class="stat-card"><div class="stat-num">2030</div><div class="stat-label">Year AI transforms most white-collar work</div></div>
+  </div>
+
+  <div class="level-bar">
+    <button class="level-btn active" onclick="setLevel('beginner','overview')">🌱 Beginner</button>
+    <button class="level-btn" onclick="setLevel('intermediate','overview')">⚡ Intermediate</button>
+    <button class="level-btn" onclick="setLevel('advanced','overview')">🔥 Advanced</button>
+  </div>
+
+  <div data-level="beginner" data-section="overview" class="show">
+    <div class="section-title">What Can AI Actually Do For Me?</div>
+    <div class="section-sub">Practical, everyday uses that make your work easier right now.</div>
+    <div class="use-case-grid">
+      <div class="uc-card">
+        <h3>✉️ Write better emails faster</h3>
+        <p>Describe what you want to say in a few words, and AI drafts a professional, clear email in seconds. Adjust tone from formal to casual instantly.</p>
+        <div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span><span class="uc-tag tag-domain">Daily</span></div>
+      </div>
+      <div class="uc-card">
+        <h3>📄 Summarize long documents</h3>
+        <p>Upload a 50-page report or paste a long article. Get the key points in 5 bullet points in under 10 seconds. Never skim again.</p>
+        <div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span><span class="uc-tag tag-domain">Research</span></div>
+      </div>
+      <div class="uc-card">
+        <h3>💡 Brainstorm ideas</h3>
+        <p>Stuck on a project name, blog topic, or gift idea? Give AI some context and it generates 10 creative options instantly. Use them as starting points.</p>
+        <div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span><span class="uc-tag tag-domain">Creative</span></div>
+      </div>
+      <div class="uc-card">
+        <h3>🔍 Answer research questions</h3>
+        <p>Ask a complex question and get a structured, thorough answer with context. Far more useful than a Google search for "how does X work" questions.</p>
+        <div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span><span class="uc-tag tag-domain">Learning</span></div>
+      </div>
+      <div class="uc-card">
+        <h3>🌍 Translate and localize</h3>
+        <p>Translate content between languages while preserving tone and context — not just words. AI understands cultural nuance that basic translators miss.</p>
+        <div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span><span class="uc-tag tag-domain">Global</span></div>
+      </div>
+      <div class="uc-card">
+        <h3>📊 Explain complex data</h3>
+        <p>Paste a table of numbers or a chart description. AI explains what it means in plain language and suggests what actions to take based on the data.</p>
+        <div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span><span class="uc-tag tag-domain">Analysis</span></div>
+      </div>
+    </div>
+    <div class="callout tip">
+      <div class="callout-icon">🎯</div>
+      <p><strong>Best starting point:</strong> Pick one task you do every week that involves writing. Use AI to draft it. Review, edit, send. You'll save 30–60 minutes per week from day one.</p>
+    </div>
+  </div>
+
+  <div data-level="intermediate" data-section="overview">
+    <div class="section-title">Professional AI Workflows</div>
+    <div class="section-sub">How professionals across functions are getting measurable results.</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#0d1e3e;">💼</div><div><div class="card-title">Business & Strategy</div></div></div>
+        <p>Competitive analysis in hours not weeks · First draft of strategy decks · Market research synthesis · Meeting summaries with action items · Job description writing · Performance review drafting.</p>
+        <p><strong style="color:var(--green);">Time saved: 5–10 hrs/week</strong> for senior professionals</p>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#0d2e20;">⚕️</div><div><div class="card-title">Healthcare & Legal</div></div></div>
+        <p>Clinical note drafting · Research literature summarization · Contract clause comparison · Legal brief research · Patient communication drafting · Regulatory document review.</p>
+        <p><strong style="color:var(--green);">Time saved: 2–4 hrs/day</strong> for clinical & legal staff</p>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#1a0d2e;">🎨</div><div><div class="card-title">Marketing & Content</div></div></div>
+        <p>Full content calendar generation · SEO-optimized blog posts · Ad copy A/B variants · Social media scheduling · Brand voice consistency checking · Campaign brief writing.</p>
+        <p><strong style="color:var(--green);">Output increase: 3–5x</strong> content volume without more headcount</p>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#2e2a0d;">🎓</div><div><div class="card-title">Education & Research</div></div></div>
+        <p>Personalized tutoring at any level · Curriculum design · Research paper structuring · Literature review synthesis · Lab report drafting · Student feedback generation.</p>
+        <p><strong style="color:var(--green);">Engagement: 40% higher</strong> student outcomes with AI tutoring (Stanford 2024)</p>
+      </div>
+    </div>
+  </div>
+
+  <div data-level="advanced" data-section="overview">
+    <div class="section-title">Enterprise-Scale AI Deployment</div>
+    <div class="section-sub">Systematic AI integration at the organizational level.</div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d1e3e;">🏢</div><div><div class="card-title">The AI-Native Enterprise Stack</div></div></div>
+      <p>Leading companies in 2025 aren't just adding AI to existing workflows — they're redesigning processes around AI capabilities. The pattern: <strong>humans handle strategy, judgment, and relationships; AI handles research, drafting, analysis, and repetitive cognition.</strong></p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body"><h3>Identify high-volume cognitive tasks</h3><p>Map every task where a skilled person spends more than 2 hrs/week. These are AI candidates: report writing, data analysis, email drafting, research, code review, documentation.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body"><h3>Build custom AI workflows with context</h3><p>Connect AI to your internal knowledge: product docs, past reports, CRM data, style guides. A generic AI is 3x less useful than one grounded in your organization's context.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body"><h3>Measure and iterate</h3><p>Track time-to-completion for AI-assisted vs. manual tasks. Most enterprises see ROI in 6–12 weeks for knowledge worker use cases. Expand what's working.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DOMAINS ═══ -->
+<div id="domains" class="page">
+  <div class="hero">
+    <div class="hero-badge">🗂️ By Industry</div>
+    <h1>AI by <span>Domain</span></h1>
+    <p>Deep-dive into how AI is transforming every major industry — with specific, actionable use cases.</p>
+  </div>
+
+  <div class="domain-tabs">
+    <button class="domain-tab active" onclick="showDomain('software')">💻 Software</button>
+    <button class="domain-tab" onclick="showDomain('marketing')">📣 Marketing</button>
+    <button class="domain-tab" onclick="showDomain('finance')">💰 Finance</button>
+    <button class="domain-tab" onclick="showDomain('healthcare')">⚕️ Healthcare</button>
+    <button class="domain-tab" onclick="showDomain('education')">🎓 Education</button>
+    <button class="domain-tab" onclick="showDomain('legal')">⚖️ Legal</button>
+    <button class="domain-tab" onclick="showDomain('hr')">👥 HR</button>
+  </div>
+
+  <!-- SOFTWARE -->
+  <div id="domain-software" class="domain-panel active">
+    <div class="level-bar">
+      <button class="level-btn active" onclick="setLevel('beginner','software')">🌱 Beginner</button>
+      <button class="level-btn" onclick="setLevel('intermediate','software')">⚡ Intermediate</button>
+      <button class="level-btn" onclick="setLevel('advanced','software')">🔥 Advanced</button>
+    </div>
+    <div data-level="beginner" data-section="software" class="show">
+      <div class="section-title">Software Development — Getting Started</div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>🐛 Debug errors</h3><p>Paste your error message + code. AI explains what went wrong, why, and gives you the exact fix to apply.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+        <div class="uc-card"><h3>📝 Explain code</h3><p>"What does this function do?" — paste any code and get a plain-English walkthrough, line by line if needed.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+        <div class="uc-card"><h3>✍️ Write boilerplate</h3><p>"Write a Python function to read a CSV and return a list of dicts." Save 10 minutes of Googling basic syntax.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+        <div class="uc-card"><h3>📚 Generate README</h3><p>Paste your project's main files and ask AI to write a comprehensive README with setup, usage, and API docs.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#0d1e3e;">⚡</div><div><div class="card-title">Example prompts for beginners</div></div></div>
+        <div class="prompt-box"><pre>"My Python script throws 'KeyError: user_id' at line 23. Here's the code: [paste]. Fix it and explain what was wrong."</pre><button class="copy-btn" onclick="copyPrompt(this)">Copy</button></div>
+        <div class="prompt-box"><pre>"Write a JavaScript function that takes an array of objects and groups them by a given property name. Include examples."</pre><button class="copy-btn" onclick="copyPrompt(this)">Copy</button></div>
+      </div>
+    </div>
+    <div data-level="intermediate" data-section="software">
+      <div class="section-title">Software — Professional Use Cases</div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>🔍 Code review</h3><p>Ask AI to review a PR for security vulnerabilities, performance issues, and coding standards violations — with line-by-line feedback.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+        <div class="uc-card"><h3>🧪 Generate test suites</h3><p>Feed AI your function signatures and it writes comprehensive unit tests covering happy paths, edge cases, and error scenarios.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+        <div class="uc-card"><h3>♻️ Refactor legacy code</h3><p>Upload old, messy code and ask AI to modernize it: add types, break into functions, remove duplication — without breaking behavior.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+        <div class="uc-card"><h3>🔌 API integration</h3><p>"Integrate Stripe webhooks into this Express app." AI reads your code, writes the integration, and handles edge cases you'd forget.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+      </div>
+    </div>
+    <div data-level="advanced" data-section="software">
+      <div class="section-title">Software — Expert Use Cases</div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>🏗️ Architecture design</h3><p>Describe your system requirements and constraints. AI generates system design diagrams, discusses trade-offs, and recommends patterns (CQRS, event sourcing, etc.).</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+        <div class="uc-card"><h3>🔒 Security audit</h3><p>Feed AI your codebase and ask for a security review targeting OWASP Top 10. It finds injection vulnerabilities, auth flaws, and insecure deserialization.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+        <div class="uc-card"><h3>📈 Performance optimization</h3><p>Paste slow queries, N+1 problems, or profiler output. AI identifies the bottleneck, suggests database indexes, caching strategies, and code-level fixes.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+        <div class="uc-card"><h3>🤖 Build AI features</h3><p>Use Claude to help you build AI into your own product: RAG pipelines, embedding search, AI-powered form filling, intelligent summarization features.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARKETING -->
+  <div id="domain-marketing" class="domain-panel">
+    <div class="level-bar">
+      <button class="level-btn active" onclick="setLevel('beginner','marketing')">🌱 Beginner</button>
+      <button class="level-btn" onclick="setLevel('intermediate','marketing')">⚡ Intermediate</button>
+      <button class="level-btn" onclick="setLevel('advanced','marketing')">🔥 Advanced</button>
+    </div>
+    <div data-level="beginner" data-section="marketing" class="show">
+      <div class="section-title">Marketing — Quick Wins</div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>📱 Social captions</h3><p>Describe your product and tone. Get 5 different caption options — punchy, warm, professional — in seconds. Pick and post.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+        <div class="uc-card"><h3>✉️ Email subject lines</h3><p>A/B test made easy — get 10 subject line variants for your campaign. AI knows what drives clicks: curiosity, urgency, personalization.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+        <div class="uc-card"><h3>🎯 Ad copy</h3><p>Describe your offer, audience, and platform. Get headline + body copy for Facebook, Google, LinkedIn — each optimized for that platform's style.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+        <div class="uc-card"><h3>📝 Blog posts</h3><p>Give a title and 3 key points. AI writes a full, structured 800-word post in your brand voice. Edit, not write from scratch.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#1a0d2e;">🎯</div><div><div class="card-title">Marketing prompt examples</div></div></div>
+        <div class="prompt-box"><pre>"Write 5 LinkedIn post variations promoting our new project management tool for remote teams. Audience: HR managers at 100–500 person companies. Tone: professional but conversational. Include one data point per post."</pre><button class="copy-btn" onclick="copyPrompt(this)">Copy</button></div>
+        <div class="prompt-box"><pre>"Create a 4-email welcome sequence for SaaS trial users. Goal: get them to use the core feature within 3 days. Tone: helpful, not salesy. Include subject lines for each."</pre><button class="copy-btn" onclick="copyPrompt(this)">Copy</button></div>
+      </div>
+    </div>
+    <div data-level="intermediate" data-section="marketing">
+      <div class="section-title">Marketing — Strategic Use Cases</div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>🔍 Competitive analysis</h3><p>Feed AI competitor landing pages, G2 reviews, and pricing pages. Get a structured comparison: strengths, weaknesses, positioning gaps you can exploit.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+        <div class="uc-card"><h3>📊 Campaign reporting</h3><p>Paste your analytics data and ask AI to write a 1-page campaign performance report with insights and recommended next steps for stakeholders.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+        <div class="uc-card"><h3>🗺️ Content strategy</h3><p>Describe your ICP (Ideal Customer Profile) and business goals. AI builds a 3-month content calendar with topics, formats, and distribution channels.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+        <div class="uc-card"><h3>🎭 Persona development</h3><p>Feed AI customer interview notes or support tickets. It extracts recurring themes and builds detailed buyer personas you can use across all campaigns.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+      </div>
+    </div>
+    <div data-level="advanced" data-section="marketing">
+      <div class="section-title">Marketing — Advanced Automation</div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>⚙️ Personalization at scale</h3><p>Use AI + CRM data to generate individualized email copy for thousands of prospects — each referencing their industry, company size, and pain points automatically.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+        <div class="uc-card"><h3>🔊 Brand voice enforcement</h3><p>Train AI on your best-performing content. Use it as a style checker that flags any new content deviating from your brand's tone, vocabulary, and messaging pillars.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINANCE -->
+  <div id="domain-finance" class="domain-panel">
+    <div class="level-bar">
+      <button class="level-btn active" onclick="setLevel('beginner','finance')">🌱 Beginner</button>
+      <button class="level-btn" onclick="setLevel('intermediate','finance')">⚡ Intermediate</button>
+      <button class="level-btn" onclick="setLevel('advanced','finance')">🔥 Advanced</button>
+    </div>
+    <div data-level="beginner" data-section="finance" class="show">
+      <div class="section-title">Finance — Everyday Uses</div>
+      <div class="callout warn"><div class="callout-icon">⚠️</div><p><strong>Important:</strong> AI is not a financial advisor. Use these tools for analysis, research, and communication — not as investment advice. Always verify with qualified professionals for important decisions.</p></div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>📊 Explain financial statements</h3><p>Paste a company's income statement or balance sheet. Get a plain-English explanation of what the numbers mean, what's healthy, and what's concerning.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+        <div class="uc-card"><h3>📝 Budget analysis</h3><p>Describe your budget or paste a spreadsheet summary. AI identifies where money is going, flags anomalies, and suggests areas to investigate.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+        <div class="uc-card"><h3>📧 Investor communication</h3><p>Draft board updates, investor emails, and quarterly reports in clear, professional language. Describe what happened and AI writes the narrative.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+      </div>
+    </div>
+    <div data-level="intermediate" data-section="finance">
+      <div class="section-title">Finance — Analysis Use Cases</div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>🔍 Earnings call analysis</h3><p>Paste a transcript from an earnings call. AI extracts key guidance, sentiment shifts, risk factors, and notable quotes — in 2 minutes vs 2 hours of reading.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+        <div class="uc-card"><h3>📋 Financial modeling help</h3><p>Describe your model and ask AI to write Excel formulas, suggest assumptions, or create sensitivity analysis scenarios. Drastically speeds up FP&A work.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+        <div class="uc-card"><h3>📑 Due diligence summaries</h3><p>Upload lengthy due diligence documents. AI extracts red flags, key terms, obligations, and risks in a structured format investors can act on.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+      </div>
+    </div>
+    <div data-level="advanced" data-section="finance">
+      <div class="section-title">Finance — Advanced Applications</div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>🤖 Automated report generation</h3><p>Connect AI to your data warehouse. Auto-generate weekly P&L commentary, variance analysis, and management reports with zero manual writing.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+        <div class="uc-card"><h3>🔎 Regulatory document review</h3><p>AI scans SEC filings, compliance documents, and regulatory updates — flags anything relevant to your business and summarizes the required actions.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEALTHCARE -->
+  <div id="domain-healthcare" class="domain-panel">
+    <div class="level-bar">
+      <button class="level-btn active" onclick="setLevel('beginner','health')">🌱 Beginner</button>
+      <button class="level-btn" onclick="setLevel('intermediate','health')">⚡ Intermediate</button>
+      <button class="level-btn" onclick="setLevel('advanced','health')">🔥 Advanced</button>
+    </div>
+    <div data-level="beginner" data-section="health" class="show">
+      <div class="section-title">Healthcare — Patient & Provider Use Cases</div>
+      <div class="callout warn"><div class="callout-icon">⚠️</div><p><strong>Medical disclaimer:</strong> AI should augment, never replace, clinical judgment. All clinical decisions must be validated by qualified healthcare professionals.</p></div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>📋 Clinical note drafting</h3><p>Physicians describe a patient encounter verbally or via bullet points. AI drafts a full SOAP note in seconds — the doctor reviews and signs off.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+        <div class="uc-card"><h3>🔬 Research literature synthesis</h3><p>Upload 5 papers on a treatment. AI synthesizes findings, identifies consensus, and flags conflicting evidence — a literature review in 5 minutes.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+        <div class="uc-card"><h3>👥 Patient communication</h3><p>Draft patient education materials, discharge instructions, and after-visit summaries in plain language at an appropriate reading level.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+      </div>
+    </div>
+    <div data-level="advanced" data-section="health">
+      <div class="section-title">Healthcare — Advanced Applications</div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>🧬 Genomic report interpretation</h3><p>AI assists in interpreting genetic variants, cross-referencing with clinical databases, and drafting preliminary reports for clinical review.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+        <div class="uc-card"><h3>📊 Clinical trial design</h3><p>AI assists researchers in protocol design, statistical power calculations, and identification of relevant endpoints based on therapeutic area literature.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+        <div class="uc-card"><h3>🏥 Operational efficiency</h3><p>Bed allocation modeling, staffing optimization, surgical scheduling — AI analyzing operational data to reduce wait times and improve resource utilization.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+      </div>
+    </div>
+    <div data-level="intermediate" data-section="health">
+      <div class="section-title">Healthcare — Professional Tools</div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>💊 Drug interaction checking</h3><p>AI cross-references complex polypharmacy regimens against known interaction databases — flagging potential risks for pharmacist review.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+        <div class="uc-card"><h3>🩺 Differential diagnosis support</h3><p>Present symptoms and history — AI generates a ranked list of differential diagnoses with probability reasoning and suggested workup, for physician review.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <div id="domain-education" class="domain-panel">
+    <div class="level-bar">
+      <button class="level-btn active" onclick="setLevel('beginner','edu')">🌱 Beginner</button>
+      <button class="level-btn" onclick="setLevel('intermediate','edu')">⚡ Intermediate</button>
+      <button class="level-btn" onclick="setLevel('advanced','edu')">🔥 Advanced</button>
+    </div>
+    <div data-level="beginner" data-section="edu" class="show">
+      <div class="section-title">Education — Students & Learners</div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>🎓 Personal tutor</h3><p>"Explain quantum entanglement like I'm 16." AI adapts its explanations to your level, uses analogies you relate to, and answers follow-up questions patiently.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+        <div class="uc-card"><h3>✏️ Essay feedback</h3><p>Paste your draft. AI gives structured feedback on argument, evidence, clarity, and structure — like a writing tutor reviewing your work before submission.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+        <div class="uc-card"><h3>📚 Study materials</h3><p>Give AI a chapter or topic. It creates flashcards, practice questions, and a concise study guide — learning materials personalized to the source content.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+      </div>
+    </div>
+    <div data-level="advanced" data-section="edu">
+      <div class="section-title">Education — Institutional AI Deployment</div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>📐 Adaptive curriculum</h3><p>AI dynamically adjusts lesson difficulty, pacing, and content based on real-time student performance — true personalized learning at scale.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+        <div class="uc-card"><h3>📊 Learning analytics</h3><p>AI analyzes cohort-level performance to identify which students need intervention, which concepts are poorly understood, and where curriculum improvements are needed.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+        <div class="uc-card"><h3>🌐 Multilingual education</h3><p>Real-time translation + culturally-adapted content allows one teacher to reach students in 50 languages — breaking down the biggest barrier in global education.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+      </div>
+    </div>
+    <div data-level="intermediate" data-section="edu">
+      <div class="section-title">Education — Teachers & Instructors</div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>📝 Lesson plan creation</h3><p>Specify subject, grade level, and learning objectives. AI generates complete lesson plans with activities, discussion questions, and assessment criteria.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+        <div class="uc-card"><h3>📋 Rubric & assessment design</h3><p>Describe the assignment. AI creates detailed rubrics with clear criteria, performance levels, and example responses for each level.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEGAL -->
+  <div id="domain-legal" class="domain-panel">
+    <div class="level-bar">
+      <button class="level-btn active" onclick="setLevel('beginner','legal')">🌱 Beginner</button>
+      <button class="level-btn" onclick="setLevel('intermediate','legal')">⚡ Intermediate</button>
+      <button class="level-btn" onclick="setLevel('advanced','legal')">🔥 Advanced</button>
+    </div>
+    <div data-level="beginner" data-section="legal" class="show">
+      <div class="callout warn"><div class="callout-icon">⚠️</div><p><strong>Legal disclaimer:</strong> AI output is not legal advice. Always have qualified legal counsel review important documents and decisions.</p></div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>📄 Contract summary</h3><p>Upload an NDA or service agreement. AI extracts: key obligations, termination clauses, liability caps, IP ownership, and red flags — in plain English.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+        <div class="uc-card"><h3>🔍 Legal research</h3><p>Ask AI to explain a legal concept, relevant statutes, or case law. Get an accurate overview to orient your thinking before deeper research or consultation.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+      </div>
+    </div>
+    <div data-level="advanced" data-section="legal">
+      <div class="section-title">Legal — Advanced Practice</div>
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>⚖️ Brief research & drafting</h3><p>AI assists in drafting legal briefs, identifying relevant precedents, and structuring arguments — reducing research time by 60–70% for experienced attorneys.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+        <div class="uc-card"><h3>📋 Contract lifecycle management</h3><p>Automated clause extraction, risk scoring, and obligation tracking across entire contract portfolios — impossible at scale without AI.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+        <div class="uc-card"><h3>🌐 Multi-jurisdiction compliance</h3><p>Track regulatory changes across 50+ jurisdictions, map obligations to internal policies, and flag gaps — a task that previously required large teams.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+      </div>
+    </div>
+    <div data-level="intermediate" data-section="legal">
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>📝 Document drafting</h3><p>First drafts of standard agreements (NDAs, SOWs, employment contracts) in minutes. Lawyers focus on negotiation and judgment, not initial drafting.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+        <div class="uc-card"><h3>🔎 Discovery review</h3><p>AI scans thousands of documents for relevance and privilege — reducing e-discovery costs by 40–70% while improving consistency.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HR -->
+  <div id="domain-hr" class="domain-panel">
+    <div class="level-bar">
+      <button class="level-btn active" onclick="setLevel('beginner','hr')">🌱 Beginner</button>
+      <button class="level-btn" onclick="setLevel('intermediate','hr')">⚡ Intermediate</button>
+      <button class="level-btn" onclick="setLevel('advanced','hr')">🔥 Advanced</button>
+    </div>
+    <div data-level="beginner" data-section="hr" class="show">
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>📝 Job descriptions</h3><p>Describe the role, team, and requirements. AI writes a compelling job posting that attracts the right candidates and reflects your company culture.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+        <div class="uc-card"><h3>📋 Interview questions</h3><p>Give the role and competencies. AI generates structured behavioral interview questions with ideal answer criteria for each level of experience.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+        <div class="uc-card"><h3>💌 Candidate communications</h3><p>Draft offer letters, rejection emails, and interview scheduling messages that are professional, warm, and on-brand.</p><div class="uc-tag-row"><span class="uc-tag tag-easy">Easy</span></div></div>
+      </div>
+    </div>
+    <div data-level="advanced" data-section="hr">
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>🎯 Talent analytics</h3><p>AI analyzes employee performance data, tenure patterns, and engagement surveys to predict attrition risk and identify high-potential employees before they leave.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+        <div class="uc-card"><h3>📚 Learning path personalization</h3><p>Based on role, skills assessment, and career goals, AI generates personalized L&D plans for every employee — at scale.</p><div class="uc-tag-row"><span class="uc-tag tag-hard">Advanced</span></div></div>
+      </div>
+    </div>
+    <div data-level="intermediate" data-section="hr">
+      <div class="use-case-grid">
+        <div class="uc-card"><h3>📊 Performance reviews</h3><p>Manager provides bullet points of employee accomplishments and development areas. AI drafts a fair, comprehensive, constructive performance review.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+        <div class="uc-card"><h3>🤝 Onboarding programs</h3><p>AI builds customized onboarding plans for each role, including curated learning resources, check-in schedules, and 30/60/90-day goals.</p><div class="uc-tag-row"><span class="uc-tag tag-med">Medium</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ WORKFLOWS ═══ -->
+<div id="workflows" class="page">
+  <div class="hero">
+    <div class="hero-badge">⚙️ In Practice</div>
+    <h1>Real-World <span>Workflows</span></h1>
+    <p>Step-by-step walkthroughs of how AI is actually being used to ship better work, faster.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon" style="background:#0d2e20;">🚀</div><div><div class="card-title">Workflow: From Customer Interview to Product Brief</div><div class="card-sub">Research → Synthesis → Decision in hours, not weeks</div></div></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Conduct & transcribe interviews</h3><p>Record 5–10 customer interviews. Use AI (Whisper, Otter.ai) to auto-transcribe. Feed raw transcripts to Claude.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Extract pain points and themes</h3><p><em style="color:var(--accent3);">Prompt:</em> "Here are 6 customer interview transcripts. Identify the top 5 pain points mentioned most frequently. Quote specific examples for each."</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><h3>Prioritize and rank</h3><p><em style="color:var(--accent3);">Prompt:</em> "Based on frequency of mention and emotional intensity, rank these pain points by severity. Suggest which is the highest-leverage problem to solve first and why."</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><h3>Draft the product brief</h3><p><em style="color:var(--accent3);">Prompt:</em> "Using the pain points you identified, draft a product brief for a solution. Include: problem statement, target user, proposed solution, success metrics, and open questions."</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><h3>Human review and decision</h3><p>PM reviews the brief, adds strategic context, makes the call. AI handled 80% of the analytical work. The human adds 20% of judgment that matters most.</p></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon" style="background:#0d1e3e;">📊</div><div><div class="card-title">Workflow: Instant Competitive Intelligence Report</div><div class="card-sub">What used to take an analyst 3 days now takes 30 minutes</div></div></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Gather competitor data</h3><p>Paste competitor pricing pages, G2/Capterra reviews, recent press releases, and job postings (which reveal strategic direction) into Claude.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Structure the analysis</h3><p><em style="color:var(--accent3);">Prompt:</em> "Analyze these competitor materials. For each competitor, identify: target market, pricing strategy, key differentiators, weaknesses based on reviews, and apparent strategic direction based on hiring."</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><h3>Find the gaps</h3><p><em style="color:var(--accent3);">Prompt:</em> "Based on this analysis, identify 3 market gaps or unserved customer needs that none of these competitors are addressing well."</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><h3>Format for stakeholders</h3><p><em style="color:var(--accent3);">Prompt:</em> "Rewrite this as a 1-page executive brief with a comparison table and 3 strategic recommendations. Use clear headers and bullet points."</p></div></div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#1a0d2e;">✍️</div><div><div class="card-title">Workflow: Content at Scale</div></div></div>
+      <div class="steps" style="gap:10px;">
+        <div class="step" style="padding:14px;"><div class="step-num" style="width:28px;height:28px;font-size:0.8rem;">1</div><div class="step-body"><h3>Define content pillars</h3><p>Use AI to identify 5 content themes based on your audience's top questions (from support tickets, Reddit, Quora).</p></div></div>
+        <div class="step" style="padding:14px;"><div class="step-num" style="width:28px;height:28px;font-size:0.8rem;">2</div><div class="step-body"><h3>Build a content brief factory</h3><p>For each pillar, generate 10 article briefs (title, audience, key points, CTA). One prompt, 10 briefs in 2 minutes.</p></div></div>
+        <div class="step" style="padding:14px;"><div class="step-num" style="width:28px;height:28px;font-size:0.8rem;">3</div><div class="step-body"><h3>Draft → Edit loop</h3><p>AI writes the draft. Human editor reviews, adjusts for accuracy and brand voice. Publish. Repeat.</p></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d2e20;">📧</div><div><div class="card-title">Workflow: Sales Outreach</div></div></div>
+      <div class="steps" style="gap:10px;">
+        <div class="step" style="padding:14px;"><div class="step-num" style="width:28px;height:28px;font-size:0.8rem;">1</div><div class="step-body"><h3>Research the prospect</h3><p>Paste LinkedIn profile, company news, and recent press releases. AI summarizes key context in 30 seconds.</p></div></div>
+        <div class="step" style="padding:14px;"><div class="step-num" style="width:28px;height:28px;font-size:0.8rem;">2</div><div class="step-body"><h3>Write a personalized outreach</h3><p><em style="color:var(--accent3);">Prompt:</em> "Write a 4-sentence cold email referencing their recent [event] and connecting it to our [solution]. Be specific, not generic."</p></div></div>
+        <div class="step" style="padding:14px;"><div class="step-num" style="width:28px;height:28px;font-size:0.8rem;">3</div><div class="step-body"><h3>Scale across 100 prospects</h3><p>Build a spreadsheet with prospect context. AI generates personalized emails for each row in batch.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ IMPACT ═══ -->
+<div id="impact" class="page">
+  <div class="hero">
+    <div class="hero-badge">📊 Data & Evidence</div>
+    <h1>Productivity <span>Impact</span></h1>
+    <p>Real numbers from real studies on how AI is changing what's possible at work.</p>
+  </div>
+
+  <div class="section-title">Impact by Role</div>
+  <div class="section-sub">Productivity gains measured in controlled studies (2023–2025).</div>
+
+  <div id="impact-bars">
+    <div class="impact-bar"><div class="impact-header"><span class="impact-name">💻 Software Developers</span><span class="impact-pct">55% faster</span></div><div class="bar-track"><div class="bar-fill" style="width:0" data-w="55%"></div></div><p style="font-size:0.8rem;color:var(--text2);margin-top:6px;">GitHub Copilot study: developers completed tasks 55% faster. Code review time reduced by 30%.</p></div>
+    <div class="impact-bar"><div class="impact-header"><span class="impact-name">✍️ Content Writers</span><span class="impact-pct">3-5x output</span></div><div class="bar-track"><div class="bar-fill" style="width:0" data-w="75%"></div></div><p style="font-size:0.8rem;color:var(--text2);margin-top:6px;">Boston Consulting Group: writers using AI produced 3–5x more content at equal or higher quality ratings.</p></div>
+    <div class="impact-bar"><div class="impact-header"><span class="impact-name">⚕️ Physicians (note-taking)</span><span class="impact-pct">40% less admin</span></div><div class="bar-track"><div class="bar-fill" style="width:0" data-w="40%"></div></div><p style="font-size:0.8rem;color:var(--text2);margin-top:6px;">Epic / Ambient AI study: 40% reduction in documentation time. Physician burnout scores improved.</p></div>
+    <div class="impact-bar"><div class="impact-header"><span class="impact-name">⚖️ Legal Associates</span><span class="impact-pct">70% faster research</span></div><div class="bar-track"><div class="bar-fill" style="width:0" data-w="70%"></div></div><p style="font-size:0.8rem;color:var(--text2);margin-top:6px;">Law firm trials: contract review time cut by 70%. Junior associate output matched senior associate levels.</p></div>
+    <div class="impact-bar"><div class="impact-header"><span class="impact-name">📊 Financial Analysts</span><span class="impact-pct">60% less manual work</span></div><div class="bar-track"><div class="bar-fill" style="width:0" data-w="60%"></div></div><p style="font-size:0.8rem;color:var(--text2);margin-top:6px;">JPMorgan COIN platform: financial document review reduced from 360,000 hours to seconds per year.</p></div>
+    <div class="impact-bar"><div class="impact-header"><span class="impact-name">🎓 Students (with AI tutor)</span><span class="impact-pct">40% better outcomes</span></div><div class="bar-track"><div class="bar-fill" style="width:0" data-w="40%"></div></div><p style="font-size:0.8rem;color:var(--text2);margin-top:6px;">Khan Academy / Stanford study: students using AI tutoring showed 40% improvement in test scores vs. control groups.</p></div>
+  </div>
+
+  <div class="callout info" style="margin-top:32px;">
+    <div class="callout-icon">📌</div>
+    <p><strong>Important nuance:</strong> These gains are for workers who are <em>skilled at working with AI</em>. Untrained use shows much smaller gains. Investing in AI skills pays off 3x–5x more than just buying subscriptions.</p>
+  </div>
+
+  <div class="section-title" style="margin-top:36px;">Caveats & Risks</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#2e0d0d;">⚠️</div><div><div class="card-title">Where AI underperforms</div></div></div>
+      <p><strong style="color:var(--red);">Hallucination:</strong> AI confidently invents facts, citations, and statistics. Always verify specific claims for high-stakes decisions.</p>
+      <p><strong style="color:var(--red);">Novel situations:</strong> AI excels at patterns it's seen before. Genuinely novel strategic decisions still require human judgment.</p>
+      <p><strong style="color:var(--red);">Nuanced relationships:</strong> Negotiation, empathy, reading the room — AI assists but cannot replace human connection.</p>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d2e20;">✅</div><div><div class="card-title">Where AI consistently wins</div></div></div>
+      <p><strong style="color:var(--green);">First drafts:</strong> 80% of the quality in 5% of the time. Human edits the last 20%.</p>
+      <p><strong style="color:var(--green);">Pattern matching at scale:</strong> Reviewing 1,000 documents, contracts, or support tickets simultaneously.</p>
+      <p><strong style="color:var(--green);">Research synthesis:</strong> Connecting dots across large bodies of information that no individual could read.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TIMELINE ═══ -->
+<div id="timeline" class="page">
+  <div class="hero">
+    <div class="hero-badge">🔮 Past → Future</div>
+    <h1>AI Evolution <span>Timeline</span></h1>
+    <p>How we got here, where we are now, and where use cases are headed next.</p>
+  </div>
+
+  <div class="section-title">The Evolution of AI Use Cases</div>
+  <div class="timeline" style="margin-bottom:40px;">
+    <div class="tl-item">
+      <div class="tl-date">2016–2018</div>
+      <div class="tl-title">Rule-based AI + early ML</div>
+      <div class="tl-body">AI = chatbots following decision trees, spam filters, recommendation engines. Use cases: Netflix recommendations, spam detection, image classification. Very narrow, task-specific.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2019–2020</div>
+      <div class="tl-title">GPT-2 and early language models</div>
+      <div class="tl-body">First hint that language AI could generate coherent text. Use cases: autocomplete, simple summarization. Still mostly research demos. GPT-3 showed the first glimpse of general-purpose language capability.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2021–2022</div>
+      <div class="tl-title">DALL-E, Codex, and the API economy</div>
+      <div class="tl-body">GitHub Copilot goes live (June 2021). DALL-E launches image generation. Thousands of startups build on GPT-3/Codex APIs. First real productivity gains documented. ChatGPT launches November 2022 — 1M users in 5 days.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2023</div>
+      <div class="tl-title">GPT-4 + Claude — multimodal, professional-grade</div>
+      <div class="tl-body">AI passes the bar exam, USMLE, and CPA exam. Enterprise adoption accelerates. Use cases expand to: legal research, clinical notes, financial analysis. Generative AI becomes a line item in enterprise budgets.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2024</div>
+      <div class="tl-title">Agents, long context, and real engineering tasks</div>
+      <div class="tl-body">200K context windows enable full-codebase understanding. Claude Code and Devin show AI can handle real engineering tasks end-to-end. Multimodal becomes standard. AI starts replacing, not just augmenting, some workflows.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2025</div>
+      <div class="tl-title">Multi-agent networks and AI coworkers</div>
+      <div class="tl-body">AI agents coordinate: one researches, one writes, one reviews, one deploys. "AI team member" moves from metaphor to reality. 30% of new code at major tech companies written by AI. First AI-native companies emerge with 10x revenue per employee.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026–2028</div>
+      <div class="tl-title">Autonomous knowledge work</div>
+      <div class="tl-body">Predicted: AI handles 50%+ of knowledge work tasks at leading organizations. Developer role → architect + reviewer. Analyst role → strategist + editor. Writer role → director + brand guardian. 100M jobs augmented; workforce shape changes significantly.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2030+</div>
+      <div class="tl-title">AI-native industries emerge</div>
+      <div class="tl-body">Entire new industries built on AI capabilities. AI-discovered drugs, AI-designed materials, AI-optimized supply chains that no human could optimize. The question shifts from "can AI do X" to "how do humans add unique value alongside AI."</div>
+    </div>
+  </div>
+
+  <div class="section-title">Future Use Cases (2026–2030)</div>
+  <div class="future-grid">
+    <div class="future-card">
+      <div class="year">2026–2027</div>
+      <h4>🔬 AI-accelerated drug discovery</h4>
+      <p>AI designs novel protein structures, predicts drug-target interactions, and runs virtual clinical trials. Timeline from molecule to candidate: 12 months → 3 months.</p>
+    </div>
+    <div class="future-card" style="border-top-color:var(--accent2);">
+      <div class="year" style="color:var(--accent2);">2026</div>
+      <h4>🏗️ Autonomous software delivery</h4>
+      <p>End-to-end: product spec → architecture → code → tests → deployment. Humans define what and why; AI handles how and deliver.</p>
+    </div>
+    <div class="future-card" style="border-top-color:var(--green);">
+      <div class="year" style="color:var(--green);">2027–2028</div>
+      <h4>🌱 Climate optimization AI</h4>
+      <p>AI optimizes grid energy distribution, models climate interventions, and designs low-carbon materials — attacking climate change from every computational angle simultaneously.</p>
+    </div>
+    <div class="future-card" style="border-top-color:var(--yellow);">
+      <div class="year" style="color:var(--yellow);">2028–2030</div>
+      <h4>🧠 Personalized education at global scale</h4>
+      <p>Every person on earth gets access to an AI tutor as good as the best human teacher — in their language, at their pace, calibrated to their knowledge and goals.</p>
+    </div>
+    <div class="future-card" style="border-top-color:var(--red);">
+      <div class="year" style="color:var(--red);">2027+</div>
+      <h4>⚖️ AI legal access</h4>
+      <p>Quality legal representation democratized: AI handles routine legal matters (contracts, wills, disputes) making professional-quality legal guidance available to everyone, not just those who can afford lawyers.</p>
+    </div>
+    <div class="future-card" style="border-top-color:var(--accent3);">
+      <div class="year" style="color:var(--accent3);">2030</div>
+      <h4>🤝 AI economic advisors</h4>
+      <p>Personalized economic analysis: AI models the impact of policy decisions at national scale in real-time, democratizing the economic modeling previously only available to central banks.</p>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-icon">🎯</div>
+    <p><strong>The meta-skill of the decade:</strong> The professionals who thrive won't be those who resist AI, nor those who blindly trust it. They'll be those who know <em>when to delegate to AI, when to question it, and when human judgment is irreplaceable</em>. That's a learnable skill — and it starts with understanding what AI actually does well.</p>
+  </div>
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  if(id==='impact') animateBars();
+}
+
+function setLevel(level, section) {
+  const page = document.querySelector('.page.active');
+  page.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  page.querySelectorAll('[data-level]').forEach(el=>{
+    if(!el.dataset.section || el.dataset.section===section){
+      el.classList.toggle('show', el.dataset.level===level);
+    }
+  });
+}
+
+function showDomain(id) {
+  document.querySelectorAll('.domain-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.domain-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('domain-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function copyPrompt(btn) {
+  const pre = btn.parentElement.querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(()=>{
+    btn.textContent='Copied!';
+    setTimeout(()=>btn.textContent='Copy',2000);
+  });
+}
+
+function animateBars() {
+  setTimeout(()=>{
+    document.querySelectorAll('.bar-fill').forEach(bar=>{
+      bar.style.width = bar.dataset.w;
+    });
+  }, 200);
+}
+</script>
+
+<!-- FOOTER -->
+<footer role="contentinfo" style="padding:3rem 2rem;text-align:center;color:var(--text3);font-size:.83rem;border-top:1px solid var(--border);">
+  <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.9rem;">
+    <a href="index.html" style="color:var(--accent2);">← Back to All Modules</a>
+    <a href="terminology.html" style="color:var(--accent2);">AI Terminology</a>
+    <a href="core-ai.html" style="color:var(--accent2);">Core Architecture</a>
+    <a href="comparisons.html" style="color:var(--accent2);">Model Comparisons</a>
+    <a href="prompting.html" style="color:var(--accent2);">Prompt Engineering</a>
+    <a href="use-cases.html" style="color:var(--accent2);">Use Cases</a>
+    <a href="ai-integration.html" style="color:var(--accent2);">AI Integration</a>
+    <a href="enterprise-ai.html" style="color:var(--accent2);">Enterprise AI</a>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.9rem;">
+    <a href="about.html" style="color:var(--accent2);">About</a>
+    <a href="contact.html" style="color:var(--accent2);">Contact</a>
+    <a href="privacy-policy.html" style="color:var(--accent2);">Privacy Policy</a>
+  </div>
+  <div style="line-height:1.8;">
+    <strong style="color:var(--text2);">AI Literate</strong> — Free AI education for everyone.<br>
+    AI information changes rapidly — verify with official sources. Not affiliated with any AI company.<br>
+    <span>&copy; <span class="footer-yr"></span> AI Literate. All rights reserved.</span>
+  </div>
+</footer>
+<script>document.querySelectorAll('.footer-yr').forEach(e=>e.textContent=new Date().getFullYear());</script>
+
+</body>
+</html>

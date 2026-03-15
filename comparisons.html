@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>GPT-4 vs Claude vs Gemini vs Llama: Complete AI Model Comparison 2025 — AI Literate</title>
+<meta name="description" content="Detailed comparison of the top AI models in 2025: GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, Llama 3.1, Mistral, and o1/o3. Benchmark scores, pricing, strengths, weaknesses, and an interactive tool to find which AI is best for your use case.">
+<meta name="keywords" content="GPT-4 vs Claude, Claude vs ChatGPT, Gemini vs GPT-4, best AI model 2025, AI model comparison, LLM benchmark, MMLU scores, HumanEval, ChatGPT alternatives, Claude 3.5 review, Gemini 1.5 Pro, Llama 3.1, AI pricing comparison">
+<meta name="robots" content="index, follow">
+<meta name="author" content="AI Literate">
+<meta property="og:title" content="GPT-4 vs Claude vs Gemini: Complete AI Model Comparison 2025">
+<meta property="og:description" content="Side-by-side comparison of all major AI models with benchmark data, pricing, strengths/weaknesses, and an interactive model picker.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ai-literate.online/comparisons.html">
+<meta property="og:site_name" content="AI Literate">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GPT-4 vs Claude vs Gemini — Full Comparison 2025">
+<meta name="twitter:description" content="The definitive AI model comparison: benchmarks, pricing, strengths, and an interactive tool to find the right model for you.">
+<link rel="canonical" href="https://ai-literate.online/comparisons.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "GPT-4 vs Claude vs Gemini vs Llama: Complete AI Model Comparison 2025",
+  "description": "Detailed comparison of all major AI models with benchmark scores, pricing, strengths, weaknesses, and decision tools.",
+  "author": {"@type": "Organization", "name": "AI Literate"},
+  "publisher": {"@type": "Organization", "name": "AI Literate", "url": "https://ai-literate.online"},
+  "url": "https://ai-literate.online/comparisons.html",
+  "inLanguage": "en-US"
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0f1117;--surface:#1a1d2e;--surface2:#242840;--surface3:#2e3250;--accent:#6c63ff;--accent2:#a78bfa;--green:#10b981;--yellow:#f59e0b;--red:#ef4444;--blue:#3b82f6;--pink:#ec4899;--orange:#f97316;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--border:#2e3250;--r:12px;
+--gpt:#10a37f;--claude:#c17c2a;--gemini:#4285f4;--llama:#0467df;--mistral:#f97316;--o1:#ef4444}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+a{color:var(--accent2)}a:hover{text-decoration:underline}
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(15,17,23,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:1rem}
+.nav-back{display:flex;align-items:center;gap:.4rem;color:var(--text2);font-size:.85rem;text-decoration:none;padding:.35rem .8rem;border-radius:8px;border:1px solid var(--border);transition:all .2s}
+.nav-back:hover{border-color:var(--accent);color:var(--text);text-decoration:none}
+.nav-title{font-size:1rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-tabs{display:flex;gap:.25rem;overflow-x:auto;margin-left:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{padding:.3rem .85rem;border-radius:6px;border:1px solid transparent;background:transparent;color:var(--text3);font-size:.78rem;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .2s}
+.nav-tab:hover{color:var(--text2);border-color:var(--border)}
+.nav-tab.active{background:var(--surface2);color:var(--text);border-color:var(--border)}
+/* MAIN */
+main{padding-top:56px}
+.page{display:none;max-width:1040px;margin:0 auto;padding:3rem 2rem 5rem}
+.page.active{display:block}
+.page-hero{margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.page-label{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+.page-title{font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:800;line-height:1.2;margin-bottom:.75rem}
+.page-desc{font-size:.95rem;color:var(--text2);max-width:640px}
+h2.sh{font-size:1.2rem;font-weight:700;margin:2rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+h2.sh::before{content:'';width:3px;height:1.1rem;background:var(--accent);border-radius:2px;display:inline-block}
+/* MODEL PROFILES */
+.model-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.model-tab{padding:.5rem 1.2rem;border-radius:999px;border:2px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;font-family:inherit;font-size:.82rem;font-weight:500;transition:all .2s;white-space:nowrap}
+.model-tab:hover{background:var(--surface2)}
+.model-tab.active{color:#fff}
+.model-tab[data-model="gpt"].active{background:var(--gpt);border-color:var(--gpt)}
+.model-tab[data-model="claude"].active{background:var(--claude);border-color:var(--claude)}
+.model-tab[data-model="gemini"].active{background:var(--gemini);border-color:var(--gemini)}
+.model-tab[data-model="llama"].active{background:var(--llama);border-color:var(--llama)}
+.model-tab[data-model="mistral"].active{background:var(--mistral);border-color:var(--mistral)}
+.model-tab[data-model="o1"].active{background:var(--o1);border-color:var(--o1)}
+.model-profile{display:none}
+.model-profile.active{display:block}
+/* PROFILE CARD */
+.prof-header{display:flex;align-items:flex-start;gap:1.5rem;padding:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:1.5rem}
+.prof-logo{width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.prof-info{flex:1}
+.prof-name{font-size:1.4rem;font-weight:800;margin-bottom:.2rem}
+.prof-org{font-size:.82rem;font-weight:500;opacity:.7;margin-bottom:.5rem}
+.prof-tagline{font-size:.92rem;color:var(--text2)}
+.prof-badges{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.75rem}
+.badge{display:inline-block;padding:.2rem .65rem;border-radius:999px;font-size:.7rem;font-weight:600;border:1px solid}
+.b-open{background:rgba(16,185,129,.15);color:#34d399;border-color:rgba(16,185,129,.3)}
+.b-closed{background:rgba(239,68,68,.1);color:#fca5a5;border-color:rgba(239,68,68,.2)}
+.b-free{background:rgba(59,130,246,.15);color:#93c5fd;border-color:rgba(59,130,246,.3)}
+.b-api{background:rgba(108,99,255,.15);color:var(--accent2);border-color:rgba(108,99,255,.3)}
+.b-multi{background:rgba(236,72,153,.15);color:#f9a8d4;border-color:rgba(236,72,153,.3)}
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem}
+.stat-label{font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:.25rem}
+.stat-value{font-size:1rem;font-weight:700;color:var(--text)}
+.stat-sub{font-size:.72rem;color:var(--text3);margin-top:.15rem}
+/* STRENGTH/WEAK */
+.sw-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+@media(max-width:560px){.sw-grid{grid-template-columns:1fr}}
+.sw-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem}
+.sw-label{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.75rem}
+.sw-label.str{color:#34d399}
+.sw-label.wk{color:#fca5a5}
+.sw-list{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.sw-list li{font-size:.85rem;color:var(--text2);padding-left:1.2rem;position:relative;line-height:1.4}
+.sw-list.str li::before{content:'✓';position:absolute;left:0;color:var(--green)}
+.sw-list.wk li::before{content:'✗';position:absolute;left:0;color:var(--red)}
+/* MODEL VERSIONS */
+.versions{margin-bottom:1.5rem}
+.versions h3{font-size:.9rem;font-weight:600;margin-bottom:.75rem}
+.version-list{display:flex;flex-direction:column;gap:.5rem}
+.ver-item{display:flex;align-items:flex-start;gap:1rem;padding:.75rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px}
+.ver-name{font-size:.88rem;font-weight:600;min-width:160px;color:var(--text)}
+.ver-desc{font-size:.82rem;color:var(--text2);line-height:1.5}
+.ver-ctx{font-size:.72rem;color:var(--text3);white-space:nowrap;margin-left:auto}
+/* DEEP TEXT */
+.deep-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem 1.5rem;margin-bottom:1rem}
+.deep-card h3{font-size:.95rem;font-weight:700;margin-bottom:.5rem}
+.deep-card p{font-size:.88rem;color:var(--text2);line-height:1.7;margin-bottom:.6rem}
+.deep-card p:last-child{margin-bottom:0}
+.deep-card p strong{color:var(--text)}
+/* COMPARISON TABLE */
+.compare-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--r)}
+table.ct{width:100%;border-collapse:collapse;font-size:.82rem}
+table.ct th{background:var(--surface2);padding:.8rem 1rem;text-align:left;font-weight:600;color:var(--text2);white-space:nowrap;border-bottom:1px solid var(--border)}
+table.ct th:first-child{min-width:140px}
+table.ct td{padding:.75rem 1rem;border-top:1px solid var(--border);vertical-align:top;line-height:1.5}
+table.ct tr:hover td{background:var(--surface2)}
+table.ct td:first-child{font-weight:600;font-size:.85rem;white-space:nowrap}
+.ct-green{color:#34d399}.ct-yellow{color:#fcd34d}.ct-red{color:#fca5a5}.ct-blue{color:#93c5fd}.ct-purple{color:var(--accent2)}
+.cell-badge{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.7rem;font-weight:600;white-space:nowrap}
+.cb-g{background:rgba(16,185,129,.15);color:#34d399}
+.cb-y{background:rgba(245,158,11,.15);color:#fcd34d}
+.cb-r{background:rgba(239,68,68,.12);color:#fca5a5}
+.cb-b{background:rgba(59,130,246,.15);color:#93c5fd}
+/* PICKER */
+#picker-section{margin-bottom:2.5rem}
+.picker-row{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-bottom:1.5rem}
+.picker-row label{font-size:.85rem;color:var(--text2)}
+.model-select{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.5rem .9rem;color:var(--text);font-family:inherit;font-size:.85rem;outline:none;cursor:pointer}
+.model-select:focus{border-color:var(--accent)}
+/* RADAR CHART */
+#radar-wrap{display:flex;gap:1.5rem;flex-wrap:wrap;align-items:flex-start;margin-top:1rem}
+canvas#radar{background:var(--surface);border:1px solid var(--border);border-radius:var(--r)}
+#radar-legend{flex:1;min-width:200px}
+.legend-item{display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem;font-size:.82rem}
+.legend-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+/* CALLOUT */
+.callout{border-radius:var(--r);padding:.9rem 1.1rem;font-size:.87rem;line-height:1.7;margin:1rem 0}
+.callout.blue{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.25);color:#93c5fd}
+.callout.yellow{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fcd34d}
+.callout.green{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#6ee7b7}
+/* DECISION TREE */
+.decision-tree{display:flex;flex-direction:column;gap:.75rem}
+.dt-question{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem}
+.dt-q{font-size:.88rem;font-weight:600;margin-bottom:.6rem}
+.dt-options{display:flex;flex-wrap:wrap;gap:.5rem}
+.dt-opt{padding:.35rem .9rem;border-radius:8px;border:1px solid var(--border);background:var(--surface2);font-size:.78rem;cursor:pointer;transition:all .2s;color:var(--text2)}
+.dt-opt:hover{border-color:var(--accent);color:var(--accent2)}
+.dt-opt.picked{background:rgba(108,99,255,.2);border-color:var(--accent);color:var(--accent2)}
+#dt-result{padding:1.25rem;background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.3);border-radius:var(--r);display:none;font-size:.9rem;line-height:1.6}
+#dt-result h3{font-size:1rem;font-weight:700;margin-bottom:.5rem}
+/* BENCH */
+.bench-row{display:flex;align-items:center;gap:.75rem;margin-bottom:.6rem}
+.bench-name{width:120px;font-size:.78rem;font-weight:600;text-align:right;color:var(--text2)}
+.bench-bar-wrap{flex:1;background:var(--surface2);border-radius:4px;height:22px;overflow:hidden}
+.bench-bar{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 .5rem;font-size:.7rem;font-weight:600;color:#fff;transition:width 1.2s ease}
+.bench-score{font-size:.78rem;color:var(--text3);width:40px}
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:2.5rem 0}
+@media(max-width:640px){.page{padding:2rem 1rem 4rem}.prof-header{flex-direction:column;gap:.75rem}.stat-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://ai-literate.online/"},
+    {"@type":"ListItem","position":2,"name":"Model Comparisons","item":"https://ai-literate.online/comparisons.html"}
+  ]
+}
+</script>
+</head>
+<body>
+
+<nav id="nav" aria-label="Main navigation">
+  <a href="index.html" style="font-size:1.05rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;">🤖 AI Literate</a>
+  <div style="display:flex;gap:1.5rem;margin-left:auto;align-items:center;">
+    <a href="index.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">All Modules</a>
+    <a href="about.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">About</a>
+    <a href="contact.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">Contact</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ═══════════════════ MODEL PROFILES ═══════════════════ -->
+<div class="page active" id="page-profiles">
+  <div class="page-hero">
+    <div class="page-label">Deep Dive</div>
+    <h1 class="page-title">AI Model Profiles</h1>
+    <p class="page-desc">Click any model for a full profile — capabilities, versions, strengths, weaknesses, and technical details.</p>
+  </div>
+
+  <div class="model-tabs">
+    <button class="model-tab active" data-model="gpt" onclick="showModel('gpt',this)">🟢 GPT / ChatGPT</button>
+    <button class="model-tab" data-model="claude" onclick="showModel('claude',this)">🟠 Claude</button>
+    <button class="model-tab" data-model="gemini" onclick="showModel('gemini',this)">🔵 Gemini</button>
+    <button class="model-tab" data-model="llama" onclick="showModel('llama',this)">🦙 Llama</button>
+    <button class="model-tab" data-model="mistral" onclick="showModel('mistral',this)">🌪️ Mistral</button>
+    <button class="model-tab" data-model="o1" onclick="showModel('o1',this)">🧮 o1 / o3</button>
+  </div>
+
+  <!-- GPT -->
+  <div class="model-profile active" id="profile-gpt">
+    <div class="prof-header">
+      <div class="prof-logo" style="background:rgba(16,163,127,.15)">🟢</div>
+      <div class="prof-info">
+        <div class="prof-name" style="color:var(--gpt)">ChatGPT / GPT-4o</div>
+        <div class="prof-org">OpenAI — San Francisco, CA. Founded 2015.</div>
+        <div class="prof-tagline">The model that brought AI to the mainstream. The world's most used AI assistant.</div>
+        <div class="prof-badges">
+          <span class="badge b-closed">Closed Source</span>
+          <span class="badge b-free">Free Tier</span>
+          <span class="badge b-api">API Available</span>
+          <span class="badge b-multi">Multimodal</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-label">Context Window</div><div class="stat-value">128K</div><div class="stat-sub">~96,000 words</div></div>
+      <div class="stat-card"><div class="stat-label">Input Pricing</div><div class="stat-value">$5</div><div class="stat-sub">per 1M tokens (4o)</div></div>
+      <div class="stat-card"><div class="stat-label">Output Pricing</div><div class="stat-value">$15</div><div class="stat-sub">per 1M tokens (4o)</div></div>
+      <div class="stat-card"><div class="stat-label">Knowledge Cutoff</div><div class="stat-value">Apr 2024</div><div class="stat-sub">GPT-4o</div></div>
+      <div class="stat-card"><div class="stat-label">Modalities</div><div class="stat-value">Text + Images</div><div class="stat-sub">Voice in app</div></div>
+      <div class="stat-card"><div class="stat-label">Web Browsing</div><div class="stat-value">Yes</div><div class="stat-sub">Via tools</div></div>
+    </div>
+
+    <div class="sw-grid">
+      <div class="sw-box">
+        <div class="sw-label str">✓ Strengths</div>
+        <ul class="sw-list str">
+          <li>Largest ecosystem — plugins, GPTs, integrations</li>
+          <li>Excellent general-purpose performance across all tasks</li>
+          <li>DALL-E 3 integration for image generation</li>
+          <li>Voice mode with natural conversation</li>
+          <li>Real-time web browsing capability</li>
+          <li>Strong coding with Code Interpreter</li>
+          <li>Best-in-class instruction following</li>
+          <li>Most widely tested — huge community</li>
+        </ul>
+      </div>
+      <div class="sw-box">
+        <div class="sw-label wk">✗ Weaknesses</div>
+        <ul class="sw-list wk">
+          <li>Shorter context than Claude or Gemini</li>
+          <li>More expensive than comparable alternatives</li>
+          <li>Can be verbose and over-qualify answers</li>
+          <li>GPT-4 performance harder to reproduce via API</li>
+          <li>Privacy concerns — OpenAI trains on user data by default</li>
+          <li>Rate limits on free tier frustrating</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="versions">
+      <h3>🔢 Model Versions</h3>
+      <div class="version-list">
+        <div class="ver-item"><div class="ver-name">GPT-4o (May 2024)</div><div class="ver-desc">Flagship multimodal model. Natively processes text, images, audio. Faster and cheaper than GPT-4 Turbo. Best choice for most tasks.</div><div class="ver-ctx">128K ctx</div></div>
+        <div class="ver-item"><div class="ver-name">GPT-4o mini</div><div class="ver-desc">Small, fast, cheap version of GPT-4o. Dramatically cheaper ($0.15/1M input tokens). Best for high-volume tasks where cost matters.</div><div class="ver-ctx">128K ctx</div></div>
+        <div class="ver-item"><div class="ver-name">GPT-4 Turbo (legacy)</div><div class="ver-desc">Previous flagship. Largely superseded by GPT-4o. Still available via API but GPT-4o is faster, cheaper, and generally better.</div><div class="ver-ctx">128K ctx</div></div>
+        <div class="ver-item"><div class="ver-name">GPT-3.5 Turbo (legacy)</div><div class="ver-desc">The model that launched ChatGPT in 2022. Now largely superseded. Very cheap but significantly less capable than GPT-4 family.</div><div class="ver-ctx">16K ctx</div></div>
+      </div>
+    </div>
+
+    <div class="deep-card">
+      <h3>🏗️ Technical Architecture</h3>
+      <p>GPT-4 is a large-scale Transformer with a decoder-only architecture, trained with a combination of supervised fine-tuning and RLHF. OpenAI has not published the parameter count for GPT-4, but informed estimates range from 1 to 1.8 trillion parameters in a Mixture-of-Experts (MoE) configuration — meaning the full model is large but only a subset of parameters is active for any given token, keeping inference costs manageable.</p>
+      <p>GPT-4o ("o" for omni) represents a step toward native multimodality — unlike earlier GPT-4V which used separate vision modules, GPT-4o is trained end-to-end on text, images, and audio together. This enables richer cross-modal reasoning and the natural voice conversation mode. The architecture handles audio as compressed audio tokens rather than first transcribing to text.</p>
+    </div>
+    <div class="deep-card">
+      <h3>📜 Historical Context</h3>
+      <p><strong>GPT-1 (2018):</strong> Demonstrated that pre-training on large text corpora produces transferable representations. 117M parameters. Relatively modest but conceptually foundational.</p>
+      <p><strong>GPT-2 (2019):</strong> 1.5B parameters. OpenAI controversially refused to release the full model initially, citing misuse concerns. In retrospect, this was more about attention than genuine risk — GPT-2 is trivially outclassed by modern models.</p>
+      <p><strong>GPT-3 (2020):</strong> 175B parameters. The breakthrough moment. Few-shot learning abilities surprised even the researchers. API access launched the LLM application era.</p>
+      <p><strong>ChatGPT (Nov 2022):</strong> GPT-3.5 fine-tuned with RLHF and released with a consumer chat interface. 100 million users in two months. The product that brought AI to the mainstream and triggered the current AI boom.</p>
+      <p><strong>GPT-4 (Mar 2023):</strong> Multimodal. Passed the bar exam in the top 10th percentile. Outperformed all previous models on standard benchmarks by a wide margin. Catalysed unprecedented competitive response from Google, Anthropic, and Meta.</p>
+    </div>
+    <div class="callout yellow">💰 Pricing note: OpenAI offers significant discounts through Batch API (50% off) and through cached prompt pricing. Real cost for most applications is lower than the base rate.</div>
+  </div>
+
+  <!-- CLAUDE -->
+  <div class="model-profile" id="profile-claude">
+    <div class="prof-header">
+      <div class="prof-logo" style="background:rgba(193,124,42,.15)">🟠</div>
+      <div class="prof-info">
+        <div class="prof-name" style="color:var(--claude)">Claude</div>
+        <div class="prof-org">Anthropic — San Francisco, CA. Founded 2021 by former OpenAI researchers.</div>
+        <div class="prof-tagline">The AI built from the ground up for safety and helpfulness. Best-in-class for coding, documents, and nuanced instruction following.</div>
+        <div class="prof-badges">
+          <span class="badge b-closed">Closed Source</span>
+          <span class="badge b-free">Free Tier</span>
+          <span class="badge b-api">API Available</span>
+          <span class="badge b-multi">Multimodal</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-label">Context Window</div><div class="stat-value">200K</div><div class="stat-sub">~150,000 words</div></div>
+      <div class="stat-card"><div class="stat-label">Input Pricing</div><div class="stat-value">$3</div><div class="stat-sub">per 1M (Sonnet 3.5)</div></div>
+      <div class="stat-card"><div class="stat-label">Output Pricing</div><div class="stat-value">$15</div><div class="stat-sub">per 1M (Sonnet 3.5)</div></div>
+      <div class="stat-card"><div class="stat-label">Knowledge Cutoff</div><div class="stat-value">Apr 2024</div><div class="stat-sub">Claude 3.5</div></div>
+      <div class="stat-card"><div class="stat-label">Modalities</div><div class="stat-value">Text + Images</div><div class="stat-sub">Vision built-in</div></div>
+      <div class="stat-card"><div class="stat-label">Alignment</div><div class="stat-value">Constitutional AI</div><div class="stat-sub">Anthropic's method</div></div>
+    </div>
+
+    <div class="sw-grid">
+      <div class="sw-box">
+        <div class="sw-label str">✓ Strengths</div>
+        <ul class="sw-list str">
+          <li>200K context — read entire codebases or books</li>
+          <li>Best instruction following for complex, precise tasks</li>
+          <li>Exceptional coding and code review</li>
+          <li>Strong nuanced writing with natural voice</li>
+          <li>Less likely to add unnecessary caveats</li>
+          <li>Constitutional AI alignment — principled safety approach</li>
+          <li>Excellent at document analysis and Q&A</li>
+          <li>Claude Code for agentic software development</li>
+        </ul>
+      </div>
+      <div class="sw-box">
+        <div class="sw-label wk">✗ Weaknesses</div>
+        <ul class="sw-list wk">
+          <li>No built-in image generation</li>
+          <li>No real-time web browsing by default</li>
+          <li>Smaller ecosystem than OpenAI</li>
+          <li>Can be over-cautious on some creative requests</li>
+          <li>No voice conversation mode</li>
+          <li>Limited third-party integrations vs GPT</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="versions">
+      <h3>🔢 Model Versions (Claude 3 Family)</h3>
+      <div class="version-list">
+        <div class="ver-item"><div class="ver-name">Claude 3.5 Sonnet</div><div class="ver-desc">Current flagship. Best balance of intelligence and speed. Tops SWE-bench coding benchmark. The recommended model for most tasks.</div><div class="ver-ctx">200K ctx</div></div>
+        <div class="ver-item"><div class="ver-name">Claude 3 Opus</div><div class="ver-desc">Previous top-tier model. Slower and more expensive but excellent for the most complex reasoning. Being superseded by Claude 3.5 Sonnet on most benchmarks.</div><div class="ver-ctx">200K ctx</div></div>
+        <div class="ver-item"><div class="ver-name">Claude 3 Haiku</div><div class="ver-desc">Fastest and cheapest. Excellent for summarisation, classification, and high-volume tasks. Remarkable capability-to-cost ratio.</div><div class="ver-ctx">200K ctx</div></div>
+        <div class="ver-item"><div class="ver-name">Claude 3.5 Haiku</div><div class="ver-desc">Updated Haiku model matching or exceeding the original Claude 3 Sonnet in capability at Haiku pricing. Great value.</div><div class="ver-ctx">200K ctx</div></div>
+      </div>
+    </div>
+
+    <div class="deep-card">
+      <h3>🏗️ Constitutional AI — Anthropic's Unique Approach</h3>
+      <p>Claude is trained using Constitutional AI (CAI), Anthropic's alignment methodology. Rather than relying exclusively on human preference ratings (RLHF), CAI uses a written "constitution" — a set of principles ("be helpful, be harmless, be honest") — to guide the model to critique and revise its own outputs.</p>
+      <p>This produces several unique properties: Claude is more likely to engage thoughtfully with edge cases rather than refuse reflexively. It expresses uncertainty rather than confabulating. It can disagree with users when warranted. These behaviours are deliberate design choices, not accidents — Anthropic argues that a truly helpful AI must be willing to say "I don't know" and "I disagree" when appropriate.</p>
+      <p>Anthropic was founded by Dario Amodei, Daniela Amodei, and others who left OpenAI in 2021 over differences in approach to AI safety. The company has published significant research on interpretability (understanding what's happening inside neural networks) as a route to safer AI.</p>
+    </div>
+    <div class="deep-card">
+      <h3>💡 What Claude Does Differently</h3>
+      <p><strong>Nuance and honesty:</strong> Claude is noticeably more willing to express opinions, acknowledge limitations, and push back on false premises than competitors. Where other models might agree with a factually incorrect premise to be "helpful," Claude will correct it.</p>
+      <p><strong>Long-document performance:</strong> The 200K context window combined with strong attention to detail across long contexts makes Claude particularly effective for tasks like "read this entire 500-page document and answer questions about it" — it tends to actually use information from throughout the document, not just the beginning and end.</p>
+      <p><strong>Coding excellence:</strong> Claude 3.5 Sonnet leads the SWE-bench coding benchmark (resolving real GitHub issues) as of late 2024. Combined with Claude Code (agentic coding tool), it represents the state-of-the-art in AI-assisted software development.</p>
+    </div>
+  </div>
+
+  <!-- GEMINI -->
+  <div class="model-profile" id="profile-gemini">
+    <div class="prof-header">
+      <div class="prof-logo" style="background:rgba(66,133,244,.15)">🔵</div>
+      <div class="prof-info">
+        <div class="prof-name" style="color:var(--gemini)">Gemini</div>
+        <div class="prof-org">Google DeepMind — London & Mountain View. Google's flagship AI family.</div>
+        <div class="prof-tagline">Google's response to the LLM race. Native multimodality at massive scale, with the world's largest context window and deep Google ecosystem integration.</div>
+        <div class="prof-badges">
+          <span class="badge b-closed">Closed Source</span>
+          <span class="badge b-free">Free Tier</span>
+          <span class="badge b-api">API Available</span>
+          <span class="badge b-multi">Multimodal (video+audio)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-label">Context Window</div><div class="stat-value">1M</div><div class="stat-sub">~750,000 words</div></div>
+      <div class="stat-card"><div class="stat-label">Input Pricing</div><div class="stat-value">$3.50</div><div class="stat-sub">per 1M (1.5 Pro)</div></div>
+      <div class="stat-card"><div class="stat-label">Output Pricing</div><div class="stat-value">$10.50</div><div class="stat-sub">per 1M (1.5 Pro)</div></div>
+      <div class="stat-card"><div class="stat-label">Video Support</div><div class="stat-value">Yes</div><div class="stat-sub">Native video input</div></div>
+      <div class="stat-card"><div class="stat-label">Google Integration</div><div class="stat-value">Deep</div><div class="stat-sub">Docs, Gmail, Drive</div></div>
+      <div class="stat-card"><div class="stat-label">Free API</div><div class="stat-value">Yes</div><div class="stat-sub">Gemini API free tier</div></div>
+    </div>
+
+    <div class="sw-grid">
+      <div class="sw-box">
+        <div class="sw-label str">✓ Strengths</div>
+        <ul class="sw-list str">
+          <li>1M token context — entire codebases, long videos</li>
+          <li>Native video and audio processing</li>
+          <li>Deep Google Workspace integration</li>
+          <li>Gemini 2.0 Flash is extremely fast and cheap</li>
+          <li>Generous free API tier for developers</li>
+          <li>Grounding with Google Search built-in</li>
+          <li>Strong multimodal reasoning across media types</li>
+        </ul>
+      </div>
+      <div class="sw-box">
+        <div class="sw-label wk">✗ Weaknesses</div>
+        <ul class="sw-list wk">
+          <li>Earlier versions had inconsistency issues</li>
+          <li>Context quality degrades with very long inputs</li>
+          <li>Slower than Claude or GPT on some tasks</li>
+          <li>Google ecosystem lock-in for advanced features</li>
+          <li>Less consistent instruction following than Claude</li>
+          <li>Still catching up on coding tasks</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="versions">
+      <h3>🔢 Model Versions</h3>
+      <div class="version-list">
+        <div class="ver-item"><div class="ver-name">Gemini 1.5 Pro</div><div class="ver-desc">Main workhorse. 1M token context. Excellent for video, long-form documents, and multimodal tasks. Best choice for Google-integrated workflows.</div><div class="ver-ctx">1M ctx</div></div>
+        <div class="ver-item"><div class="ver-name">Gemini 2.0 Flash</div><div class="ver-desc">Next-gen fast model. Designed for speed and efficiency. Multimodal, fast, cheap. The go-to for high-volume production applications.</div><div class="ver-ctx">1M ctx</div></div>
+        <div class="ver-item"><div class="ver-name">Gemini 1.5 Flash</div><div class="ver-desc">Previous fast model. Extremely cheap ($0.075/1M input). Excellent cost-quality ratio for straightforward tasks.</div><div class="ver-ctx">1M ctx</div></div>
+        <div class="ver-item"><div class="ver-name">Gemini Ultra (legacy)</div><div class="ver-desc">Original top-tier model, largely superseded by 1.5 Pro. Primarily of historical significance as Google's first GPT-4 competitor.</div><div class="ver-ctx">32K ctx</div></div>
+      </div>
+    </div>
+
+    <div class="deep-card">
+      <h3>🏗️ Why 1M Tokens Changes Everything</h3>
+      <p>A 1 million token context is not just "bigger" — it's a qualitative shift. You can feed Gemini the entire codebase of a mid-sized application (200,000 lines of code = ~700K tokens) and ask architectural questions about it. You can provide an entire year of customer service transcripts. You can input a feature-length film (as frames) plus its screenplay and ask the model to fact-check the subtitles against the video.</p>
+      <p>The challenge: attention over 1M tokens is computationally expensive (attention scales O(n²) with context). Google uses "ring attention" and other infrastructure techniques to make this tractable. The quality of information retrieval at the extremes of the context window (especially the middle) is still an open challenge — the "lost in the middle" problem is more acute at 1M tokens than at 200K.</p>
+    </div>
+    <div class="deep-card">
+      <h3>🔬 Architecture: The Mixture-of-Experts Design</h3>
+      <p>Gemini 1.5 reportedly uses a Mixture-of-Experts (MoE) architecture — the same approach speculated for GPT-4. Rather than one dense model, MoE uses many specialised "expert" sub-networks, with a learned routing mechanism selecting which experts to activate for each token. This means the "full" model can be enormous while per-token compute stays manageable.</p>
+      <p>Google has the unique advantage of training on Google-exclusive data — YouTube video transcripts, Google Books, Google Scholar papers, Gmail (anonymised), and Google Search — in addition to public web data. This proprietary data advantage is significant, particularly for tasks involving web knowledge, multilingual content, and multimedia understanding.</p>
+    </div>
+  </div>
+
+  <!-- LLAMA -->
+  <div class="model-profile" id="profile-llama">
+    <div class="prof-header">
+      <div class="prof-logo" style="background:rgba(4,103,223,.15)">🦙</div>
+      <div class="prof-info">
+        <div class="prof-name" style="color:var(--llama)">Llama</div>
+        <div class="prof-org">Meta AI — Menlo Park, CA. Part of Meta (Facebook) AI Research (FAIR).</div>
+        <div class="prof-tagline">The world's most capable open-source model family. Free to download, run locally, and fine-tune. Democratising frontier AI.</div>
+        <div class="prof-badges">
+          <span class="badge b-open">Open Weights</span>
+          <span class="badge b-free">Free to Use</span>
+          <span class="badge b-api">Via Third Parties</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-label">Available Sizes</div><div class="stat-value">8B–405B</div><div class="stat-sub">Multiple size options</div></div>
+      <div class="stat-card"><div class="stat-label">Cost</div><div class="stat-value">Free</div><div class="stat-sub">Download weights</div></div>
+      <div class="stat-card"><div class="stat-label">Context (3.1)</div><div class="stat-value">128K</div><div class="stat-sub">All Llama 3.1 sizes</div></div>
+      <div class="stat-card"><div class="stat-label">License</div><div class="stat-value">Custom</div><div class="stat-sub">Llama Community License</div></div>
+      <div class="stat-card"><div class="stat-label">Run Locally</div><div class="stat-value">Yes</div><div class="stat-sub">Via Ollama, LM Studio</div></div>
+      <div class="stat-card"><div class="stat-label">Fine-tunable</div><div class="stat-value">Yes</div><div class="stat-sub">LoRA, QLoRA</div></div>
+    </div>
+
+    <div class="sw-grid">
+      <div class="sw-box">
+        <div class="sw-label str">✓ Strengths</div>
+        <ul class="sw-list str">
+          <li>Completely free — no API costs</li>
+          <li>Run locally — data never leaves your machine</li>
+          <li>Full customisation — fine-tune for any use case</li>
+          <li>405B rivals GPT-4 on many benchmarks</li>
+          <li>Active open-source community</li>
+          <li>No rate limits or terms of service restrictions</li>
+          <li>Thousands of community fine-tunes for specific tasks</li>
+        </ul>
+      </div>
+      <div class="sw-box">
+        <div class="sw-label wk">✗ Weaknesses</div>
+        <ul class="sw-list wk">
+          <li>Large models require significant GPU infrastructure</li>
+          <li>Self-hosting requires technical expertise</li>
+          <li>Base model lacks safety alignment by default</li>
+          <li>No built-in tools (web, code execution)</li>
+          <li>Typically lags behind frontier closed models</li>
+          <li>Community support, not enterprise SLAs</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="versions">
+      <h3>🔢 Llama 3.1 Versions</h3>
+      <div class="version-list">
+        <div class="ver-item"><div class="ver-name">Llama 3.1 405B</div><div class="ver-desc">Flagship open model. Competitive with GPT-4 on many benchmarks. Requires ~800GB GPU memory to run in full precision; quantised versions require less.</div><div class="ver-ctx">128K ctx</div></div>
+        <div class="ver-item"><div class="ver-name">Llama 3.1 70B</div><div class="ver-desc">The sweet spot for local deployment. Excellent performance on a single 80GB GPU (or 2× 40GB). The most popular size for production deployments.</div><div class="ver-ctx">128K ctx</div></div>
+        <div class="ver-item"><div class="ver-name">Llama 3.1 8B</div><div class="ver-desc">Runs on a modern laptop (16GB RAM with quantisation). Impressive for its size. Best for edge deployment, offline use, and devices with limited resources.</div><div class="ver-ctx">128K ctx</div></div>
+        <div class="ver-item"><div class="ver-name">Llama 3.2 (Vision)</div><div class="ver-desc">Multimodal Llama models (11B, 90B) with vision capabilities. The first open-source vision LLMs competitive with closed alternatives.</div><div class="ver-ctx">128K ctx</div></div>
+      </div>
+    </div>
+
+    <div class="deep-card">
+      <h3>🔓 Why Open Source Matters</h3>
+      <p>When Meta releases Llama weights, any researcher, startup, or individual can download and run a frontier-capable model with no API fees, no rate limits, and complete privacy. This has several important implications. For privacy-sensitive applications (healthcare, legal, personal data), running a local model means data never leaves your infrastructure. For cost-sensitive applications (high-volume inference), avoiding API fees can save millions annually at scale.</p>
+      <p>The open ecosystem also means the community can fine-tune Llama for specialised tasks — there are thousands of Llama derivatives on HuggingFace, fine-tuned for medical note-taking, legal document analysis, specific coding languages, and regional languages. This specialisation is impossible with closed models.</p>
+    </div>
+    <div class="callout green">🚀 <strong>Running Llama locally:</strong> Install <a href="https://ollama.com" target="_blank">Ollama</a>, then run <code style="background:var(--surface2);padding:.1rem .4rem;border-radius:4px;font-family:monospace">ollama run llama3.1:8b</code> to get a capable LLM running entirely on your machine. No account, no API key, no data leaving your device.</div>
+  </div>
+
+  <!-- MISTRAL -->
+  <div class="model-profile" id="profile-mistral">
+    <div class="prof-header">
+      <div class="prof-logo" style="background:rgba(249,115,22,.15)">🌪️</div>
+      <div class="prof-info">
+        <div class="prof-name" style="color:var(--mistral)">Mistral</div>
+        <div class="prof-org">Mistral AI — Paris, France. Founded 2023. Europe's leading AI lab.</div>
+        <div class="prof-tagline">Efficient, European, and surprisingly powerful. Mistral's open models consistently punch above their weight class.</div>
+        <div class="prof-badges">
+          <span class="badge b-open">Open Weights (some)</span>
+          <span class="badge b-api">API Available</span>
+          <span class="badge b-multi">Multilingual</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-label">Flagship Model</div><div class="stat-value">Mistral Large 2</div><div class="stat-sub">Top tier closed</div></div>
+      <div class="stat-card"><div class="stat-label">Open Model</div><div class="stat-value">Mixtral 8x22B</div><div class="stat-sub">Open weights</div></div>
+      <div class="stat-card"><div class="stat-label">Architecture</div><div class="stat-value">MoE</div><div class="stat-sub">Mixture of Experts</div></div>
+      <div class="stat-card"><div class="stat-label">Input Pricing</div><div class="stat-value">$3</div><div class="stat-sub">per 1M (Large 2)</div></div>
+      <div class="stat-card"><div class="stat-label">Context</div><div class="stat-value">128K</div><div class="stat-sub">Large models</div></div>
+      <div class="stat-card"><div class="stat-label">EU GDPR</div><div class="stat-value">Compliant</div><div class="stat-sub">European infrastructure</div></div>
+    </div>
+
+    <div class="sw-grid">
+      <div class="sw-box">
+        <div class="sw-label str">✓ Strengths</div>
+        <ul class="sw-list str">
+          <li>Exceptional efficiency — smaller models outperform larger competitors</li>
+          <li>Mixtral MoE architecture is highly parameter-efficient</li>
+          <li>Strong multilingual support (European focus)</li>
+          <li>GDPR-compliant, EU infrastructure option</li>
+          <li>Mistral 7B was a landmark open-source release</li>
+          <li>Good coding performance for model size</li>
+          <li>Codestral specialised for code completion</li>
+        </ul>
+      </div>
+      <div class="sw-box">
+        <div class="sw-label wk">✗ Weaknesses</div>
+        <ul class="sw-list wk">
+          <li>Smaller ecosystem than OpenAI or Anthropic</li>
+          <li>No multimodal capabilities in base models</li>
+          <li>Less RLHF alignment than US counterparts by default</li>
+          <li>Smaller company = less long-term certainty</li>
+          <li>Limited tooling and integration ecosystem</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deep-card">
+      <h3>🏗️ The MoE Innovation — Mixtral</h3>
+      <p>Mixtral 8x7B was a landmark moment in open AI: a Mixture-of-Experts model where 8 expert networks each have 7B parameters (56B total), but only 2 experts are activated per token (14B effective per forward pass). This means you get GPT-3.5 level performance with the computational cost of a 14B model at inference — a remarkable efficiency gain.</p>
+      <p>The routing mechanism — deciding which 2 of 8 experts handles each token — is itself a small learned network. Different experts specialise in different types of content without explicit supervision: some handle code, others multilingual text, others creative writing. This emergent specialisation from a purely learned router is one of the most interesting phenomena in modern ML.</p>
+    </div>
+  </div>
+
+  <!-- o1 -->
+  <div class="model-profile" id="profile-o1">
+    <div class="prof-header">
+      <div class="prof-logo" style="background:rgba(239,68,68,.12)">🧮</div>
+      <div class="prof-info">
+        <div class="prof-name" style="color:var(--o1)">OpenAI o1 / o3</div>
+        <div class="prof-org">OpenAI — a specialised reasoning model, separate from the GPT family.</div>
+        <div class="prof-tagline">Designed to think before answering. Dramatically outperforms all other models on complex maths, science, and programming challenges.</div>
+        <div class="prof-badges">
+          <span class="badge b-closed">Closed Source</span>
+          <span class="badge b-api">API Available</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-label">Context Window</div><div class="stat-value">128K</div><div class="stat-sub">Input tokens</div></div>
+      <div class="stat-card"><div class="stat-label">Input Pricing (o1)</div><div class="stat-value">$15</div><div class="stat-sub">per 1M tokens</div></div>
+      <div class="stat-card"><div class="stat-label">Output Pricing (o1)</div><div class="stat-value">$60</div><div class="stat-sub">per 1M tokens</div></div>
+      <div class="stat-card"><div class="stat-label">Reasoning Tokens</div><div class="stat-value">Hidden</div><div class="stat-sub">Internal thought</div></div>
+      <div class="stat-card"><div class="stat-label">Speed</div><div class="stat-value">Slow</div><div class="stat-sub">10-60s typical</div></div>
+      <div class="stat-card"><div class="stat-label">o1-mini Price</div><div class="stat-value">$3</div><div class="stat-sub">per 1M input tokens</div></div>
+    </div>
+
+    <div class="sw-grid">
+      <div class="sw-box">
+        <div class="sw-label str">✓ Strengths</div>
+        <ul class="sw-list str">
+          <li>Best-in-class maths and science reasoning</li>
+          <li>PhD-level performance on STEM benchmarks</li>
+          <li>Excellent for multi-step logical deduction</li>
+          <li>Dramatically reduces errors on complex problems</li>
+          <li>Self-verification — checks its own reasoning</li>
+        </ul>
+      </div>
+      <div class="sw-box">
+        <div class="sw-label wk">✗ Weaknesses</div>
+        <ul class="sw-list wk">
+          <li>Very expensive — $60/1M output tokens for o1</li>
+          <li>Very slow — 10–60 seconds per response</li>
+          <li>Overkill for simple tasks (costs more, no benefit)</li>
+          <li>Reasoning traces are hidden (can't see thinking)</li>
+          <li>Doesn't outperform GPT-4o on simple tasks</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deep-card">
+      <h3>🧠 How Reasoning Models Work</h3>
+      <p>Standard LLMs (GPT-4, Claude, Gemini) generate responses in a single forward-pass chain, producing tokens one at a time with no explicit planning. Reasoning models like o1 use a different approach: before generating the final response, the model generates a long internal "chain of thought" — working through the problem step by step, trying different approaches, catching its own errors, and backtracking when needed.</p>
+      <p>This internal reasoning happens in "reasoning tokens" — tokens that are generated but not shown to the user (the model "thinks" before answering). The final response is generated only after this internal deliberation. For hard problems (competitive maths, logical puzzles, complex code), this extended reasoning can dramatically improve accuracy — o1 solved 83% of 2024 International Mathematical Olympiad problems, versus 13% for GPT-4o.</p>
+      <p>The cost is time: generating thousands of internal reasoning tokens before responding means latency of 10–60+ seconds for complex problems. This makes o1 inappropriate for conversational applications (too slow) but powerful for analytical tasks where accuracy matters more than speed.</p>
+    </div>
+    <div class="callout yellow">📊 <strong>When to use o1:</strong> Only when accuracy on hard problems truly matters — competitive programming, formal proof verification, complex analytical tasks. For everything else, GPT-4o or Claude 3.5 Sonnet are faster, cheaper, and equally capable.</div>
+  </div>
+
+</div><!-- end profiles page -->
+
+<!-- ═══════════════════ TABLE PAGE ═══════════════════ -->
+<div class="page" id="page-table">
+  <div class="page-hero">
+    <div class="page-label">Comparison</div>
+    <h1 class="page-title">Side-by-Side Comparison</h1>
+    <p class="page-desc">Detailed technical comparison across the major AI models.</p>
+  </div>
+
+  <h2 class="sh">📋 Full Feature Comparison</h2>
+  <div class="compare-wrap" style="margin-bottom:2rem">
+    <table class="ct">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th style="color:var(--gpt)">GPT-4o</th>
+          <th style="color:var(--claude)">Claude 3.5</th>
+          <th style="color:var(--gemini)">Gemini 1.5</th>
+          <th style="color:var(--llama)">Llama 3.1</th>
+          <th style="color:var(--mistral)">Mixtral</th>
+          <th style="color:var(--o1)">o1</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Context Window</td><td>128K</td><td class="ct-green"><strong>200K</strong></td><td class="ct-green"><strong>1M</strong></td><td>128K</td><td>128K</td><td>128K</td></tr>
+        <tr><td>Open Weights</td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-g">Yes</span></td><td><span class="cell-badge cb-g">Yes (some)</span></td><td><span class="cell-badge cb-r">No</span></td></tr>
+        <tr><td>Free Tier</td><td><span class="cell-badge cb-g">Yes</span></td><td><span class="cell-badge cb-g">Yes</span></td><td><span class="cell-badge cb-g">Yes</span></td><td><span class="cell-badge cb-g">Free download</span></td><td><span class="cell-badge cb-y">Via API</span></td><td><span class="cell-badge cb-r">Paid only</span></td></tr>
+        <tr><td>Image Understanding</td><td><span class="cell-badge cb-g">Yes</span></td><td><span class="cell-badge cb-g">Yes</span></td><td><span class="cell-badge cb-g">Yes</span></td><td><span class="cell-badge cb-g">3.2 models</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-g">Yes</span></td></tr>
+        <tr><td>Image Generation</td><td><span class="cell-badge cb-g">DALL-E 3</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-r">No</span></td></tr>
+        <tr><td>Video Input</td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-g">Yes</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-r">No</span></td></tr>
+        <tr><td>Audio Input</td><td><span class="cell-badge cb-g">Yes (4o)</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-g">Yes</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-r">No</span></td></tr>
+        <tr><td>Web Browsing</td><td><span class="cell-badge cb-g">Yes</span></td><td><span class="cell-badge cb-y">Via tools</span></td><td><span class="cell-badge cb-g">Grounding</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-r">No</span></td></tr>
+        <tr><td>Code Execution</td><td><span class="cell-badge cb-g">Yes</span></td><td><span class="cell-badge cb-g">Claude Code</span></td><td><span class="cell-badge cb-y">Limited</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-r">No</span></td><td><span class="cell-badge cb-r">No</span></td></tr>
+        <tr><td>Input Price /1M</td><td>$5.00</td><td class="ct-green">$3.00</td><td>$3.50</td><td class="ct-green">$0 (local)</td><td class="ct-green">$2.00</td><td class="ct-red">$15.00</td></tr>
+        <tr><td>Speed</td><td><span class="cell-badge cb-g">Fast</span></td><td><span class="cell-badge cb-g">Fast</span></td><td><span class="cell-badge cb-y">Medium</span></td><td><span class="cell-badge cb-y">Varies</span></td><td><span class="cell-badge cb-g">Fast</span></td><td><span class="cell-badge cb-r">Slow</span></td></tr>
+        <tr><td>Best Coding</td><td><span class="cell-badge cb-y">Excellent</span></td><td><span class="cell-badge cb-g">Best</span></td><td><span class="cell-badge cb-y">Good</span></td><td><span class="cell-badge cb-y">Good</span></td><td><span class="cell-badge cb-y">Good</span></td><td><span class="cell-badge cb-y">Excellent</span></td></tr>
+        <tr><td>Best Reasoning</td><td><span class="cell-badge cb-y">Excellent</span></td><td><span class="cell-badge cb-y">Excellent</span></td><td><span class="cell-badge cb-y">Excellent</span></td><td><span class="cell-badge cb-y">Good</span></td><td><span class="cell-badge cb-y">Good</span></td><td><span class="cell-badge cb-g">Best</span></td></tr>
+        <tr><td>Privacy</td><td><span class="cell-badge cb-r">Trains on data</span></td><td><span class="cell-badge cb-y">Opt out</span></td><td><span class="cell-badge cb-y">Google policy</span></td><td><span class="cell-badge cb-g">Local = private</span></td><td><span class="cell-badge cb-y">EU GDPR</span></td><td><span class="cell-badge cb-r">Trains on data</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="sh">💰 Pricing Comparison (as of late 2024)</h2>
+  <div class="compare-wrap" style="margin-bottom:2rem">
+    <table class="ct">
+      <thead><tr><th>Model</th><th>Input /1M tokens</th><th>Output /1M tokens</th><th>Free Tier</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--gpt)">GPT-4o</td><td>$5.00</td><td>$15.00</td><td>Yes (chat.openai.com)</td><td>Batch API: 50% discount</td></tr>
+        <tr><td style="color:var(--gpt)">GPT-4o mini</td><td class="ct-green">$0.15</td><td class="ct-green">$0.60</td><td>Yes</td><td>Best value for simple tasks</td></tr>
+        <tr><td style="color:var(--claude)">Claude 3.5 Sonnet</td><td>$3.00</td><td>$15.00</td><td>Yes (claude.ai)</td><td>Cache: 90% discount on repeat prompts</td></tr>
+        <tr><td style="color:var(--claude)">Claude 3 Haiku</td><td class="ct-green">$0.25</td><td class="ct-green">$1.25</td><td>Yes</td><td>Fastest Claude model</td></tr>
+        <tr><td style="color:var(--gemini)">Gemini 1.5 Pro</td><td>$3.50</td><td>$10.50</td><td>Google AI Studio</td><td>Free below 1.5M tokens/day in Studio</td></tr>
+        <tr><td style="color:var(--gemini)">Gemini 2.0 Flash</td><td class="ct-green">$0.10</td><td class="ct-green">$0.40</td><td>Yes (generous)</td><td>Extremely cheap + fast</td></tr>
+        <tr><td style="color:var(--llama)">Llama 3.1 405B</td><td class="ct-green">$0 (self-host)</td><td class="ct-green">$0 (self-host)</td><td>Download free</td><td>Via Groq/Together: ~$5/1M tokens</td></tr>
+        <tr><td style="color:var(--mistral)">Mistral Large 2</td><td>$3.00</td><td>$9.00</td><td>No</td><td></td></tr>
+        <tr><td style="color:var(--o1)">o1</td><td class="ct-red">$15.00</td><td class="ct-red">$60.00</td><td>No</td><td>3-5x more expensive than GPT-4o</td></tr>
+        <tr><td style="color:var(--o1)">o1-mini</td><td>$3.00</td><td>$12.00</td><td>No</td><td>Cheaper reasoning model</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout yellow">⚠️ Prices change frequently. Check official pricing pages: <a href="https://openai.com/pricing" target="_blank">openai.com/pricing</a> · <a href="https://www.anthropic.com/pricing" target="_blank">anthropic.com/pricing</a> · <a href="https://ai.google.dev/pricing" target="_blank">ai.google.dev/pricing</a></div>
+</div>
+
+<!-- ═══════════════════ BENCHMARKS ═══════════════════ -->
+<div class="page" id="page-benchmarks">
+  <div class="page-hero">
+    <div class="page-label">Performance</div>
+    <h1 class="page-title">🏆 Benchmark Performance</h1>
+    <p class="page-desc">How AI models score on standardised tests — and what those tests actually measure.</p>
+  </div>
+
+  <div class="callout blue">⚠️ Benchmarks measure narrow aspects of AI capability. A model that tops a benchmark isn't necessarily better for your specific use case. Use benchmarks as orientation, not gospel. Also note: labs sometimes train on benchmark data, inflating scores.</div>
+
+  <h2 class="sh">MMLU — General Knowledge (% correct)</h2>
+  <p style="font-size:.84rem;color:var(--text2);margin-bottom:1rem">Massive Multitask Language Understanding. 57 subjects including STEM, humanities, social science. 4-choice multiple choice. Tests broad factual knowledge. Human expert baseline: ~89%.</p>
+  <div id="bench-mmlu"></div>
+
+  <h2 class="sh">HumanEval — Coding (% pass)</h2>
+  <p style="font-size:.84rem;color:var(--text2);margin-bottom:1rem">164 Python programming problems. Measures ability to write functional code from docstrings. Tests algorithmic thinking and Python knowledge.</p>
+  <div id="bench-humaneval"></div>
+
+  <h2 class="sh">MATH — Mathematical Reasoning (%)</h2>
+  <p style="font-size:.84rem;color:var(--text2);margin-bottom:1rem">12,500 competition mathematics problems across 7 difficulty levels. Tests step-by-step mathematical reasoning. This is where reasoning models (o1) have the largest advantage. Human expert baseline: ~90%.</p>
+  <div id="bench-math"></div>
+
+  <h2 class="sh">SWE-bench Verified — Real-World Coding</h2>
+  <p style="font-size:.84rem;color:var(--text2);margin-bottom:1rem">% of real GitHub issues resolved by the AI autonomously. The most practical coding benchmark — uses actual open-source bugs, not artificial problems. Measures real-world software engineering capability.</p>
+  <div id="bench-swe"></div>
+
+  <div class="divider"></div>
+
+  <h2 class="sh">Understanding Benchmark Limitations</h2>
+  <div class="deep-card" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem">
+    <p><strong>Benchmark contamination:</strong> If training data contains benchmark questions (even indirectly), scores are inflated. This is a real concern for all major benchmarks. True "unseen" evaluation is difficult to achieve at scale.</p>
+    <p><strong>Single-benchmark thinking is misleading:</strong> A model that tops MMLU might underperform on creative writing, code review, or nuanced reasoning. Benchmarks measure specific skills. Always evaluate on your actual use case.</p>
+    <p><strong>The "vibes" gap:</strong> Practitioners frequently report that their subjective preference for a model doesn't match benchmark rankings. User experience, consistency, following complex instructions precisely, and appropriate tone matter enormously in practice — and are harder to benchmark.</p>
+    <p><strong>References:</strong> <a href="https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard" target="_blank">HuggingFace Open LLM Leaderboard</a> · <a href="https://lmsys.org/blog/2023-05-03-arena/" target="_blank">LMSYS Chatbot Arena (Human Preference)</a></p>
+  </div>
+</div>
+
+<!-- ═══════════════════ PICKER PAGE ═══════════════════ -->
+<div class="page" id="page-picker">
+  <div class="page-hero">
+    <div class="page-label">Decision Guide</div>
+    <h1 class="page-title">🎯 Which AI Should You Use?</h1>
+    <p class="page-desc">Answer a few questions to get a personalised recommendation.</p>
+  </div>
+
+  <div id="picker-section">
+    <div class="decision-tree">
+      <div class="dt-question" id="q1">
+        <div class="dt-q">1. What is your primary use case?</div>
+        <div class="dt-options">
+          <button class="dt-opt" onclick="pick(this,'uc','code')">💻 Writing / Reviewing Code</button>
+          <button class="dt-opt" onclick="pick(this,'uc','doc')">📄 Long Documents / Analysis</button>
+          <button class="dt-opt" onclick="pick(this,'uc','chat')">💬 General Chat / Q&A</button>
+          <button class="dt-opt" onclick="pick(this,'uc','image')">🎨 Image Generation</button>
+          <button class="dt-opt" onclick="pick(this,'uc','math')">🧮 Hard Maths / Science</button>
+          <button class="dt-opt" onclick="pick(this,'uc','private')">🔒 Privacy / Run Locally</button>
+        </div>
+      </div>
+      <div class="dt-question" id="q2" style="display:none">
+        <div class="dt-q">2. What is your budget?</div>
+        <div class="dt-options">
+          <button class="dt-opt" onclick="pick(this,'budget','free')">💚 Free tier only</button>
+          <button class="dt-opt" onclick="pick(this,'budget','low')">💛 Low cost (&lt;$10/mo)</button>
+          <button class="dt-opt" onclick="pick(this,'budget','any')">💜 Cost doesn't matter</button>
+        </div>
+      </div>
+      <div class="dt-question" id="q3" style="display:none">
+        <div class="dt-q">3. How important is multimodal (images/video)?</div>
+        <div class="dt-options">
+          <button class="dt-opt" onclick="pick(this,'mm','yes')">Important to me</button>
+          <button class="dt-opt" onclick="pick(this,'mm','no')">Text only is fine</button>
+        </div>
+      </div>
+    </div>
+    <div id="dt-result" style="margin-top:1.5rem"></div>
+  </div>
+
+  <div class="divider"></div>
+  <h2 class="sh">Quick Reference</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem"><div style="font-weight:700;margin-bottom:.5rem">For coding & documents</div><p style="font-size:.84rem;color:var(--text2)">→ <strong style="color:var(--claude)">Claude 3.5 Sonnet</strong>. Best instruction following, 200K context, tops SWE-bench.</p></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem"><div style="font-weight:700;margin-bottom:.5rem">For images + chat</div><p style="font-size:.84rem;color:var(--text2)">→ <strong style="color:var(--gpt)">GPT-4o</strong>. DALL-E 3, voice mode, best ecosystem.</p></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem"><div style="font-weight:700;margin-bottom:.5rem">For video / Google</div><p style="font-size:.84rem;color:var(--text2)">→ <strong style="color:var(--gemini)">Gemini 1.5 Pro</strong>. Video input, 1M context, Google integration.</p></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem"><div style="font-weight:700;margin-bottom:.5rem">For hard maths/science</div><p style="font-size:.84rem;color:var(--text2)">→ <strong style="color:var(--o1)">o1 or o3</strong>. Built for extended reasoning on complex problems.</p></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem"><div style="font-weight:700;margin-bottom:.5rem">For privacy / offline</div><p style="font-size:.84rem;color:var(--text2)">→ <strong style="color:var(--llama)">Llama 3.1 8B/70B</strong> via Ollama. Runs on your machine, zero cost.</p></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem"><div style="font-weight:700;margin-bottom:.5rem">For high-volume cheap</div><p style="font-size:.84rem;color:var(--text2)">→ <strong style="color:var(--gpt)">GPT-4o mini</strong> or <strong style="color:var(--gemini)">Gemini Flash</strong>. 50-100x cheaper than flagship models.</p></div>
+  </div>
+
+</div>
+
+</main>
+
+<script>
+// ══ PAGE & MODEL TABS ══
+function showPage(n, btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+n).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(n==='benchmarks') setTimeout(drawBenchmarks,200);
+}
+function showModel(m, btn){
+  document.querySelectorAll('.model-profile').forEach(p=>p.classList.remove('active'));
+  document.getElementById('profile-'+m).classList.add('active');
+  document.querySelectorAll('.model-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ══ BENCHMARKS ══
+const BENCH_DATA = {
+  mmlu:   [{name:'GPT-4o',v:87.8,c:'#10a37f'},{name:'Claude 3.5',v:88.7,c:'#c17c2a'},{name:'Gemini 1.5',v:85.9,c:'#4285f4'},{name:'Llama 405B',v:85.2,c:'#0467df'},{name:'Mixtral 8x22B',v:77.8,c:'#f97316'},{name:'o1',v:91.8,c:'#ef4444'}],
+  humaneval:[{name:'GPT-4o',v:90.2,c:'#10a37f'},{name:'Claude 3.5',v:92.0,c:'#c17c2a'},{name:'Gemini 1.5',v:84.1,c:'#4285f4'},{name:'Llama 405B',v:89.0,c:'#0467df'},{name:'Mixtral 8x22B',v:75.1,c:'#f97316'},{name:'o1',v:92.4,c:'#ef4444'}],
+  math:   [{name:'GPT-4o',v:76.6,c:'#10a37f'},{name:'Claude 3.5',v:71.1,c:'#c17c2a'},{name:'Gemini 1.5',v:67.7,c:'#4285f4'},{name:'Llama 405B',v:73.8,c:'#0467df'},{name:'Mixtral 8x22B',v:54.9,c:'#f97316'},{name:'o1',v:94.8,c:'#ef4444'}],
+  swe:    [{name:'GPT-4o',v:33.2,c:'#10a37f'},{name:'Claude 3.5',v:49.0,c:'#c17c2a'},{name:'Gemini 1.5',v:21.7,c:'#4285f4'},{name:'Llama 405B',v:25.0,c:'#0467df'},{name:'Mixtral 8x22B',v:9.4,c:'#f97316'},{name:'o1',v:41.3,c:'#ef4444'}]
+};
+
+function renderBenchSection(id, data){
+  const container = document.getElementById(id);
+  if(!container) return;
+  const max = Math.max(...data.map(d=>d.v));
+  container.innerHTML = data.map(d=>`
+    <div class="bench-row">
+      <div class="bench-name">${d.name}</div>
+      <div class="bench-bar-wrap">
+        <div class="bench-bar" style="width:${(d.v/100)*100}%;background:${d.c}aa;border:1px solid ${d.c}55">
+          ${d.v >= 30 ? d.v+'%' : ''}
+        </div>
+      </div>
+      <div class="bench-score">${d.v}%</div>
+    </div>
+  `).join('');
+}
+function drawBenchmarks(){
+  renderBenchSection('bench-mmlu', BENCH_DATA.mmlu);
+  renderBenchSection('bench-humaneval', BENCH_DATA.humaneval);
+  renderBenchSection('bench-math', BENCH_DATA.math);
+  renderBenchSection('bench-swe', BENCH_DATA.swe);
+}
+
+// ══ DECISION TREE ══
+const picks = {};
+function pick(btn, key, val){
+  // Deselect others in same question
+  btn.closest('.dt-options').querySelectorAll('.dt-opt').forEach(b=>b.classList.remove('picked'));
+  btn.classList.add('picked');
+  picks[key] = val;
+
+  if(key==='uc'){document.getElementById('q2').style.display='block';}
+  if(key==='budget'){document.getElementById('q3').style.display='block';}
+  if(key==='mm'){showRecommendation();}
+}
+
+function showRecommendation(){
+  const uc = picks.uc, budget = picks.budget, mm = picks.mm;
+  let recs = [];
+
+  if(uc==='code'){
+    recs=[{name:'Claude 3.5 Sonnet',color:'var(--claude)',reason:'Leads SWE-bench (real GitHub issue resolution). Best instruction following for complex coding tasks. 200K context reads entire codebases.'},
+          {name:'GPT-4o + Code Interpreter',color:'var(--gpt)',reason:'Built-in code execution and debugging sandbox. Great for data analysis and iterative development.'}];
+  } else if(uc==='doc'){
+    recs=[{name:'Claude 3.5 Sonnet',color:'var(--claude)',reason:'200K context window and excellent long-document recall. Can process entire books or codebases in one session.'},
+          {name:'Gemini 1.5 Pro',color:'var(--gemini)',reason:'1M token context — ideal for massive documents or multiple documents at once. Great for Google Workspace integration.'}];
+  } else if(uc==='chat'){
+    if(budget==='free')
+      recs=[{name:'Claude (claude.ai)',color:'var(--claude)',reason:'Excellent free tier. Thoughtful, nuanced responses. Generous limits on the free plan.'},
+            {name:'ChatGPT (chat.openai.com)',color:'var(--gpt)',reason:'Most polished chat UI. Widest ecosystem. Free tier with some GPT-4o access.'}];
+    else
+      recs=[{name:'GPT-4o',color:'var(--gpt)',reason:'Best all-round assistant with image generation, voice, and broadest capabilities.'},
+            {name:'Claude 3.5 Sonnet',color:'var(--claude)',reason:'Excellent for nuanced tasks requiring careful instruction following.'}];
+  } else if(uc==='image'){
+    recs=[{name:'ChatGPT + DALL-E 3',color:'var(--gpt)',reason:'GPT-4o with DALL-E 3 is the best text-to-image option with natural language control. Only major LLM with built-in image generation.'},
+          {name:'Midjourney (separate tool)',color:'#a78bfa',reason:'Best artistic quality for standalone image generation — but requires Discord and separate subscription.'}];
+  } else if(uc==='math'){
+    recs=[{name:'OpenAI o1 or o3',color:'var(--o1)',reason:'Purpose-built for extended reasoning. Dramatically outperforms all other models on maths, science, and formal reasoning. Worth the higher cost for hard problems.'},
+          {name:'Claude 3.5 Sonnet',color:'var(--claude)',reason:'Strong maths reasoning without the slowness and cost of o1. Often good enough for non-competition-level problems.'}];
+  } else if(uc==='private'){
+    recs=[{name:'Llama 3.1 8B (via Ollama)',color:'var(--llama)',reason:'Free, runs on your laptop, zero data sharing. Install Ollama and run: ollama run llama3.1:8b'},
+          {name:'Llama 3.1 70B',color:'var(--llama)',reason:'Better capability for the 70B model if you have a GPU with 40+ GB memory. Best open-source option.'}];
+  }
+
+  const resultEl = document.getElementById('dt-result');
+  resultEl.style.display='block';
+  resultEl.innerHTML = `<h3>🎯 Recommended for you</h3>` +
+    recs.map((r,i)=>`<div style="padding:.75rem 0;${i>0?'border-top:1px solid var(--border)':''}"><div style="font-weight:700;color:${r.color};margin-bottom:.3rem">${['🥇','🥈'][i]} ${r.name}</div><div style="font-size:.85rem;color:var(--text2)">${r.reason}</div></div>`).join('');
+}
+</script>
+
+<!-- FOOTER -->
+<footer role="contentinfo" style="padding:3rem 2rem;text-align:center;color:var(--text3);font-size:.83rem;border-top:1px solid var(--border);">
+  <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.9rem;">
+    <a href="index.html" style="color:var(--accent2);">← Back to All Modules</a>
+    <a href="terminology.html" style="color:var(--accent2);">AI Terminology</a>
+    <a href="core-ai.html" style="color:var(--accent2);">Core Architecture</a>
+    <a href="comparisons.html" style="color:var(--accent2);">Model Comparisons</a>
+    <a href="prompting.html" style="color:var(--accent2);">Prompt Engineering</a>
+    <a href="use-cases.html" style="color:var(--accent2);">Use Cases</a>
+    <a href="ai-integration.html" style="color:var(--accent2);">AI Integration</a>
+    <a href="enterprise-ai.html" style="color:var(--accent2);">Enterprise AI</a>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.9rem;">
+    <a href="about.html" style="color:var(--accent2);">About</a>
+    <a href="contact.html" style="color:var(--accent2);">Contact</a>
+    <a href="privacy-policy.html" style="color:var(--accent2);">Privacy Policy</a>
+  </div>
+  <div style="line-height:1.8;">
+    <strong style="color:var(--text2);">AI Literate</strong> — Free AI education for everyone.<br>
+    AI information changes rapidly — verify with official sources. Not affiliated with any AI company.<br>
+    <span>&copy; <span class="footer-yr"></span> AI Literate. All rights reserved.</span>
+  </div>
+</footer>
+<script>document.querySelectorAll('.footer-yr').forEach(e=>e.textContent=new Date().getFullYear());</script>
+
+</body>
+</html>

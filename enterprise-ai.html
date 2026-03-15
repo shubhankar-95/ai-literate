@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Enterprise AI Guide: Governance, Security, MLOps & Compliance — AI Literate</title>
+<meta name="description" content="The complete enterprise AI guide. AI governance frameworks, security and privacy, cost management, MLOps, compliance, team structure, and the real failure modes that sink enterprise AI initiatives. Free module.">
+<meta name="keywords" content="enterprise AI, AI governance, AI security, MLOps, AI compliance, AI cost management, AI deployment, enterprise LLM, responsible AI, AI risk management">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="author" content="AI Literate">
+<meta name="theme-color" content="#a78bfa">
+<meta property="og:title" content="Enterprise AI Guide: Governance, Security, MLOps & Compliance">
+<meta property="og:description" content="Advanced concepts for deploying AI at scale. Governance, security, cost management, MLOps, compliance, team structure and failure modes covered in depth.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ai-literate.online/enterprise-ai.html">
+<meta property="og:site_name" content="AI Literate">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Enterprise AI Guide — AI Literate">
+<meta name="twitter:description" content="AI governance, security, MLOps, compliance and real failure modes — free in-depth module.">
+<link rel="canonical" href="https://ai-literate.online/enterprise-ai.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0f1117;--surface:#1a1d2e;--surface2:#242840;--accent:#a78bfa;--accent2:#c4b5fd;--green:#10b981;--yellow:#f59e0b;--red:#ef4444;--blue:#3b82f6;--pink:#ec4899;--orange:#f97316;--teal:#14b8a6;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--border:#2e3250;--r:14px}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+a{text-decoration:none;color:var(--accent2)}
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(15,17,23,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 2rem;gap:1.5rem}
+.nav-brand{font-size:1rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-back{font-size:.82rem;color:var(--text2);display:flex;align-items:center;gap:.3rem;transition:color .2s}
+.nav-back:hover{color:var(--text)}
+/* HERO */
+#hero{padding:7rem 2rem 4rem;max-width:900px;margin:0 auto;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--surface);border:1px solid var(--border);padding:.3rem 1rem;border-radius:999px;font-size:.75rem;color:var(--accent2);margin-bottom:1.2rem}
+#hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;line-height:1.15;margin-bottom:1rem;background:linear-gradient(135deg,#fff 30%,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+#hero p{color:var(--text2);font-size:1.05rem;max-width:680px;margin:0 auto 2rem;line-height:1.75}
+.hero-pills{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-bottom:2.5rem}
+.pill{font-size:.72rem;padding:.25rem .85rem;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--text2);font-weight:600}
+/* TAB BAR */
+#tab-bar{position:sticky;top:56px;z-index:50;background:rgba(15,17,23,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 2rem;overflow-x:auto;white-space:nowrap}
+.tab-list{display:inline-flex;gap:0;padding:0}
+.tab-btn{padding:.85rem 1.1rem;font-size:.82rem;font-weight:600;color:var(--text2);border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;transition:all .18s;font-family:inherit;white-space:nowrap}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent2);border-bottom-color:var(--accent2)}
+/* CONTENT */
+main{max-width:920px;margin:0 auto;padding:0 2rem 6rem}
+.page{display:none;padding-top:2.5rem;animation:fadeIn .25s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* TYPOGRAPHY */
+h2.sh{font-size:1.55rem;font-weight:800;margin:2.5rem 0 1rem;color:var(--text)}
+h3.sh3{font-size:1.1rem;font-weight:700;margin:2rem 0 .7rem;color:var(--text)}
+p.lead{font-size:1rem;color:var(--text2);line-height:1.75;margin-bottom:1.2rem}
+/* CARDS / BOXES */
+.info-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem 1.6rem;margin-bottom:1.25rem}
+.info-box.warn{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.06)}
+.info-box.danger{border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.06)}
+.info-box.success{border-color:rgba(16,185,129,.35);background:rgba(16,185,129,.06)}
+.info-box.accent{border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.06)}
+.box-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
+.box-label.warn{color:var(--yellow)}
+.box-label.danger{color:var(--red)}
+.box-label.success{color:var(--green)}
+.box-label.accent{color:var(--accent2)}
+/* GRID */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+@media(max-width:640px){.two-col,.three-col{grid-template-columns:1fr}}
+/* STAT CARDS */
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.2rem;text-align:center}
+.stat-card .sc-num{font-size:1.9rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-card .sc-label{font-size:.78rem;color:var(--text3);margin-top:.2rem}
+/* CODE BLOCKS */
+pre{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.4rem;overflow-x:auto;font-size:.83rem;font-family:'Fira Code',monospace;line-height:1.7;margin:1rem 0 1.5rem;color:#c9d1d9}
+code{font-family:'Fira Code',monospace;font-size:.85em;background:var(--surface);padding:.1em .4em;border-radius:4px;color:var(--accent2)}
+/* RISK MATRIX */
+.risk-table{width:100%;border-collapse:collapse;font-size:.84rem;margin:1rem 0 1.5rem}
+.risk-table th{background:var(--surface2);padding:.7rem 1rem;text-align:left;font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;color:var(--text2);border:1px solid var(--border)}
+.risk-table td{padding:.65rem 1rem;border:1px solid var(--border);vertical-align:top;line-height:1.55}
+.risk-table tr:nth-child(even) td{background:rgba(255,255,255,.015)}
+.badge{display:inline-block;padding:.1rem .55rem;border-radius:999px;font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.badge.high{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3)}
+.badge.med{background:rgba(245,158,11,.15);color:#fbbf24;border:1px solid rgba(245,158,11,.3)}
+.badge.low{background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.3)}
+/* CHECKLIST */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin:1rem 0 1.5rem}
+.checklist li{display:flex;gap:.75rem;align-items:flex-start;font-size:.88rem;color:var(--text2);line-height:1.6}
+.checklist li::before{content:'';width:18px;height:18px;min-width:18px;border-radius:4px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);display:flex;align-items:center;justify-content:center;margin-top:2px}
+.checklist li.done::before{background:rgba(16,185,129,.2);content:'✓';font-size:.7rem;font-weight:800;color:var(--green);display:flex;align-items:center;justify-content:center}
+/* FRAMEWORK STEPS */
+.fw-steps{display:flex;flex-direction:column;gap:.75rem;margin:1.2rem 0 1.8rem}
+.fw-step{display:flex;gap:1rem;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem}
+.fw-step-num{width:32px;height:32px;min-width:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;color:#fff}
+.fw-step-body strong{font-size:.92rem;display:block;margin-bottom:.2rem}
+.fw-step-body span{font-size:.82rem;color:var(--text2);line-height:1.55}
+/* CALLOUT */
+.callout{display:flex;gap:.9rem;padding:1.1rem 1.3rem;border-radius:10px;margin:1.2rem 0}
+.callout.tip{background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.25)}
+.callout.warn{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.25)}
+.callout.danger{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.25)}
+.callout-icon{font-size:1.2rem;margin-top:.05rem}
+.callout-body{font-size:.86rem;color:var(--text2);line-height:1.65}
+.callout-body strong{color:var(--text);display:block;margin-bottom:.2rem}
+/* DIVIDER */
+.divider{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
+/* COMPARISON STRIP */
+.vs-row{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:12px;overflow:hidden;margin:1.2rem 0 1.8rem}
+.vs-col{background:var(--surface);padding:1.2rem 1.4rem}
+.vs-col h4{font-size:.78rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:.8rem}
+.vs-col.bad h4{color:var(--red)}
+.vs-col.good h4{color:var(--green)}
+.vs-item{font-size:.83rem;color:var(--text2);padding:.3rem 0;border-bottom:1px solid var(--border);line-height:1.5}
+.vs-item:last-child{border-bottom:none}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://ai-literate.online/"},
+    {"@type":"ListItem","position":2,"name":"Enterprise AI","item":"https://ai-literate.online/enterprise-ai.html"}
+  ]
+}
+</script>
+</head>
+<body>
+
+<nav id="nav" aria-label="Main navigation">
+  <a href="index.html" style="font-size:1.05rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;">🤖 AI Literate</a>
+  <div style="display:flex;gap:1.5rem;margin-left:auto;align-items:center;">
+    <a href="index.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">All Modules</a>
+    <a href="about.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">About</a>
+    <a href="contact.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">Contact</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-badge">Module 08 · Advanced</div>
+  <h1>Enterprise AI: Deploy at Scale Without Getting Burned</h1>
+  <p>Most enterprise AI projects don't fail because the model was bad — they fail because of governance gaps, uncontrolled costs, security blind spots, and missing observability. This module covers everything you need to know before and after go-live.</p>
+  <div class="hero-pills">
+    <span class="pill">Governance</span><span class="pill">Security</span><span class="pill">Compliance</span>
+    <span class="pill">Cost Control</span><span class="pill">MLOps</span><span class="pill">Observability</span>
+    <span class="pill">RAI</span><span class="pill">Vendor Strategy</span><span class="pill">Team Structure</span>
+  </div>
+</section>
+
+<div id="tab-bar">
+  <div class="tab-list">
+    <button class="tab-btn active" onclick="showTab('overview',this)">Overview</button>
+    <button class="tab-btn" onclick="showTab('governance',this)">Governance & Policy</button>
+    <button class="tab-btn" onclick="showTab('security',this)">Security & Privacy</button>
+    <button class="tab-btn" onclick="showTab('cost',this)">Cost Management</button>
+    <button class="tab-btn" onclick="showTab('mlops',this)">MLOps & Reliability</button>
+    <button class="tab-btn" onclick="showTab('compliance',this)">Compliance & Ethics</button>
+    <button class="tab-btn" onclick="showTab('team',this)">Team & Culture</button>
+    <button class="tab-btn" onclick="showTab('failures',this)">Failure Modes</button>
+  </div>
+</div>
+
+<main>
+
+<!-- ═══ OVERVIEW ═══ -->
+<div class="page active" id="page-overview">
+
+  <h2 class="sh">The Enterprise AI Reality Check</h2>
+  <p class="lead">Enterprise AI adoption has exploded — but so has the graveyard of failed initiatives. The difference between a chatbot that gets quietly switched off and one that drives genuine ROI isn't model quality. It's the surrounding infrastructure, processes, and cultural readiness.</p>
+
+  <div class="three-col">
+    <div class="stat-card"><div class="sc-num">85%</div><div class="sc-label">of AI projects never reach production (Gartner)</div></div>
+    <div class="stat-card"><div class="sc-num">$2.5M</div><div class="sc-label">average annual LLM spend for mid-size enterprise deployments</div></div>
+    <div class="stat-card"><div class="sc-num">47%</div><div class="sc-label">of CISOs cite AI-related data leakage as top emerging threat</div></div>
+  </div>
+
+  <h2 class="sh">What Makes Enterprise AI Different</h2>
+  <p class="lead">Consumer AI use is forgiving. Enterprise AI is not. The stakes are higher on every dimension:</p>
+
+  <div class="two-col">
+    <div class="info-box">
+      <div class="box-label accent">Scale</div>
+      <p style="font-size:.86rem;color:var(--text2);line-height:1.6">Thousands of concurrent users, millions of API calls per month, multi-region deployments. What works in a PoC at 50 req/day breaks spectacularly at 50,000.</p>
+    </div>
+    <div class="info-box">
+      <div class="box-label accent">Accountability</div>
+      <p style="font-size:.86rem;color:var(--text2);line-height:1.6">When the AI gets it wrong, someone is accountable — legally, financially, reputationally. Consumer hallucinations are annoying. Enterprise hallucinations in medical, legal, or financial contexts are catastrophic.</p>
+    </div>
+    <div class="info-box">
+      <div class="box-label accent">Data Sensitivity</div>
+      <p style="font-size:.86rem;color:var(--text2);line-height:1.6">Enterprise systems contain PII, trade secrets, IP, patient data, and financial records. Every prompt sent to a third-party API is a potential data residency and regulatory event.</p>
+    </div>
+    <div class="info-box">
+      <div class="box-label accent">Integration Complexity</div>
+      <p style="font-size:.86rem;color:var(--text2);line-height:1.6">AI doesn't live in isolation. It reads from CRM, writes to ERP, triggers workflows in Jira, and queries databases. Every integration is a new attack surface and a new failure point.</p>
+    </div>
+  </div>
+
+  <h2 class="sh">The Enterprise AI Maturity Ladder</h2>
+  <div class="fw-steps">
+    <div class="fw-step">
+      <div class="fw-step-num">1</div>
+      <div class="fw-step-body"><strong>Experimentation (PoC)</strong><span>A handful of developers using the API, no policy, no monitoring, no budget controls. Fast to start, impossible to scale.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">2</div>
+      <div class="fw-step-body"><strong>Productionisation</strong><span>First real users, basic rate limiting, some logging. Usually where most teams discover they have no playbook for incidents.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">3</div>
+      <div class="fw-step-body"><strong>Governance</strong><span>Formal AI use policy, data classification, access controls, audit trails. Legal and InfoSec are now involved.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">4</div>
+      <div class="fw-step-body"><strong>Optimisation</strong><span>Cost benchmarking, model routing (cheap vs premium), prompt caching, latency SLAs, A/B testing of prompts.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">5</div>
+      <div class="fw-step-body"><strong>Institutional Embedding</strong><span>AI is a standard tool like cloud storage. Defined ownership, budget lines, hiring plans, training, and continuous improvement loops.</span></div>
+    </div>
+  </div>
+
+  <h2 class="sh">Where Most Teams Are Stuck</h2>
+  <p class="lead">The majority of enterprise teams are at stage 1 or 2 — shipping into production without the foundations that stages 3–5 require. The tabs above each cover a critical dimension of what it takes to graduate.</p>
+
+  <div class="callout warn">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body"><strong>The PoC Trap</strong>A PoC that impresses in a demo is built to demo. It has no error handling, no content filtering, no cost guardrails, and no incident response plan. Never let a PoC become a prod system without a rebuild pass.</div>
+  </div>
+
+</div>
+
+<!-- ═══ GOVERNANCE ═══ -->
+<div class="page" id="page-governance">
+
+  <h2 class="sh">AI Governance: Building the Policy Foundation</h2>
+  <p class="lead">Governance is the set of rules, processes, and accountabilities that determine how AI is used in your organisation. Without it, you have N teams making N independent decisions with zero coordination — and all the risk that creates.</p>
+
+  <h3 class="sh3">The AI Use Policy</h3>
+  <p class="lead">Every enterprise deploying AI needs a written, published AI Use Policy. It must cover at minimum:</p>
+
+  <div class="info-box accent">
+    <div class="box-label accent">Core Policy Components</div>
+    <ul style="font-size:.86rem;color:var(--text2);padding-left:1.2rem;line-height:2">
+      <li><strong style="color:var(--text)">Approved use cases</strong> — What tasks AI may and may not be used for. E.g., "AI may not make final credit decisions."</li>
+      <li><strong style="color:var(--text)">Data classification rules</strong> — Which data tiers can be sent to which models. "Confidential data must not leave the VPC."</li>
+      <li><strong style="color:var(--text)">Approved models and vendors</strong> — A whitelist. Shadow AI (employees using random tools) is a data governance nightmare.</li>
+      <li><strong style="color:var(--text)">Output review requirements</strong> — Which outputs require human review before action. Legal drafts? Always. Internal FAQ answers? Maybe not.</li>
+      <li><strong style="color:var(--text)">Incident reporting</strong> — What constitutes an AI incident and how to report it. A hallucinated contract clause is an incident.</li>
+      <li><strong style="color:var(--text)">Training requirements</strong> — Who must complete AI literacy training before using enterprise AI tools.</li>
+    </ul>
+  </div>
+
+  <h3 class="sh3">The AI Governance Committee</h3>
+  <p class="lead">A cross-functional body responsible for policy, oversight, and incident review. Should include:</p>
+
+  <div class="two-col">
+    <div class="info-box">
+      <div class="box-label accent">Core Members</div>
+      <ul style="font-size:.84rem;color:var(--text2);padding-left:1.1rem;line-height:2">
+        <li>Chief AI Officer or equivalent sponsor</li>
+        <li>CISO or Security lead</li>
+        <li>Legal and Compliance</li>
+        <li>Data Privacy Officer (DPO)</li>
+        <li>Engineering lead</li>
+      </ul>
+    </div>
+    <div class="info-box">
+      <div class="box-label accent">Extended / As Needed</div>
+      <ul style="font-size:.84rem;color:var(--text2);padding-left:1.1rem;line-height:2">
+        <li>HR (employee monitoring, bias)</li>
+        <li>Business unit leads (use case owners)</li>
+        <li>Ethics / responsible AI lead</li>
+        <li>External audit / advisory</li>
+        <li>Customer representative</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sh3">RBAC for AI Systems</h3>
+  <p class="lead">Role-Based Access Control applied to AI means more than "who can log in." It means controlling what models each user can access, what data they can pass to the model, and what actions the model can take on their behalf.</p>
+
+  <pre>// Example RBAC enforcement at the API gateway layer
+const AI_ROLES = {
+  'analyst':    { models: ['gpt-4o-mini'], data_tiers: ['public','internal'] },
+  'developer':  { models: ['gpt-4o','claude-3-5-sonnet'], data_tiers: ['public','internal','confidential'] },
+  'executive':  { models: ['gpt-4o','claude-opus'], data_tiers: ['all'], requires_audit_log: true },
+  'hr_admin':   { models: ['gpt-4o-mini'], data_tiers: ['internal'], blocked_topics: ['compensation','pii'] },
+};
+
+function checkAccess(user_role, model, data_tier) {
+  const role = AI_ROLES[user_role];
+  if (!role) throw new Error('No AI access for role: ' + user_role);
+  if (!role.models.includes(model)) throw new Error('Model not permitted for role');
+  if (!role.data_tiers.includes(data_tier) && role.data_tiers[0] !== 'all')
+    throw new Error('Data tier not permitted for role');
+  return true;
+}</pre>
+
+  <h3 class="sh3">AI Asset Registry</h3>
+  <p class="lead">Every AI deployment in your org should be registered — just like software systems are. The registry should track:</p>
+
+  <div class="info-box">
+    <table style="width:100%;font-size:.83rem;border-collapse:collapse">
+      <thead><tr style="border-bottom:1px solid var(--border)">
+        <th style="text-align:left;padding:.4rem .6rem;color:var(--text2);font-weight:700">Field</th>
+        <th style="text-align:left;padding:.4rem .6rem;color:var(--text2);font-weight:700">Example</th>
+        <th style="text-align:left;padding:.4rem .6rem;color:var(--text2);font-weight:700">Why It Matters</th>
+      </tr></thead>
+      <tbody>
+        <tr><td style="padding:.5rem .6rem;border-bottom:1px solid var(--border)">System name</td><td style="padding:.5rem .6rem;border-bottom:1px solid var(--border);color:var(--text2)">CustomerSupport-GPT-v2</td><td style="padding:.5rem .6rem;border-bottom:1px solid var(--border);color:var(--text3)">Unique identifier for audits</td></tr>
+        <tr><td style="padding:.5rem .6rem;border-bottom:1px solid var(--border)">Business owner</td><td style="padding:.5rem .6rem;border-bottom:1px solid var(--border);color:var(--text2)">Head of CX</td><td style="padding:.5rem .6rem;border-bottom:1px solid var(--border);color:var(--text3)">Accountability for outputs</td></tr>
+        <tr><td style="padding:.5rem .6rem;border-bottom:1px solid var(--border)">Model & provider</td><td style="padding:.5rem .6rem;border-bottom:1px solid var(--border);color:var(--text2)">GPT-4o, OpenAI API</td><td style="padding:.5rem .6rem;border-bottom:1px solid var(--border);color:var(--text3)">Vendor risk, data agreements</td></tr>
+        <tr><td style="padding:.5rem .6rem;border-bottom:1px solid var(--border)">Data tiers accessed</td><td style="padding:.5rem .6rem;border-bottom:1px solid var(--border);color:var(--text2)">Internal, some PII</td><td style="padding:.5rem .6rem;border-bottom:1px solid var(--border);color:var(--text3)">DPA and GDPR obligations</td></tr>
+        <tr><td style="padding:.5rem .6rem;border-bottom:1px solid var(--border)">Risk classification</td><td style="padding:.5rem .6rem;border-bottom:1px solid var(--border);color:var(--text2)">Medium — advises humans</td><td style="padding:.5rem .6rem;border-bottom:1px solid var(--border);color:var(--text3)">EU AI Act risk tier</td></tr>
+        <tr><td style="padding:.5rem .6rem">Last audit date</td><td style="padding:.5rem .6rem;color:var(--text2)">2024-11-01</td><td style="padding:.5rem .6rem;color:var(--text3)">Compliance cadence</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sh3">Prompt Registry & Version Control</h3>
+  <p class="lead">System prompts are critical infrastructure. They define model behaviour, set guardrails, and encode business logic. They must be version-controlled, reviewed, and deployed with the same rigour as code.</p>
+
+  <div class="callout tip">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><strong>Treat prompts like code</strong>Store system prompts in git. Require PR reviews for changes. Tag versions to deployments. Keep a changelog. A casual tweak to a system prompt by a developer at 11pm has triggered serious production incidents at multiple large companies.</div>
+  </div>
+
+</div>
+
+<!-- ═══ SECURITY ═══ -->
+<div class="page" id="page-security">
+
+  <h2 class="sh">Security & Privacy in Enterprise AI</h2>
+  <p class="lead">AI introduces a new class of attack vectors that traditional security tools weren't built for. The perimeter is no longer just your network — it now includes every prompt your employees send and every response the model generates.</p>
+
+  <h3 class="sh3">Threat Model: What's New with AI</h3>
+
+  <table class="risk-table">
+    <thead><tr><th>Threat</th><th>Category</th><th>Severity</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Prompt Injection</strong></td><td>LLM-specific</td><td><span class="badge high">High</span></td><td>Malicious content in user input or retrieved documents hijacks the model's instructions. Especially dangerous in agentic systems with tool access.</td></tr>
+      <tr><td><strong>Data Exfiltration via Prompt</strong></td><td>LLM-specific</td><td><span class="badge high">High</span></td><td>Users craft prompts that cause the model to reveal confidential context window content or system prompt details.</td></tr>
+      <tr><td><strong>Training Data Poisoning</strong></td><td>ML-specific</td><td><span class="badge med">Medium</span></td><td>If you fine-tune on user-generated data without sanitisation, attackers can poison the training set to alter model behaviour.</td></tr>
+      <tr><td><strong>Shadow AI</strong></td><td>Policy</td><td><span class="badge high">High</span></td><td>Employees using personal ChatGPT accounts to process company data, bypassing DPA and security controls.</td></tr>
+      <tr><td><strong>Model Inversion</strong></td><td>ML-specific</td><td><span class="badge med">Medium</span></td><td>Adversarial queries designed to reconstruct training data from model outputs, potentially exposing PII.</td></tr>
+      <tr><td><strong>Supply Chain (Third-party Models)</strong></td><td>Infrastructure</td><td><span class="badge med">Medium</span></td><td>Using open-source models without provenance checks. Malicious models have been uploaded to HuggingFace with backdoors.</td></tr>
+      <tr><td><strong>Excessive Agency</strong></td><td>Agentic AI</td><td><span class="badge high">High</span></td><td>An AI agent with broad tool permissions being manipulated (or erroring) into destructive actions — deleting files, sending emails, making API calls.</td></tr>
+      <tr><td><strong>Credential Extraction</strong></td><td>Agentic AI</td><td><span class="badge high">High</span></td><td>Agents given environment variables or secrets for tool auth can be prompted to reveal them.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sh3">Data Residency & Privacy Architecture</h3>
+  <p class="lead">Where your data goes when you call an AI API is a legal question, not just a technical one. You must answer:</p>
+
+  <div class="two-col">
+    <div class="info-box warn">
+      <div class="box-label warn">Questions to Answer Before Signing</div>
+      <ul style="font-size:.84rem;color:var(--text2);padding-left:1.1rem;line-height:2">
+        <li>Is prompt data used for model training?</li>
+        <li>In which regions is data processed and stored?</li>
+        <li>What is the data retention period?</li>
+        <li>Does your DPA cover this vendor?</li>
+        <li>Who has access to your prompts at the provider?</li>
+        <li>Is zero-data-retention (ZDR) available?</li>
+      </ul>
+    </div>
+    <div class="info-box success">
+      <div class="box-label success">Mitigation Patterns</div>
+      <ul style="font-size:.84rem;color:var(--text2);padding-left:1.1rem;line-height:2">
+        <li>Use enterprise/business tiers (training opt-out)</li>
+        <li>PII stripping before API calls</li>
+        <li>On-prem or private cloud deployment</li>
+        <li>Azure OpenAI / AWS Bedrock (data stays in your cloud)</li>
+        <li>Tokenise/pseudonymise sensitive entities</li>
+        <li>Zero-data-retention API endpoints</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sh3">Prompt Injection Defence in Production</h3>
+  <p class="lead">Prompt injection is the SQL injection of the AI era. For any agentic or RAG system that processes untrusted input, you need layered defences:</p>
+
+  <div class="fw-steps">
+    <div class="fw-step">
+      <div class="fw-step-num">1</div>
+      <div class="fw-step-body"><strong>Privilege Separation</strong><span>Never mix user-controlled content with system instructions in the same message. Use the system prompt slot for instructions and the user turn strictly for data.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">2</div>
+      <div class="fw-step-body"><strong>Input Sanitisation</strong><span>Strip or escape known injection patterns from retrieved documents and user input before it enters the context window. Don't rely on the model to "resist" injection — assume it won't.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">3</div>
+      <div class="fw-step-body"><strong>Least Privilege for Agents</strong><span>An agent that reads email should not also have write access to your database. Scope tool permissions to the minimum required. Require confirmation for irreversible actions.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">4</div>
+      <div class="fw-step-body"><strong>Output Validation</strong><span>Validate structured outputs before acting on them. If the model should return JSON with a status field, validate the schema — don't assume the model produced what you asked for.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">5</div>
+      <div class="fw-step-body"><strong>Human-in-the-Loop Gates</strong><span>For high-stakes or irreversible actions (send email, execute trade, delete record), require explicit human confirmation regardless of model confidence.</span></div>
+    </div>
+  </div>
+
+  <h3 class="sh3">Secrets Management for Agentic AI</h3>
+  <p class="lead">Agents often need credentials to call tools. These must never be in the system prompt or context window:</p>
+
+  <div class="vs-row">
+    <div class="vs-col bad">
+      <h4>❌ Wrong</h4>
+      <div class="vs-item">API keys hardcoded in system prompt</div>
+      <div class="vs-item">DB connection strings in env vars passed to model</div>
+      <div class="vs-item">Storing secrets in memory the model can read back</div>
+      <div class="vs-item">Single shared credential for all users</div>
+    </div>
+    <div class="vs-col good">
+      <h4>✅ Right</h4>
+      <div class="vs-item">Secrets in a vault (AWS Secrets Manager, HashiCorp Vault)</div>
+      <div class="vs-item">Agent calls internal broker that adds auth headers</div>
+      <div class="vs-item">Scoped tokens per user/session, rotated regularly</div>
+      <div class="vs-item">Audit log every credential use</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ COST ═══ -->
+<div class="page" id="page-cost">
+
+  <h2 class="sh">AI Cost Management at Scale</h2>
+  <p class="lead">LLM costs are famously non-linear. A feature that costs $50/month in testing can cost $50,000/month in production. Token costs compound with context length, model tier, and call frequency in ways that surprise every team the first time.</p>
+
+  <h3 class="sh3">Understanding the Cost Drivers</h3>
+
+  <div class="two-col">
+    <div class="info-box">
+      <div class="box-label accent">Input Tokens</div>
+      <p style="font-size:.84rem;color:var(--text2);line-height:1.6">Every character in your system prompt, conversation history, retrieved documents, and user message is billed. A 10,000-token system prompt × 1M calls/month = 10B input tokens. At $3/M tokens that's $30,000/month just in system prompts.</p>
+    </div>
+    <div class="info-box">
+      <div class="box-label accent">Output Tokens</div>
+      <p style="font-size:.84rem;color:var(--text2);line-height:1.6">Typically 3–5× more expensive per token than input. Verbose responses are expensive. Always set <code>max_tokens</code>. A model that rambles in production will cause budget overruns before anyone notices.</p>
+    </div>
+    <div class="info-box">
+      <div class="box-label accent">Context Window Size</div>
+      <p style="font-size:.84rem;color:var(--text2);line-height:1.6">Conversational memory accumulates. A chat session that reaches 50,000 tokens costs 50× more per message than the opening exchange. Without truncation or summarisation strategies, long sessions become extremely expensive.</p>
+    </div>
+    <div class="info-box">
+      <div class="box-label accent">Model Tier</div>
+      <p style="font-size:.84rem;color:var(--text2);line-height:1.6">GPT-4o is ~20× more expensive than GPT-4o mini. Claude 3 Opus is ~15× more expensive than Claude 3 Haiku. Using the flagship model for every task is like hiring a surgeon to take blood pressure.</p>
+    </div>
+  </div>
+
+  <h3 class="sh3">Model Routing: The Biggest Cost Lever</h3>
+  <p class="lead">Route requests to the cheapest model that can handle the task reliably. Most enterprise workloads can use a two-tier or three-tier routing strategy:</p>
+
+  <pre>// Conceptual model router
+function routeToModel(request) {
+  const complexity = classifyComplexity(request);
+
+  if (complexity === 'simple') {
+    // FAQ lookup, classification, short summarisation
+    // Use: GPT-4o mini, Claude 3 Haiku, Gemini Flash
+    return { model: 'gpt-4o-mini', max_tokens: 512 };
+  }
+
+  if (complexity === 'medium') {
+    // Code generation, document analysis, multi-step reasoning
+    // Use: GPT-4o, Claude 3.5 Sonnet
+    return { model: 'gpt-4o', max_tokens: 2048 };
+  }
+
+  if (complexity === 'hard') {
+    // Legal analysis, architecture review, creative synthesis
+    // Use: Claude Opus, o1, GPT-4o with extended thinking
+    return { model: 'claude-opus-3', max_tokens: 4096 };
+  }
+}
+
+// Cost result: 60–80% of traffic hits the cheap tier
+// Typical savings: 70-90% vs naive "always use flagship"</pre>
+
+  <h3 class="sh3">Prompt Caching</h3>
+  <p class="lead">Most providers offer prompt caching — if the same prefix (system prompt + common context) is sent repeatedly, cached tokens are billed at a fraction of the normal rate.</p>
+
+  <div class="info-box success">
+    <div class="box-label success">Caching Savings Example</div>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.6">Anthropic's prompt caching charges cached input tokens at <strong style="color:var(--text)">10% of the standard rate</strong>. If your system prompt is 5,000 tokens and you make 500,000 calls per month: without caching = 2.5B tokens × $3/M = <strong style="color:var(--red)">$7,500</strong>. With caching = 2.5B × $0.30/M = <strong style="color:var(--green)">$750</strong>. Savings: $6,750/month just from this one optimization.</p>
+  </div>
+
+  <h3 class="sh3">Context Window Management</h3>
+  <p class="lead">For long or ongoing conversations, implement a memory management strategy:</p>
+
+  <div class="fw-steps">
+    <div class="fw-step">
+      <div class="fw-step-num">1</div>
+      <div class="fw-step-body"><strong>Sliding Window</strong><span>Keep only the last N turns of conversation. Simple but loses early context. Good for support chatbots where each exchange is relatively independent.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">2</div>
+      <div class="fw-step-body"><strong>Summarisation</strong><span>Periodically summarise older conversation segments and replace them with the summary. Preserves semantic content at a fraction of the token cost.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">3</div>
+      <div class="fw-step-body"><strong>External Memory</strong><span>Store full conversation history in a database. Use RAG to retrieve only the relevant previous exchanges for each new message. Most cost-effective for very long-running sessions.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">4</div>
+      <div class="fw-step-body"><strong>Structured State</strong><span>Instead of raw conversation history, maintain a structured JSON object of key facts extracted from the conversation. Much cheaper than raw text, more reliable for agentic systems.</span></div>
+    </div>
+  </div>
+
+  <h3 class="sh3">Cost Observability & Budgets</h3>
+  <p class="lead">You cannot manage what you cannot measure. Essential cost instrumentation:</p>
+
+  <ul class="checklist">
+    <li class="done">Per-feature, per-team cost attribution (tag every API call with a cost center)</li>
+    <li class="done">Token usage dashboards updated in near real-time</li>
+    <li class="done">Spending anomaly alerts (e.g., "alert if spend doubles day-over-day")</li>
+    <li class="done">Per-user rate limiting to prevent abuse or runaway automation</li>
+    <li class="done">Monthly budget caps enforced at the API gateway level</li>
+    <li class="done">Cost per successful output tracked (not just raw token spend)</li>
+    <li class="done">Regular model benchmarking as pricing changes (models get cheaper every 6–12 months)</li>
+  </ul>
+
+</div>
+
+<!-- ═══ MLOPS ═══ -->
+<div class="page" id="page-mlops">
+
+  <h2 class="sh">MLOps & Reliability for LLM Systems</h2>
+  <p class="lead">Traditional MLOps was about training pipelines, model versioning, and feature stores. LLMOps inherits all of that complexity and adds new layers: prompt versioning, output quality evaluation, latency management, and dealing with non-deterministic systems.</p>
+
+  <h3 class="sh3">LLM-Specific Reliability Challenges</h3>
+
+  <div class="two-col">
+    <div class="info-box danger">
+      <div class="box-label danger">Non-Determinism</div>
+      <p style="font-size:.84rem;color:var(--text2);line-height:1.6">The same prompt can produce different outputs on repeat calls. Reproducible bugs are hard to diagnose. Unit tests for traditional code don't apply. You need eval harnesses, not assertion-based tests.</p>
+    </div>
+    <div class="info-box danger">
+      <div class="box-label danger">Silent Degradation</div>
+      <p style="font-size:.84rem;color:var(--text2);line-height:1.6">A model update by the provider can change behaviour without any API error. Your product appears to work but quality has drifted. Without evals running in CI, you won't know until a user complains.</p>
+    </div>
+    <div class="info-box danger">
+      <div class="box-label danger">Latency Variability</div>
+      <p style="font-size:.84rem;color:var(--text2);line-height:1.6">LLM inference latency varies enormously — a 2-second call can become a 30-second call under provider load. P99 latency matters for UX. Always implement timeouts and graceful degradation.</p>
+    </div>
+    <div class="info-box danger">
+      <div class="box-label danger">Context Sensitivity</div>
+      <p style="font-size:.84rem;color:var(--text2);line-height:1.6">A prompt change that improves performance on one use case can silently degrade another. Regressions are invisible without comprehensive eval coverage across all production prompt templates.</p>
+    </div>
+  </div>
+
+  <h3 class="sh3">The LLM Evaluation Framework</h3>
+  <p class="lead">Evals are your automated test suite for AI quality. Every production prompt should have an eval suite that runs in CI before deployment:</p>
+
+  <pre>// Eval harness structure (pseudo-code)
+const evals = [
+  {
+    name: 'Factual Accuracy',
+    inputs: factual_qa_dataset,           // 100+ Q&A pairs with ground truth
+    scorer: (output, expected) =>
+      semanticSimilarity(output, expected) > 0.85,
+    pass_threshold: 0.90                  // 90% of cases must pass
+  },
+  {
+    name: 'Hallucination Rate',
+    inputs: rag_retrieval_dataset,
+    scorer: (output, context) =>
+      !containsClaimsNotInContext(output, context),
+    pass_threshold: 0.95
+  },
+  {
+    name: 'Tone & Policy Compliance',
+    inputs: edge_case_prompts,           // Includes adversarial inputs
+    scorer: (output) =>
+      !containsBannedContent(output) &&
+      matchesBrandVoice(output),
+    pass_threshold: 1.00                 // Zero tolerance for policy breaches
+  },
+  {
+    name: 'Latency SLA',
+    inputs: representative_load_sample,
+    scorer: (_, __, latency_ms) => latency_ms < 3000,
+    pass_threshold: 0.99                // P99 must be under 3s
+  }
+];</pre>
+
+  <h3 class="sh3">Observability Stack for LLM Systems</h3>
+  <p class="lead">Every LLM call in production should be fully observable. The minimum observability stack:</p>
+
+  <div class="three-col">
+    <div class="info-box">
+      <div class="box-label accent">Tracing</div>
+      <p style="font-size:.83rem;color:var(--text2);line-height:1.6">Full request traces including prompt, model, temperature, output, token counts, latency, and user ID. Tools: LangSmith, Langfuse, Arize, W&B Weave.</p>
+    </div>
+    <div class="info-box">
+      <div class="box-label accent">Metrics</div>
+      <p style="font-size:.83rem;color:var(--text2);line-height:1.6">Token usage, cost per call, error rates, latency P50/P95/P99, cache hit rate, refusal rate. Feed into Datadog, Grafana, or CloudWatch.</p>
+    </div>
+    <div class="info-box">
+      <div class="box-label accent">Quality Signals</div>
+      <p style="font-size:.83rem;color:var(--text2);line-height:1.6">Human thumbs up/down, automated quality scores, downstream task success rates (did the user re-ask?), session abandonment. These are your leading indicators of model drift.</p>
+    </div>
+  </div>
+
+  <h3 class="sh3">Deployment Patterns</h3>
+
+  <div class="fw-steps">
+    <div class="fw-step">
+      <div class="fw-step-num">1</div>
+      <div class="fw-step-body"><strong>Blue/Green Prompt Deployment</strong><span>Maintain two versions of a prompt. Route a small percentage of traffic to the new version. Compare quality metrics before promoting to 100%. Never do a hard cutover without comparison data.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">2</div>
+      <div class="fw-step-body"><strong>Canary Model Releases</strong><span>When switching models (e.g., GPT-4o → new version), route 5% of traffic to the new model for a week. Compare outputs side-by-side before full migration.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">3</div>
+      <div class="fw-step-body"><strong>Fallback Chains</strong><span>Primary model fails? Fall back to secondary. Implement circuit breakers. A hard dependency on a single provider API with no fallback is a guaranteed outage when that provider has downtime.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">4</div>
+      <div class="fw-step-body"><strong>Rate Limit Handling</strong><span>Implement exponential backoff with jitter for rate limit errors. Queue non-urgent requests. Monitor rate limit hit frequency — chronic rate limiting means you need to upgrade your tier or optimise call patterns.</span></div>
+    </div>
+  </div>
+
+  <h3 class="sh3">Fine-tuning vs Prompting vs RAG: When to Use Each</h3>
+
+  <table class="risk-table">
+    <thead><tr><th>Approach</th><th>Best For</th><th>Avoid When</th><th>Cost</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Prompt Engineering</strong></td><td>Most use cases. Start here always. Fast iteration, no infra.</td><td>Data is too large for context window</td><td><span class="badge low">Low</span></td></tr>
+      <tr><td><strong>RAG</strong></td><td>Knowledge-intensive tasks, up-to-date info, large document corpora</td><td>Task requires deep reasoning integration, not just retrieval</td><td><span class="badge med">Medium</span></td></tr>
+      <tr><td><strong>Fine-tuning</strong></td><td>Consistent style/format, domain terminology, very high volume tasks</td><td>Data is scarce, requirements change often, compliance is unclear</td><td><span class="badge high">High</span></td></tr>
+      <tr><td><strong>Custom Model Training</strong></td><td>Extreme specialisation, full IP ownership, ultra-low latency at scale</td><td>Almost always — the talent, compute, and data requirements are immense</td><td><span class="badge high">Very High</span></td></tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- ═══ COMPLIANCE ═══ -->
+<div class="page" id="page-compliance">
+
+  <h2 class="sh">Compliance, Ethics & Responsible AI</h2>
+  <p class="lead">The regulatory landscape for AI is moving from "emerging" to "enforced." The EU AI Act is in effect. Sector-specific rules (HIPAA for healthcare, FINRA/SEC for finance) apply now. Getting ahead of compliance is far cheaper than retrofitting it.</p>
+
+  <h3 class="sh3">Key Regulatory Frameworks</h3>
+
+  <div class="two-col">
+    <div class="info-box">
+      <div class="box-label accent">EU AI Act (2024)</div>
+      <p style="font-size:.84rem;color:var(--text2);line-height:1.6">Risk-tiered framework. <strong style="color:var(--red)">Unacceptable risk</strong> (banned): social scoring, real-time biometric surveillance. <strong style="color:var(--yellow)">High risk</strong>: hiring, credit scoring, law enforcement, medical devices — require conformity assessments, human oversight, transparency. <strong style="color:var(--green)">Limited/minimal risk</strong>: most enterprise chatbots — transparency obligations only.</p>
+    </div>
+    <div class="info-box">
+      <div class="box-label accent">GDPR / Data Privacy</div>
+      <p style="font-size:.84rem;color:var(--text2);line-height:1.6">Automated decision-making that significantly affects individuals requires human review rights. Processing PII through AI requires lawful basis. Data subject rights (access, deletion, portability) apply to AI-generated profiles. Your DPA must cover AI processors.</p>
+    </div>
+    <div class="info-box">
+      <div class="box-label accent">Sector-Specific (US)</div>
+      <p style="font-size:.84rem;color:var(--text2);line-height:1.6"><strong style="color:var(--text)">HIPAA</strong>: AI processing PHI requires BAA with provider, audit logs, access controls. <strong style="color:var(--text)">FINRA/SEC</strong>: AI-generated investment advice is regulated. <strong style="color:var(--text)">EEOC</strong>: AI in hiring must be tested for disparate impact. <strong style="color:var(--text)">FTC</strong>: AI-generated content presented as human must be disclosed.</p>
+    </div>
+    <div class="info-box">
+      <div class="box-label accent">Executive Orders & Emerging</div>
+      <p style="font-size:.84rem;color:var(--text2);line-height:1.6">US EO on Safe, Secure, and Trustworthy AI mandates safety testing for frontier models. NIST AI RMF provides a voluntary framework now used as a baseline for contracts. China's Generative AI Regulations require registration and content moderation.</p>
+    </div>
+  </div>
+
+  <h3 class="sh3">Responsible AI (RAI) Principles in Practice</h3>
+  <p class="lead">Most orgs publish RAI principles. Far fewer operationalise them. The gap is where liability lives:</p>
+
+  <div class="fw-steps">
+    <div class="fw-step">
+      <div class="fw-step-num">1</div>
+      <div class="fw-step-body"><strong>Bias Testing</strong><span>For any AI system that affects people (hiring, lending, customer triage), test for demographic disparities before launch and on an ongoing basis. Disparate impact that you didn't know about is still legally actionable.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">2</div>
+      <div class="fw-step-body"><strong>Explainability Documentation</strong><span>For high-stakes decisions (loan denial, hiring screen), document how the AI reached its conclusion. Black-box outputs are a liability. Use chain-of-thought logging or structured reasoning capture.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">3</div>
+      <div class="fw-step-body"><strong>Human Override Mechanisms</strong><span>Any AI-generated decision that affects a person must have a clear path for human appeal and override. This is both an ethical requirement and a legal one under GDPR Article 22.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">4</div>
+      <div class="fw-step-body"><strong>Disclosure to Users</strong><span>Users interacting with AI systems have a right to know they're talking to AI. Disclosures must be clear, not buried in ToS. Many jurisdictions now mandate this by law.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">5</div>
+      <div class="fw-step-body"><strong>Red-Teaming</strong><span>Before launch, have a dedicated team attempt to elicit harmful, biased, or policy-violating outputs from your AI. Document findings and remediations. Repeat quarterly.</span></div>
+    </div>
+  </div>
+
+  <h3 class="sh3">Content Policy & Output Filtering</h3>
+  <p class="lead">Model providers have their own content policies, but enterprise deployments almost always need additional filtering layers:</p>
+
+  <div class="info-box accent">
+    <div class="box-label accent">Layered Filtering Architecture</div>
+    <pre style="margin:0;font-size:.8rem">User Input
+    ↓
+[1] PII Detection & Redaction     ← strip before sending to model
+    ↓
+[2] Topic/Intent Classification   ← block off-policy requests early (cheap)
+    ↓
+[3] Model Inference
+    ↓
+[4] Output Safety Classifier      ← catch policy violations in response
+    ↓
+[5] Brand Voice / Tone Check      ← optional for customer-facing
+    ↓
+[6] Audit Log                     ← always
+    ↓
+User Response</pre>
+  </div>
+
+  <h3 class="sh3">IP and Copyright Considerations</h3>
+  <p class="lead">The legal status of AI-generated content is unresolved in most jurisdictions. Enterprise teams must manage copyright risk proactively:</p>
+
+  <div class="two-col">
+    <div class="info-box warn">
+      <div class="box-label warn">Risks</div>
+      <ul style="font-size:.83rem;color:var(--text2);padding-left:1.1rem;line-height:1.9">
+        <li>Model outputs that reproduce copyrighted training data</li>
+        <li>AI-generated code with GPL or restrictive license provenance</li>
+        <li>Ownership ambiguity on AI-assisted creative work</li>
+        <li>Vendor IP indemnity clauses vary widely</li>
+      </ul>
+    </div>
+    <div class="info-box success">
+      <div class="box-label success">Mitigations</div>
+      <ul style="font-size:.83rem;color:var(--text2);padding-left:1.1rem;line-height:1.9">
+        <li>Use providers with IP indemnity (OpenAI, Microsoft Copilot)</li>
+        <li>Use AI code scanners (GitHub Copilot has built-in filter)</li>
+        <li>Document AI involvement in creative outputs</li>
+        <li>Consult IP counsel for high-value AI-generated assets</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ TEAM ═══ -->
+<div class="page" id="page-team">
+
+  <h2 class="sh">Team Structure & Organisational Change</h2>
+  <p class="lead">The biggest barrier to enterprise AI isn't technical — it's organisational. Buying the right tool and hiring smart people isn't enough if the org structure, incentives, and skills are misaligned.</p>
+
+  <h3 class="sh3">Common AI Team Models</h3>
+
+  <div class="three-col">
+    <div class="info-box">
+      <div class="box-label accent">Centralised CoE</div>
+      <p style="font-size:.83rem;color:var(--text2);line-height:1.6"><strong style="color:var(--text)">Centre of Excellence model.</strong> One AI team serves the whole org. Pros: consistency, specialisation, governance. Cons: bottleneck, slow to serve every BU, perceived as ivory tower.</p>
+    </div>
+    <div class="info-box">
+      <div class="box-label accent">Federated / Embedded</div>
+      <p style="font-size:.83rem;color:var(--text2);line-height:1.6"><strong style="color:var(--text)">AI engineers embedded in each product team.</strong> Pros: fast delivery, domain alignment. Cons: inconsistent standards, duplicated tooling, governance gaps, difficult to share learning.</p>
+    </div>
+    <div class="info-box">
+      <div class="box-label accent">Hybrid Hub-and-Spoke</div>
+      <p style="font-size:.83rem;color:var(--text2);line-height:1.6"><strong style="color:var(--text)">Central platform team + embedded AI leads per BU.</strong> Platform owns infra, tooling, governance. Spokes own use case delivery. The most scalable model for orgs beyond ~200 people.</p>
+    </div>
+  </div>
+
+  <h3 class="sh3">Key Roles to Hire or Develop</h3>
+
+  <table class="risk-table">
+    <thead><tr><th>Role</th><th>Responsible For</th><th>Common Gap</th></tr></thead>
+    <tbody>
+      <tr><td><strong>AI Platform Engineer</strong></td><td>API gateway, cost monitoring, model routing, internal tooling</td><td>Often missing — devs call APIs directly instead</td></tr>
+      <tr><td><strong>Prompt Engineer / AI Product Designer</strong></td><td>System prompt design, eval harnesses, UX of AI features</td><td>Usually given to whoever has time, not expertise</td></tr>
+      <tr><td><strong>ML/AI Engineer</strong></td><td>Fine-tuning, RAG pipeline, embedding infrastructure</td><td>Often confused with data scientists (different skill set)</td></tr>
+      <tr><td><strong>AI Safety / Policy Analyst</strong></td><td>Red-teaming, policy compliance, bias testing, incident response</td><td>Almost always missing until an incident forces the hire</td></tr>
+      <tr><td><strong>AI Product Manager</strong></td><td>Use case prioritisation, success metrics, user research for AI features</td><td>Regular PMs often lack AI intuition for feasibility/risk</td></tr>
+      <tr><td><strong>AI-Literate Legal / Compliance</strong></td><td>Data agreements, regulatory mapping, IP review</td><td>Legal teams often 12–18 months behind on AI specifics</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sh3">Change Management: Getting Employee Buy-In</h3>
+  <p class="lead">AI initiatives fail when employees perceive them as surveillance tools or job threats. Change management for AI requires more, not less, attention than other technology transitions:</p>
+
+  <div class="fw-steps">
+    <div class="fw-step">
+      <div class="fw-step-num">1</div>
+      <div class="fw-step-body"><strong>Communicate "AI Augments, Not Replaces" — and Mean It</strong><span>This is hollow if the org simultaneously announces headcount reductions. If AI is genuinely used to remove drudge work so humans do higher-value things, say so specifically and show examples.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">2</div>
+      <div class="fw-step-body"><strong>Involve End Users in Design</strong><span>The teams who will use the AI should co-design it. Their domain knowledge improves the system. Their buy-in ensures adoption. Top-down deployments with no user input almost always fail.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">3</div>
+      <div class="fw-step-body"><strong>Invest in Upskilling, Not Just Tools</strong><span>Every employee affected by AI deployment should receive training. Not just "here's how to use the tool" but "here's how to evaluate AI outputs critically and when to override." AI literacy is now a baseline work skill.</span></div>
+    </div>
+    <div class="fw-step">
+      <div class="fw-step-num">4</div>
+      <div class="fw-step-body"><strong>Create Safe Feedback Channels</strong><span>Employees should be able to flag AI errors, biases, or concerns without fear of being seen as obstructionist. Psychological safety around AI feedback is how you catch problems before they escalate.</span></div>
+    </div>
+  </div>
+
+  <h3 class="sh3">Building an Internal AI Community</h3>
+  <p class="lead">Knowledge compounds when shared. Enterprise AI programs that grow fastest have strong internal knowledge-sharing:</p>
+
+  <ul class="checklist">
+    <li class="done">Monthly internal AI demo day — teams share what they've built and learned</li>
+    <li class="done">Internal Slack/Teams channel for AI tips, prompts, and tool discoveries</li>
+    <li class="done">Prompt library — a shared repository of battle-tested system prompts</li>
+    <li class="done">AI incident retrospectives published internally (blameless, learnings-focused)</li>
+    <li class="done">External conference/paper sponsorships to keep the team current</li>
+    <li class="done">AI reading group — monthly paper or article discussion</li>
+  </ul>
+
+</div>
+
+<!-- ═══ FAILURES ═══ -->
+<div class="page" id="page-failures">
+
+  <h2 class="sh">The Enterprise AI Failure Taxonomy</h2>
+  <p class="lead">Learning from failure is faster than learning from success. These are the most common and most costly ways enterprise AI initiatives go wrong — with the preventions that actually work.</p>
+
+  <h3 class="sh3">Category 1: Technical Failures</h3>
+
+  <div class="info-box danger">
+    <div class="box-label danger">💀 The Hallucination Incident</div>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65;margin-bottom:.8rem"><strong style="color:var(--text)">Pattern:</strong> AI-generated content presented to a customer or used in a decision without verification. The output was confidently wrong. A legal document cited a non-existent regulation. A medical summary omitted a drug interaction. A financial report included fabricated figures.</p>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65"><strong style="color:var(--green)">Prevention:</strong> Never allow AI outputs to flow directly into high-stakes documents without human review. Implement source citation requirements (RAG with visible citations). Set user expectations: every AI output needs verification for consequential use.</p>
+  </div>
+
+  <div class="info-box danger">
+    <div class="box-label danger">💀 The Runaway Agent</div>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65;margin-bottom:.8rem"><strong style="color:var(--text)">Pattern:</strong> An agentic AI system with broad permissions acts on an ambiguous or incorrect interpretation of instructions. It sends emails to 10,000 customers, deletes a production database, or spends $50,000 on API calls in a loop.</p>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65"><strong style="color:var(--green)">Prevention:</strong> Least privilege always. Human-in-the-loop for irreversible actions. Hard spending caps at the infrastructure level. Dry-run mode for new agents. Detailed action logging before and after every tool call.</p>
+  </div>
+
+  <div class="info-box danger">
+    <div class="box-label danger">💀 The Silent Quality Drift</div>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65;margin-bottom:.8rem"><strong style="color:var(--text)">Pattern:</strong> The AI vendor silently updates the model. Behaviour changes subtly. Response length decreases, tone shifts, a specific capability degrades. Users start complaining but it's hard to pinpoint why. Weeks pass before the root cause is identified.</p>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65"><strong style="color:var(--green)">Prevention:</strong> Automated eval suites running in CI against every model update. Pin model versions where possible (e.g., <code>gpt-4o-2024-08-06</code> not <code>gpt-4o</code>). Monitor output quality metrics continuously.</p>
+  </div>
+
+  <div class="info-box danger">
+    <div class="box-label danger">💀 The Data Leakage</div>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65;margin-bottom:.8rem"><strong style="color:var(--text)">Pattern:</strong> A developer pastes customer PII into a chat to debug a prompt. An employee uses a personal Claude account to summarise an internal strategy document. A system prompt containing confidential business logic is extracted via clever user prompting.</p>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65"><strong style="color:var(--green)">Prevention:</strong> Clear data handling policy with teeth. DLP tooling that monitors AI tool usage. System prompt hardening (test for extraction resistance). Enterprise accounts with zero data retention for sensitive use cases.</p>
+  </div>
+
+  <h3 class="sh3">Category 2: Organisational Failures</h3>
+
+  <div class="info-box warn">
+    <div class="box-label warn">⚠️ The Shiny Toy Trap</div>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65;margin-bottom:.8rem"><strong style="color:var(--text)">Pattern:</strong> Leadership mandates AI adoption without clear use cases. Teams scramble to "add AI" to products where it adds no value. Budget is spent, demos are built, and nothing ships to production. A year later: "AI didn't deliver ROI."</p>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65"><strong style="color:var(--green)">Prevention:</strong> Start with a problem, not a technology. Require every AI initiative to articulate: what decision or task is being improved, how success is measured, what the baseline is, and what happens if the AI is wrong.</p>
+  </div>
+
+  <div class="info-box warn">
+    <div class="box-label warn">⚠️ The Governance Vacuum</div>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65;margin-bottom:.8rem"><strong style="color:var(--text)">Pattern:</strong> No AI policy exists. Different teams use different tools, send customer data to different providers, and build incompatible systems. Legal discovers the situation during a due diligence review or regulatory audit.</p>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65"><strong style="color:var(--green)">Prevention:</strong> Publish an AI use policy before significant adoption begins. A lightweight policy today is far better than a perfect policy in 18 months. Include an AI asset registry.</p>
+  </div>
+
+  <div class="info-box warn">
+    <div class="box-label warn">⚠️ The Expertise Gap</div>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65;margin-bottom:.8rem"><strong style="color:var(--text)">Pattern:</strong> AI systems are built by developers who are skilled engineers but have no training in prompt engineering, evaluation, or responsible AI. The resulting system is technically functional but produces unreliable, biased, or policy-violating outputs at scale.</p>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65"><strong style="color:var(--green)">Prevention:</strong> Every team building AI products needs at least one person with deep AI/ML knowledge. Training existing engineers in LLM-specific patterns is faster than hiring. Build an internal curriculum.</p>
+  </div>
+
+  <div class="info-box warn">
+    <div class="box-label warn">⚠️ The Vendor Lock-In Trap</div>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65;margin-bottom:.8rem"><strong style="color:var(--text)">Pattern:</strong> All AI infrastructure is tightly coupled to one vendor. When that vendor raises prices 40%, deprecates a model, or has a 6-hour outage, the entire product line is affected with no fallback.</p>
+    <p style="font-size:.85rem;color:var(--text2);line-height:1.65"><strong style="color:var(--green)">Prevention:</strong> Abstraction layer over model providers (LiteLLM, LangChain, or custom). Test multi-provider routing. Maintain at least one fallback model per use case. Avoid proprietary features where standard alternatives exist.</p>
+  </div>
+
+  <h3 class="sh3">The Pre-Launch Checklist</h3>
+  <p class="lead">Before any AI feature ships to real users, every item below should be checked:</p>
+
+  <ul class="checklist">
+    <li class="done">Eval suite exists and passes at &gt;90% on representative inputs</li>
+    <li class="done">Red-teaming completed, findings documented and addressed</li>
+    <li class="done">Data handling reviewed by Legal — DPA / BAA in place if needed</li>
+    <li class="done">Cost model validated — P95 usage scenario doesn't blow the budget</li>
+    <li class="done">Rate limits and spending caps set at API gateway level</li>
+    <li class="done">Full request/response logging active (with PII handling)</li>
+    <li class="done">Incident response runbook exists for AI-specific failures</li>
+    <li class="done">Human override / appeal path documented and tested</li>
+    <li class="done">User disclosure in place if AI-generated content is presented</li>
+    <li class="done">Model version pinned, update process documented</li>
+    <li class="done">Fallback behaviour defined and tested (what happens if API is down?)</li>
+    <li class="done">Business owner signed off on AI risk classification</li>
+  </ul>
+
+</div>
+
+</main>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top: document.getElementById('tab-bar').offsetTop - 56, behavior:'smooth'});
+}
+</script>
+
+
+<!-- FOOTER -->
+<footer role="contentinfo" style="padding:3rem 2rem;text-align:center;color:var(--text3);font-size:.83rem;border-top:1px solid var(--border);">
+  <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.9rem;">
+    <a href="index.html" style="color:var(--accent2);">← Back to All Modules</a>
+    <a href="terminology.html" style="color:var(--accent2);">AI Terminology</a>
+    <a href="core-ai.html" style="color:var(--accent2);">Core Architecture</a>
+    <a href="comparisons.html" style="color:var(--accent2);">Model Comparisons</a>
+    <a href="prompting.html" style="color:var(--accent2);">Prompt Engineering</a>
+    <a href="use-cases.html" style="color:var(--accent2);">Use Cases</a>
+    <a href="ai-integration.html" style="color:var(--accent2);">AI Integration</a>
+    <a href="enterprise-ai.html" style="color:var(--accent2);">Enterprise AI</a>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.9rem;">
+    <a href="about.html" style="color:var(--accent2);">About</a>
+    <a href="contact.html" style="color:var(--accent2);">Contact</a>
+    <a href="privacy-policy.html" style="color:var(--accent2);">Privacy Policy</a>
+  </div>
+  <div style="line-height:1.8;">
+    <strong style="color:var(--text2);">AI Literate</strong> — Free AI education for everyone.<br>
+    AI information changes rapidly — verify with official sources. Not affiliated with any AI company.<br>
+    <span>&copy; <span class="footer-yr"></span> AI Literate. All rights reserved.</span>
+  </div>
+</footer>
+<script>document.querySelectorAll('.footer-yr').forEach(e=>e.textContent=new Date().getFullYear());</script>
+
+</body>
+</html>

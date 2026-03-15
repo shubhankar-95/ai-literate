@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code Guide: Installation, Commands & Workflows — AI Literate</title>
+<meta name="description" content="The complete Claude Code guide — install, configure CLAUDE.md, master commands, real workflow patterns (autonomous bug fixing, feature development, refactoring), and advanced MCP integration. Beginner to expert.">
+<meta name="keywords" content="Claude Code guide, Claude Code tutorial, Claude Code commands, CLAUDE.md setup, AI coding agent, agentic coding, Anthropic Claude Code, MCP servers Claude, autonomous coding AI">
+<meta name="robots" content="index, follow">
+<meta name="author" content="AI Literate">
+<meta property="og:title" content="Claude Code Guide: Installation, Commands & Workflows">
+<meta property="og:description" content="Complete Claude Code guide: setup, CLAUDE.md, key commands, real dev workflows, MCP integration, and parallel agent patterns. From beginner to power user.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ai-literate.online/claude-code.html">
+<meta property="og:site_name" content="AI Literate">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Claude Code Guide — AI Literate">
+<meta name="twitter:description" content="Complete guide to Claude Code: install, configure, and use Anthropic's AI coding agent for real engineering workflows.">
+<link rel="canonical" href="https://ai-literate.online/claude-code.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Claude Code Guide: Installation, Commands & Workflows",
+  "description": "The complete guide to Claude Code — Anthropic's agentic coding CLI tool. Installation, configuration, workflow patterns, and advanced techniques.",
+  "author": {"@type": "Organization", "name": "AI Literate"},
+  "publisher": {"@type": "Organization", "name": "AI Literate", "url": "https://ai-literate.online"},
+  "url": "https://ai-literate.online/claude-code.html",
+  "inLanguage": "en-US"
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a28;
+  --surface3: #22223a;
+  --border: #2a2a40;
+  --accent: #7c5cbf;
+  --accent2: #5b8ef0;
+  --accent3: #3ecfcf;
+  --green: #3ecf8e;
+  --yellow: #f0c040;
+  --red: #ef5050;
+  --orange: #f07040;
+  --text: #e8e8f0;
+  --text2: #9090b0;
+  --text3: #6060808;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --mono: 'Fira Code', monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; min-height:100vh; }
+
+/* NAV */
+.topnav { position:sticky; top:0; z-index:100; background:rgba(10,10,15,0.95); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); padding:0 24px; display:flex; align-items:center; gap:20px; height:56px; }
+.nav-brand { font-weight:700; font-size:1rem; color:var(--accent); text-decoration:none; white-space:nowrap; }
+.nav-brand span { color:var(--text2); font-weight:400; }
+.nav-tabs { display:flex; gap:4px; overflow-x:auto; flex:1; }
+.nav-tab { padding:6px 14px; border-radius:var(--radius-sm); cursor:pointer; font-size:0.82rem; font-weight:500; color:var(--text2); border:none; background:none; white-space:nowrap; transition:all 0.2s; }
+.nav-tab:hover { background:var(--surface2); color:var(--text); }
+.nav-tab.active { background:var(--accent); color:#fff; }
+.nav-back { font-size:0.82rem; color:var(--text2); text-decoration:none; padding:6px 12px; border:1px solid var(--border); border-radius:var(--radius-sm); transition:all 0.2s; white-space:nowrap; }
+.nav-back:hover { border-color:var(--accent); color:var(--accent); }
+
+/* LAYOUT */
+.page { display:none; padding:40px 24px; max-width:1100px; margin:0 auto; }
+.page.active { display:block; }
+
+/* HERO */
+.hero { text-align:center; margin-bottom:48px; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; background:var(--surface2); border:1px solid var(--border); padding:6px 14px; border-radius:40px; font-size:0.8rem; color:var(--accent); margin-bottom:20px; }
+.hero h1 { font-size:clamp(2rem,4vw,3rem); font-weight:800; margin-bottom:16px; }
+.hero h1 span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.hero p { font-size:1.1rem; color:var(--text2); max-width:600px; margin:0 auto; }
+
+/* LEVEL SELECTOR */
+.level-bar { display:flex; gap:8px; margin-bottom:32px; padding:4px; background:var(--surface); border:1px solid var(--border); border-radius:40px; width:fit-content; }
+.level-btn { padding:8px 20px; border-radius:40px; border:none; cursor:pointer; font-size:0.85rem; font-weight:600; transition:all 0.2s; color:var(--text2); background:none; }
+.level-btn.active { background:var(--accent); color:#fff; }
+[data-level] { display:none; }
+[data-level].show { display:block; }
+
+/* SECTION */
+.section-title { font-size:1.5rem; font-weight:700; margin-bottom:8px; }
+.section-sub { color:var(--text2); margin-bottom:28px; }
+
+/* CARDS */
+.card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; }
+.card-head { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+.card-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
+.card-title { font-size:1.05rem; font-weight:700; }
+.card-sub { font-size:0.85rem; color:var(--text2); }
+.card p { color:var(--text2); font-size:0.9rem; line-height:1.7; margin-bottom:10px; }
+.card p:last-child { margin-bottom:0; }
+
+/* STEP CARDS */
+.steps { display:flex; flex-direction:column; gap:16px; }
+.step { display:flex; gap:20px; align-items:flex-start; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+.step-num { width:36px; height:36px; border-radius:50%; background:var(--accent); color:#fff; font-weight:700; font-size:0.9rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.step-body { flex:1; }
+.step-body h3 { font-size:1rem; font-weight:700; margin-bottom:6px; }
+.step-body p { font-size:0.88rem; color:var(--text2); line-height:1.65; }
+
+/* CODE BLOCKS */
+.code-block { background:#0d0d18; border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px 20px; margin:12px 0; position:relative; overflow-x:auto; }
+.code-block code { font-family:var(--mono); font-size:0.82rem; color:#c9d1d9; white-space:pre; display:block; }
+.code-block .comment { color:#6a9955; }
+.code-block .cmd { color:#79b8ff; }
+.code-block .flag { color:#ffab70; }
+.code-block .str { color:#9ecbff; }
+.copy-btn { position:absolute; top:8px; right:8px; padding:4px 10px; background:var(--surface3); border:1px solid var(--border); border-radius:6px; font-size:0.75rem; cursor:pointer; color:var(--text2); transition:all 0.2s; }
+.copy-btn:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+/* GRID */
+.grid-2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-bottom:24px; }
+.grid-3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-bottom:24px; }
+
+/* COMMAND CARDS */
+.cmd-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; }
+.cmd-card h4 { font-size:0.9rem; font-weight:700; margin-bottom:4px; color:var(--accent3); font-family:var(--mono); }
+.cmd-card p { font-size:0.82rem; color:var(--text2); line-height:1.6; margin-bottom:8px; }
+.cmd-card .tags { display:flex; flex-wrap:wrap; gap:6px; }
+.tag { padding:2px 8px; border-radius:4px; font-size:0.72rem; font-weight:600; background:var(--surface2); color:var(--text2); border:1px solid var(--border); }
+.tag.green { background:#0d2e20; color:var(--green); border-color:#1a4030; }
+.tag.blue { background:#0d1e3e; color:var(--accent2); border-color:#1a2d50; }
+.tag.purple { background:#1a0d2e; color:var(--accent); border-color:#2a1a40; }
+
+/* COMPARE */
+.compare-table { width:100%; border-collapse:collapse; font-size:0.85rem; margin-bottom:24px; }
+.compare-table th { background:var(--surface2); padding:12px 16px; text-align:left; font-weight:600; color:var(--text2); border-bottom:2px solid var(--border); }
+.compare-table td { padding:12px 16px; border-bottom:1px solid var(--border); vertical-align:top; }
+.compare-table tr:hover td { background:var(--surface); }
+
+/* TIMELINE */
+.timeline { position:relative; padding-left:32px; }
+.timeline::before { content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background:linear-gradient(to bottom,var(--accent),var(--accent2)); }
+.tl-item { position:relative; margin-bottom:28px; }
+.tl-item::before { content:''; position:absolute; left:-28px; top:4px; width:12px; height:12px; border-radius:50%; background:var(--accent); border:2px solid var(--bg); }
+.tl-date { font-size:0.78rem; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+.tl-title { font-size:1rem; font-weight:700; margin-bottom:4px; }
+.tl-body { font-size:0.87rem; color:var(--text2); line-height:1.6; }
+
+/* STAT CARDS */
+.stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:32px; }
+.stat-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px; text-align:center; }
+.stat-num { font-size:1.8rem; font-weight:800; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.stat-label { font-size:0.75rem; color:var(--text2); margin-top:4px; }
+
+/* CALLOUT */
+.callout { padding:16px 20px; border-radius:var(--radius-sm); margin:16px 0; display:flex; gap:12px; align-items:flex-start; }
+.callout.tip { background:#0d2e20; border-left:3px solid var(--green); }
+.callout.warn { background:#2e1a0d; border-left:3px solid var(--orange); }
+.callout.info { background:#0d1e3e; border-left:3px solid var(--accent2); }
+.callout-icon { font-size:1.1rem; flex-shrink:0; margin-top:1px; }
+.callout p { font-size:0.87rem; color:var(--text2); margin:0; }
+.callout strong { color:var(--text); }
+
+/* ACCORDION */
+.accordion { margin-bottom:12px; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+.acc-head { padding:16px 20px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; background:var(--surface); transition:background 0.2s; }
+.acc-head:hover { background:var(--surface2); }
+.acc-head h3 { font-size:0.95rem; font-weight:600; }
+.acc-arrow { transition:transform 0.3s; font-size:0.8rem; color:var(--text2); }
+.acc-head.open .acc-arrow { transform:rotate(180deg); }
+.acc-body { display:none; padding:0 20px 20px; background:var(--surface); }
+.acc-body.show { display:block; }
+
+/* WORKFLOW DEMO */
+.workflow { display:flex; flex-direction:column; gap:0; }
+.wf-step { display:flex; gap:0; align-items:stretch; }
+.wf-line { display:flex; flex-direction:column; align-items:center; width:40px; flex-shrink:0; }
+.wf-dot { width:16px; height:16px; border-radius:50%; background:var(--accent); border:2px solid var(--bg); flex-shrink:0; margin-top:4px; }
+.wf-connector { width:2px; flex:1; background:var(--border); margin:4px 0; min-height:20px; }
+.wf-last .wf-connector { display:none; }
+.wf-content { flex:1; padding:0 0 24px 16px; }
+.wf-content h4 { font-size:0.95rem; font-weight:700; margin-bottom:6px; }
+.wf-content p { font-size:0.85rem; color:var(--text2); line-height:1.6; }
+
+/* PILL BADGES */
+.pill { display:inline-block; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:600; margin:2px; }
+.pill-green { background:#0d2e20; color:var(--green); }
+.pill-blue { background:#0d1e3e; color:var(--accent2); }
+.pill-purple { background:#1a0d2e; color:var(--accent); }
+.pill-yellow { background:#2e2a0d; color:var(--yellow); }
+
+/* FEATURE TABLE */
+.feature-grid { display:grid; gap:12px; margin-bottom:24px; }
+.feature-row { display:grid; grid-template-columns:200px 1fr; gap:16px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; align-items:start; }
+.feature-label { font-size:0.85rem; font-weight:600; color:var(--accent3); }
+.feature-val { font-size:0.85rem; color:var(--text2); line-height:1.6; }
+
+/* QUIZ/INTERACTIVE */
+.interactive-demo { background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:24px; }
+.interactive-demo h3 { font-size:1rem; font-weight:700; margin-bottom:16px; }
+
+/* FUTURE SECTION */
+.future-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-bottom:24px; }
+.future-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; border-top:3px solid var(--accent); }
+.future-card h4 { font-size:0.95rem; font-weight:700; margin-bottom:8px; }
+.future-card p { font-size:0.83rem; color:var(--text2); line-height:1.6; }
+.future-card .year { font-size:0.75rem; font-weight:700; color:var(--accent); margin-bottom:8px; }
+
+/* SCROLL */
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+::-webkit-scrollbar-thumb:hover { background:var(--accent); }
+
+/* YOUTUBE EMBED */
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://ai-literate.online/"},
+    {"@type":"ListItem","position":2,"name":"Claude Code Guide","item":"https://ai-literate.online/claude-code.html"}
+  ]
+}
+</script>
+</head>
+<body>
+
+<nav id="nav" aria-label="Main navigation">
+  <a href="index.html" style="font-size:1.05rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;">🤖 AI Literate</a>
+  <div style="display:flex;gap:1.5rem;margin-left:auto;align-items:center;">
+    <a href="index.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">All Modules</a>
+    <a href="about.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">About</a>
+    <a href="contact.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">Contact</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ OVERVIEW ═══════════════ -->
+<div id="overview" class="page active">
+  <div class="hero">
+    <div class="hero-badge">🤖 AI Coding Agent</div>
+    <h1>Claude <span>Code</span></h1>
+    <p>The agentic CLI that thinks, codes, and ships — from your terminal. Learn to delegate entire engineering tasks to AI.</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num">10x</div><div class="stat-label">Faster prototyping</div></div>
+    <div class="stat-card"><div class="stat-num">200K</div><div class="stat-label">Token context window</div></div>
+    <div class="stat-card"><div class="stat-num">2025</div><div class="stat-label">GA release year</div></div>
+    <div class="stat-card"><div class="stat-num">∞</div><div class="stat-label">Files editable per session</div></div>
+    <div class="stat-card"><div class="stat-num">CLI</div><div class="stat-label">Works in any terminal</div></div>
+    <div class="stat-card"><div class="stat-num">#1</div><div class="stat-label">SWE-bench score (2025)</div></div>
+  </div>
+
+  <div class="level-bar">
+    <button class="level-btn active" onclick="setLevel('beginner','overview')">🌱 Beginner</button>
+    <button class="level-btn" onclick="setLevel('intermediate','overview')">⚡ Intermediate</button>
+    <button class="level-btn" onclick="setLevel('advanced','overview')">🔥 Advanced</button>
+  </div>
+
+  <div data-level="beginner" data-section="overview" class="show">
+    <div class="section-title">What is Claude Code?</div>
+    <div class="section-sub">A coding assistant you talk to in your terminal — like having a senior developer always on call.</div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#1a0d2e;">🤖</div><div><div class="card-title">Think of it this way</div><div class="card-sub">The simplest explanation</div></div></div>
+      <p>Claude Code is an AI you run from the command line (the text-based terminal on your computer). You describe what you want in plain English, and it writes, edits, and runs code for you. It can read your entire project, understand how it all fits together, and make changes across many files at once.</p>
+      <p>Unlike ChatGPT where you copy-paste code back and forth, Claude Code directly touches your files. It's like the difference between asking for directions and having a navigator sitting in your car.</p>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#0d2e20;">💬</div><div><div class="card-title">Old way: ChatGPT</div></div></div>
+        <p>You copy your code → paste into browser → get suggestion → copy back → manually apply → hope it works.</p>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#0d1e3e;">⚡</div><div><div class="card-title">New way: Claude Code</div></div></div>
+        <p>You type: <code style="color:var(--accent3);font-family:var(--mono)">"Add login with Google to my app"</code> — Claude reads your project, writes the code, and applies it. Done.</p>
+      </div>
+    </div>
+    <div class="callout info">
+      <div class="callout-icon">💡</div>
+      <p><strong>You don't need to know how to code</strong> to start using Claude Code — but learning the basics helps you give better instructions and review what it produces.</p>
+    </div>
+  </div>
+
+  <div data-level="intermediate" data-section="overview">
+    <div class="section-title">What Claude Code Actually Does</div>
+    <div class="section-sub">A full-stack agentic coding system — not just autocomplete.</div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#1a0d2e;">🧠</div><div><div class="card-title">The Agent Loop</div><div class="card-sub">How Claude Code solves problems</div></div></div>
+      <p>Claude Code runs an <strong>agent loop</strong>: it reads your request, decides what tools to use (read files, write files, run bash, search the web), executes them, observes the results, and continues until the task is done. It's not a one-shot response — it works like a developer iterating on a problem.</p>
+      <p>Key tools in its arsenal: <strong>Read</strong> (any file), <strong>Write/Edit</strong> (surgical edits), <strong>Bash</strong> (run tests, build, install packages), <strong>WebFetch</strong> (read docs), <strong>Glob/Grep</strong> (find code patterns).</p>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#0d2e20;">✅</div><div><div class="card-title">What it can do</div></div></div>
+        <p>Refactor an entire codebase · Add features across multiple files · Debug runtime errors by reading logs · Write and run tests · Generate documentation · Set up new projects from scratch · Research APIs via web fetch.</p>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#2e1a0d;">⚠️</div><div><div class="card-title">What it can't do (yet)</div></div></div>
+        <p>It can't see your screen or browser · Can't interact with GUIs · Won't commit/push without your approval · Can't access services that need your credentials unless you set them up · Doesn't remember previous sessions by default.</p>
+      </div>
+    </div>
+  </div>
+
+  <div data-level="advanced" data-section="overview">
+    <div class="section-title">Architecture & Internals</div>
+    <div class="section-sub">How Claude Code is built and why it works so well for engineering tasks.</div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#1a0d2e;">⚙️</div><div><div class="card-title">Under the Hood</div><div class="card-sub">The technical architecture</div></div></div>
+      <p>Claude Code is built on Anthropic's Claude Sonnet/Opus models, accessed via the Anthropic API. It runs as a Node.js process that manages a <strong>tool-calling loop</strong> — each iteration sends the conversation + tool results back to the model, which decides its next action.</p>
+      <p>The model uses a <strong>200K token context window</strong>, meaning it can hold the equivalent of ~500 pages of code in working memory simultaneously. For very large codebases, it uses smart file selection (via Glob/Grep) rather than loading everything.</p>
+      <p>Permissions are controlled at the session level. Claude Code asks for approval before any destructive action (file delete, git reset, package install) unless you've pre-authorized it. The permission model maps directly to Unix file system permissions — it can only touch what your user account can.</p>
+    </div>
+    <div class="code-block">
+      <div class="comment"># The agent loop conceptually:</div>
+      <code><span class="comment"># 1. User sends message</span>
+<span class="comment"># 2. Claude picks a tool: Read / Write / Bash / etc.</span>
+<span class="comment"># 3. Tool runs, returns result to Claude</span>
+<span class="comment"># 4. Claude reasons over result, picks next tool</span>
+<span class="comment"># 5. Repeats until task complete</span>
+<span class="comment"># 6. Claude sends final message to user</span>
+
+<span class="comment"># You can observe this loop in real time with:</span>
+<span class="cmd">claude</span> <span class="flag">--verbose</span>  <span class="comment"># shows every tool call live</span></code>
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+    </div>
+    <div class="callout tip">
+      <div class="callout-icon">🔬</div>
+      <p><strong>SWE-bench insight:</strong> Claude 3.5 Sonnet achieved <strong>49% on SWE-bench Verified</strong> (a benchmark of real GitHub issues), compared to ~18% for GPT-4o in 2024. This gap is why Claude Code feels materially different for real engineering tasks.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ INSTALLATION ═══════════════ -->
+<div id="install" class="page">
+  <div class="hero">
+    <div class="hero-badge">🛠️ Setup</div>
+    <h1>Getting <span>Started</span></h1>
+    <p>From zero to your first AI-written feature in under 10 minutes.</p>
+  </div>
+
+  <div class="level-bar">
+    <button class="level-btn active" onclick="setLevel('beginner','install')">🌱 Beginner</button>
+    <button class="level-btn" onclick="setLevel('intermediate','install')">⚡ Intermediate</button>
+    <button class="level-btn" onclick="setLevel('advanced','install')">🔥 Advanced</button>
+  </div>
+
+  <div data-level="beginner" data-section="install" class="show">
+    <div class="section-title">Step-by-Step Installation</div>
+    <div class="section-sub">Follow these steps exactly. No prior experience needed.</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Install Node.js (if you don't have it)</h3>
+          <p>Claude Code requires Node.js version 18 or newer. Go to <strong>nodejs.org</strong> and download the LTS version. Run the installer and follow the prompts. To verify it worked, open your terminal and type:</p>
+          <div class="code-block"><code><span class="cmd">node</span> <span class="flag">--version</span>   <span class="comment"># Should show v18.x.x or higher</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Install Claude Code via npm</h3>
+          <p>npm (Node Package Manager) comes with Node.js. Open your terminal and run:</p>
+          <div class="code-block"><code><span class="cmd">npm</span> install <span class="flag">-g</span> @anthropic-ai/claude-code</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <p style="margin-top:10px;">The <code style="color:var(--accent3);font-family:var(--mono)">-g</code> flag installs it globally so you can use it from any folder.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Get your Anthropic API Key</h3>
+          <p>Go to <strong>console.anthropic.com</strong> → sign up or log in → API Keys → Create new key. Copy it. This is your "password" that lets Claude Code talk to Anthropic's servers. Keep it private.</p>
+          <div class="callout warn"><div class="callout-icon">⚠️</div><p><strong>Never share your API key publicly</strong> — in GitHub repos, chat, or anywhere. If leaked, someone else can use your account's credits.</p></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Set your API key</h3>
+          <p>Run this command, replacing the placeholder with your actual key:</p>
+          <div class="code-block"><code><span class="cmd">export</span> <span class="str">ANTHROPIC_API_KEY</span>=<span class="str">sk-ant-your-key-here</span>
+
+<span class="comment"># To make it permanent (so you don't need to do this every time),</span>
+<span class="comment"># add the above line to your ~/.bashrc or ~/.zshrc file</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Navigate to your project and start</h3>
+          <p>Go to the folder containing your code, then start Claude Code:</p>
+          <div class="code-block"><code><span class="cmd">cd</span> ~/my-project   <span class="comment"># go to your project folder</span>
+<span class="cmd">claude</span>             <span class="comment"># start Claude Code</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <p style="margin-top:10px;">You'll see a prompt. Type your first request in plain English!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-level="intermediate" data-section="install">
+    <div class="section-title">Installation & Configuration</div>
+    <div class="section-sub">Full setup including environment configuration and project initialization.</div>
+
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d1e3e;">⚡</div><div><div class="card-title">Quick Install</div></div></div>
+      <div class="code-block"><code><span class="comment"># Install</span>
+<span class="cmd">npm</span> install <span class="flag">-g</span> @anthropic-ai/claude-code
+
+<span class="comment"># Verify</span>
+<span class="cmd">claude</span> <span class="flag">--version</span>
+
+<span class="comment"># Set API key permanently in ~/.zshrc or ~/.bashrc</span>
+<span class="cmd">echo</span> <span class="str">'export ANTHROPIC_API_KEY="sk-ant-..."'</span> >> ~/.zshrc
+<span class="cmd">source</span> ~/.zshrc
+
+<span class="comment"># Optional: set default model</span>
+<span class="cmd">export</span> <span class="str">CLAUDE_MODEL</span>=<span class="str">claude-sonnet-4-5</span>  <span class="comment"># faster/cheaper</span>
+<span class="comment"># or</span>
+<span class="cmd">export</span> <span class="str">CLAUDE_MODEL</span>=<span class="str">claude-opus-4-5</span>    <span class="comment"># more capable</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#1a0d2e;">📁</div><div><div class="card-title">Project Setup with CLAUDE.md</div><div class="card-sub">The config file Claude reads at startup</div></div></div>
+      <p>Create a <code style="color:var(--accent3);font-family:var(--mono)">CLAUDE.md</code> file in your project root. Claude reads this at the start of every session — use it to give context about your project, coding standards, and preferences.</p>
+      <div class="code-block"><code><span class="comment"># CLAUDE.md — Project context for Claude Code</span>
+
+## Project Overview
+E-commerce platform built with Next.js 14 + TypeScript + Prisma + PostgreSQL.
+
+## Tech Stack
+- Frontend: Next.js 14 App Router, Tailwind CSS, shadcn/ui
+- Backend: Next.js API routes, Prisma ORM
+- Database: PostgreSQL (local dev via Docker)
+- Auth: NextAuth.js with Google & GitHub providers
+
+## Coding Standards
+- Use TypeScript strictly (no `any` types)
+- Functional components only (no class components)
+- Use Zod for all input validation
+- Write tests for all API routes using Vitest
+
+## Common Commands
+- `npm run dev` — start dev server
+- `npm run test` — run tests
+- `npx prisma studio` — open database UI
+- `docker-compose up -d` — start PostgreSQL
+
+## Current Focus
+Building the checkout flow. Stripe integration is in progress (see /app/checkout/).</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    </div>
+  </div>
+
+  <div data-level="advanced" data-section="install">
+    <div class="section-title">Production-Grade Setup</div>
+    <div class="section-sub">CI/CD integration, MCP servers, and team configuration.</div>
+
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d2e20;">🔥</div><div><div class="card-title">Advanced CLAUDE.md</div><div class="card-sub">Full production project configuration</div></div></div>
+      <div class="code-block"><code><span class="comment"># CLAUDE.md — Production Config</span>
+
+## Architecture
+Microservices: auth-service, orders-service, inventory-service, notification-service.
+API Gateway via Kong. Services communicate via RabbitMQ events.
+See /docs/architecture.md for full system diagram.
+
+## Non-negotiable Standards
+- ALL database queries must go through service layer (never raw SQL in controllers)
+- Error handling: use Result<T,E> pattern from /lib/result.ts
+- Logging: structured JSON via pino logger, always include requestId
+- Tests: 80% coverage required, fail CI otherwise
+
+## Permissions (pre-authorized)
+- Read/write all project files
+- Run: npm test, npm run lint, npm run build
+- Run: docker-compose commands
+- Run: prisma migrate commands
+- Git: status, diff, add, commit (NOT push without asking)
+
+## Forbidden
+- Never modify .env files directly
+- Never push to main branch
+- Never delete migration files
+- Never use console.log (use logger)
+
+## Key Contacts / Docs
+- Auth flow: /docs/auth-flow.md
+- API contracts: /docs/openapi.yaml
+- Deployment: /docs/deployment.md</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d1e3e;">🔗</div><div><div class="card-title">MCP (Model Context Protocol) Servers</div><div class="card-sub">Extend Claude Code with custom tools</div></div></div>
+      <p>MCP servers are plugins that give Claude Code new capabilities — like reading from your database, querying Slack, or interfacing with custom internal APIs.</p>
+      <div class="code-block"><code><span class="comment"># .claude/mcp.json — Add MCP servers to your project</span>
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres"],
+      "env": {
+        "POSTGRES_CONNECTION_STRING": "${DATABASE_URL}"
+      }
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  }
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <div class="callout info"><div class="callout-icon">🔌</div><p><strong>With Postgres MCP:</strong> Claude can query your actual database schema, write optimized SQL, and understand your data shape without you having to explain it. This is a game-changer for backend development.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ COMMANDS ═══════════════ -->
+<div id="commands" class="page">
+  <div class="hero">
+    <div class="hero-badge">⌨️ Reference</div>
+    <h1>Commands & <span>Flags</span></h1>
+    <p>Every command you need, organized by how you'll actually use them.</p>
+  </div>
+
+  <div class="level-bar">
+    <button class="level-btn active" onclick="setLevel('beginner','commands')">🌱 Beginner</button>
+    <button class="level-btn" onclick="setLevel('intermediate','commands')">⚡ Intermediate</button>
+    <button class="level-btn" onclick="setLevel('advanced','commands')">🔥 Advanced</button>
+  </div>
+
+  <div data-level="beginner" data-section="commands" class="show">
+    <div class="section-title">Essential Commands</div>
+    <div class="section-sub">The 5 commands you'll use 90% of the time.</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:var(--accent3);color:#000;">1</div>
+        <div class="step-body">
+          <h3><code style="font-family:var(--mono)">claude</code> — Start a session</h3>
+          <p>Run this in your project folder to start an interactive session. Type your request in plain English and press Enter.</p>
+          <div class="code-block"><code><span class="cmd">claude</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:var(--accent3);color:#000;">2</div>
+        <div class="step-body">
+          <h3><code style="font-family:var(--mono)">claude "task"</code> — One-shot mode</h3>
+          <p>Give a task directly without entering the interactive shell. Great for quick fixes.</p>
+          <div class="code-block"><code><span class="cmd">claude</span> <span class="str">"Fix the TypeScript errors in src/api.ts"</span>
+<span class="cmd">claude</span> <span class="str">"Add error handling to all async functions in src/"</span>
+<span class="cmd">claude</span> <span class="str">"Write unit tests for the UserService class"</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:var(--accent3);color:#000;">3</div>
+        <div class="step-body">
+          <h3><code style="font-family:var(--mono)">claude --help</code> — Show all options</h3>
+          <div class="code-block"><code><span class="cmd">claude</span> <span class="flag">--help</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:var(--accent3);color:#000;">4</div>
+        <div class="step-body">
+          <h3>Inside the session: slash commands</h3>
+          <p>While in an interactive session, type these at any time:</p>
+          <div class="code-block"><code>/help      <span class="comment"># show available slash commands</span>
+/clear     <span class="comment"># clear conversation history (fresh start)</span>
+/exit      <span class="comment"># quit Claude Code</span>
+/status    <span class="comment"># show current model, cost, token usage</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:var(--accent3);color:#000;">5</div>
+        <div class="step-body">
+          <h3>Undo & review</h3>
+          <p>If Claude makes a change you don't like, use git to undo it:</p>
+          <div class="code-block"><code><span class="cmd">git</span> diff          <span class="comment"># see what Claude changed</span>
+<span class="cmd">git</span> checkout .    <span class="comment"># undo ALL Claude's changes</span>
+<span class="cmd">git</span> checkout src/api.ts  <span class="comment"># undo changes to one file</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <div class="callout tip"><div class="callout-icon">💡</div><p><strong>Always commit before a big Claude session</strong> — then you can easily roll back if needed.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-level="intermediate" data-section="commands">
+    <div class="section-title">Full Command Reference</div>
+    <div class="section-sub">All flags and in-session commands for power users.</div>
+    <div class="grid-2">
+      <div class="cmd-card">
+        <h4>claude --model</h4>
+        <p>Select which Claude model to use for this session.</p>
+        <div class="code-block" style="margin:8px 0;"><code><span class="cmd">claude</span> <span class="flag">--model</span> claude-opus-4-5
+<span class="cmd">claude</span> <span class="flag">--model</span> claude-sonnet-4-5</code></div>
+        <div class="tags"><span class="tag green">Useful</span><span class="tag blue">Performance</span></div>
+      </div>
+      <div class="cmd-card">
+        <h4>claude --print</h4>
+        <p>Print response to stdout instead of interactive mode. Great for scripting.</p>
+        <div class="code-block" style="margin:8px 0;"><code><span class="cmd">claude</span> <span class="flag">-p</span> <span class="str">"Explain this function"</span> < func.ts</code></div>
+        <div class="tags"><span class="tag blue">Scripting</span></div>
+      </div>
+      <div class="cmd-card">
+        <h4>claude --verbose</h4>
+        <p>Show every tool call Claude makes. Invaluable for understanding what Claude is doing and debugging unexpected behavior.</p>
+        <div class="code-block" style="margin:8px 0;"><code><span class="cmd">claude</span> <span class="flag">--verbose</span></code></div>
+        <div class="tags"><span class="tag purple">Debug</span></div>
+      </div>
+      <div class="cmd-card">
+        <h4>claude --continue</h4>
+        <p>Resume your last conversation. Claude remembers context from your previous session.</p>
+        <div class="code-block" style="margin:8px 0;"><code><span class="cmd">claude</span> <span class="flag">--continue</span>
+<span class="cmd">claude</span> <span class="flag">-c</span></code></div>
+        <div class="tags"><span class="tag green">Workflow</span></div>
+      </div>
+      <div class="cmd-card">
+        <h4>/memory</h4>
+        <p>Manage Claude's memory files (CLAUDE.md). View, edit, or reset context.</p>
+        <div class="code-block" style="margin:8px 0;"><code>/memory show
+/memory edit</code></div>
+        <div class="tags"><span class="tag purple">Context</span></div>
+      </div>
+      <div class="cmd-card">
+        <h4>/compact</h4>
+        <p>Summarize conversation history to reduce token usage while keeping key context. Use when approaching context limits.</p>
+        <div class="code-block" style="margin:8px 0;"><code>/compact</code></div>
+        <div class="tags"><span class="tag blue">Tokens</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div data-level="advanced" data-section="commands">
+    <div class="section-title">Automation & Scripting Commands</div>
+    <div class="section-sub">Integrating Claude Code into pipelines, CI/CD, and custom scripts.</div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d2e20;">🤖</div><div><div class="card-title">Headless / Non-interactive Mode</div><div class="card-sub">Run Claude from scripts with no human in the loop</div></div></div>
+      <div class="code-block"><code><span class="comment"># Run a task non-interactively (auto-approve safe actions)</span>
+<span class="cmd">claude</span> <span class="flag">--print</span> <span class="flag">--dangerously-skip-permissions</span> <span class="str">"Update all dependencies to latest"</span>
+
+<span class="comment"># Pipe input to Claude</span>
+<span class="cmd">cat</span> error.log | <span class="cmd">claude</span> <span class="flag">-p</span> <span class="str">"Identify the root cause of these errors"</span>
+
+<span class="comment"># Use in a Makefile or shell script</span>
+<span class="cmd">echo</span> <span class="str">"Bump version, update changelog, create git tag"</span> | <span class="cmd">claude</span> <span class="flag">-p</span>
+
+<span class="comment"># Output to file</span>
+<span class="cmd">claude</span> <span class="flag">-p</span> <span class="str">"Generate TypeScript types from schema.prisma"</span> > types.ts</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d1e3e;">⚡</div><div><div class="card-title">Pre-authorized Permissions in CLAUDE.md</div><div class="card-sub">Skip approval prompts for trusted operations</div></div></div>
+      <p>In CLAUDE.md, you can pre-authorize specific bash commands so Claude doesn't need to ask for every one. This is critical for uninterrupted agentic workflows.</p>
+      <div class="code-block"><code><span class="comment"># In CLAUDE.md:</span>
+## Allowed Commands (no approval needed)
+- npm test
+- npm run lint
+- npm run build
+- git status, git diff, git add, git commit
+- docker-compose up/down
+- prisma generate
+- prisma migrate dev
+
+## Requires Approval
+- git push
+- npm publish
+- Any file deletion
+- Any .env modification</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ WORKFLOWS ═══════════════ -->
+<div id="workflows" class="page">
+  <div class="hero">
+    <div class="hero-badge">🔄 Real Work</div>
+    <h1>Real-World <span>Workflows</span></h1>
+    <p>Step-by-step walkthroughs of how professional developers actually use Claude Code.</p>
+  </div>
+
+  <div class="level-bar">
+    <button class="level-btn active" onclick="setLevel('beginner','workflows')">🌱 Beginner</button>
+    <button class="level-btn" onclick="setLevel('intermediate','workflows')">⚡ Intermediate</button>
+    <button class="level-btn" onclick="setLevel('advanced','workflows')">🔥 Advanced</button>
+  </div>
+
+  <div data-level="beginner" data-section="workflows" class="show">
+    <div class="section-title">Your First Workflows</div>
+    <div class="section-sub">Simple, high-value tasks to build your confidence.</div>
+
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)"><h3>📝 Workflow 1: Explain unfamiliar code</h3><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">
+        <p style="color:var(--text2);font-size:0.88rem;margin-bottom:12px;">Opened a project and have no idea what it does? Try this:</p>
+        <div class="code-block"><code><span class="cmd">cd</span> mystery-project
+<span class="cmd">claude</span>
+<span class="comment">> Explain what this project does. Start with the entry point and walk me through the main flow.</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <p style="color:var(--text2);font-size:0.88rem;margin-top:12px;">Claude will read the files, understand the structure, and give you a plain-English summary — better than any README.</p>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)"><h3>🐛 Workflow 2: Fix a bug</h3><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">
+        <div class="code-block"><code><span class="cmd">claude</span>
+<span class="comment">> The app crashes when I submit the login form. The error is:</span>
+<span class="comment">> "Cannot read property 'token' of undefined"</span>
+<span class="comment">> at src/auth/login.js:42</span>
+<span class="comment">> Fix it.</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <p style="color:var(--text2);font-size:0.88rem;margin-top:12px;">Claude will read login.js, understand the context, identify the root cause, and fix the bug — often catching related issues you didn't know existed.</p>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="acc-head" onclick="toggleAcc(this)"><h3>✨ Workflow 3: Add a simple feature</h3><span class="acc-arrow">▼</span></div>
+      <div class="acc-body">
+        <div class="code-block"><code><span class="cmd">claude</span>
+<span class="comment">> Add a "dark mode" toggle button to the navbar in my React app.</span>
+<span class="comment">> Use CSS variables to switch themes. Save the preference to localStorage.</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <p style="color:var(--text2);font-size:0.88rem;margin-top:12px;">Claude finds your navbar component, adds the button, creates the theme CSS, and wires up localStorage — all without you touching a file.</p>
+      </div>
+    </div>
+  </div>
+
+  <div data-level="intermediate" data-section="workflows">
+    <div class="section-title">Developer Workflows</div>
+    <div class="section-sub">Common engineering patterns with Claude Code at the center.</div>
+
+    <div class="card" style="margin-bottom:24px;">
+      <div class="card-head"><div class="card-icon" style="background:#0d2e20;">🚀</div><div><div class="card-title">Workflow: New Feature End-to-End</div><div class="card-sub">From ticket to PR-ready code</div></div></div>
+      <div class="workflow">
+        <div class="wf-step">
+          <div class="wf-line"><div class="wf-dot"></div><div class="wf-connector"></div></div>
+          <div class="wf-content"><h4>1. Read the ticket with Claude</h4><p>"Here's the Jira ticket: [paste text]. Read the codebase and tell me what files need to change and what the implementation plan should be."</p></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-line"><div class="wf-dot" style="background:var(--accent2);"></div><div class="wf-connector"></div></div>
+          <div class="wf-content"><h4>2. Plan before implementing</h4><p>"Before writing any code, outline the exact changes you'll make and which files will be affected. Wait for my approval."</p></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-line"><div class="wf-dot" style="background:var(--green);"></div><div class="wf-connector"></div></div>
+          <div class="wf-content"><h4>3. Implement iteratively</h4><p>"Implement the data model changes first. Then I'll review before you touch the API layer."</p></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-line"><div class="wf-dot" style="background:var(--yellow);"></div><div class="wf-connector"></div></div>
+          <div class="wf-content"><h4>4. Write tests</h4><p>"Now write unit tests for all the new functions. Run them and make sure they pass."</p></div>
+        </div>
+        <div class="wf-step wf-last">
+          <div class="wf-line"><div class="wf-dot" style="background:var(--orange);"></div><div class="wf-connector"></div></div>
+          <div class="wf-content"><h4>5. Prepare PR</h4><p>"Write the PR description summarizing the changes, testing steps, and any caveats."</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#1a0d2e;">🔍</div><div><div class="card-title">Workflow: Code Review</div></div></div>
+        <div class="code-block" style="font-size:0.8rem;"><code><span class="comment">> Review the changes in this PR for:</span>
+<span class="comment">> 1. Security vulnerabilities</span>
+<span class="comment">> 2. Performance issues</span>
+<span class="comment">> 3. Missing error handling</span>
+<span class="comment">> 4. Violations of our coding standards (see CLAUDE.md)</span>
+<span class="comment">> Be specific about line numbers.</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#0d2e20;">🔧</div><div><div class="card-title">Workflow: Refactoring</div></div></div>
+        <div class="code-block" style="font-size:0.8rem;"><code><span class="comment">> Refactor src/utils/ to:</span>
+<span class="comment">> 1. Remove duplicate functions</span>
+<span class="comment">> 2. Add proper TypeScript types</span>
+<span class="comment">> 3. Add JSDoc comments</span>
+<span class="comment">> Don't change behavior, only structure.</span>
+<span class="comment">> Show me a summary of changes before applying.</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div data-level="advanced" data-section="workflows">
+    <div class="section-title">Agentic & Automated Workflows</div>
+    <div class="section-sub">Fully autonomous pipelines where Claude operates independently.</div>
+
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d1e3e;">🤖</div><div><div class="card-title">Workflow: Autonomous Bug Fixing Pipeline</div><div class="card-sub">Claude runs tests, identifies failures, fixes them, repeats</div></div></div>
+      <div class="code-block"><code><span class="comment"># One-shot: Run tests, fix all failures, commit</span>
+<span class="cmd">claude</span> <span class="str">"Run npm test. For each failing test: read the test, understand what it expects, find the bug in the source code, fix it. Then run tests again. Repeat until all tests pass. Then git commit with a meaningful message."</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <div class="callout warn"><div class="callout-icon">⚠️</div><p>Pre-authorize <code style="font-family:var(--mono)">npm test</code> and <code style="font-family:var(--mono)">git commit</code> in CLAUDE.md, but NOT <code style="font-family:var(--mono)">git push</code>. Always review before pushing.</p></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d2e20;">📦</div><div><div class="card-title">Workflow: Dependency Migration</div><div class="card-sub">Migrate an entire codebase to a new version or library</div></div></div>
+      <div class="code-block"><code><span class="cmd">claude</span> <span class="str">"Migrate this project from React 17 to React 18.
+1. Update package.json dependencies
+2. Fix all usages of deprecated APIs (ReactDOM.render → createRoot)
+3. Update all createRef usages to useRef where appropriate
+4. Run the build and fix any TypeScript errors
+5. Run tests and fix failures
+6. Generate a migration summary document"</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#1a0d2e;">🔄</div><div><div class="card-title">Workflow: Git Worktrees for Parallel Claude Sessions</div><div class="card-sub">Run multiple Claude agents on the same repo simultaneously</div></div></div>
+      <p style="font-size:0.87rem;color:var(--text2);margin-bottom:12px;">Use git worktrees to let multiple Claude Code sessions work on different features simultaneously without conflicts:</p>
+      <div class="code-block"><code><span class="comment"># Create separate worktrees for parallel Claude sessions</span>
+<span class="cmd">git</span> worktree add ../feature-auth -b feature/auth
+<span class="cmd">git</span> worktree add ../feature-payments -b feature/payments
+
+<span class="comment"># Terminal 1: Claude on auth</span>
+<span class="cmd">cd</span> ../feature-auth && <span class="cmd">claude</span> <span class="str">"Build the OAuth2 authentication flow"</span>
+
+<span class="comment"># Terminal 2: Claude on payments (simultaneously)</span>
+<span class="cmd">cd</span> ../feature-payments && <span class="cmd">claude</span> <span class="str">"Integrate Stripe payment processing"</span>
+
+<span class="comment"># Both work independently, then merge via PRs</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <div class="callout tip"><div class="callout-icon">⚡</div><p><strong>Power move:</strong> 3 parallel Claude sessions = 3x throughput. One senior dev can oversee multiple Claude agents, reviewing and merging their work like a tech lead managing a team.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ADVANCED ═══════════════ -->
+<div id="advanced" class="page">
+  <div class="hero">
+    <div class="hero-badge">🔥 Expert Level</div>
+    <h1>Advanced <span>Techniques</span></h1>
+    <p>CLAUDE.md mastery, prompt engineering for code, and architectural patterns.</p>
+  </div>
+
+  <div class="level-bar">
+    <button class="level-btn active" onclick="setLevel('beginner','advanced-tab')">🌱 Beginner</button>
+    <button class="level-btn" onclick="setLevel('intermediate','advanced-tab')">⚡ Intermediate</button>
+    <button class="level-btn" onclick="setLevel('advanced','advanced-tab')">🔥 Advanced</button>
+  </div>
+
+  <div data-level="beginner" data-section="advanced-tab" class="show">
+    <div class="section-title">Prompting Tips — What Works &amp; What Doesn't</div>
+    <div class="section-sub">Every example below shows the bad version, what goes wrong, and the fix.</div>
+    <style>
+      .bg-pair{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:24px}
+      .bg-bad{background:rgba(239,80,80,.07);padding:16px 20px;border-bottom:1px solid var(--border)}
+      .bg-good{background:rgba(62,207,142,.07);padding:16px 20px}
+      .bg-label{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+      .bg-label.bad{color:#ef8080}.bg-label.good{color:#3ecf8e}
+      .bg-prompt{font-family:var(--mono);font-size:.82rem;color:var(--text);background:var(--surface3);padding:10px 14px;border-radius:6px;margin:8px 0;white-space:pre-wrap;line-height:1.55}
+      .bg-why{font-size:.82rem;color:var(--text2);margin-top:6px;line-height:1.5}
+      .bg-why strong{color:var(--text)}
+      .bgtitle{font-size:1rem;font-weight:700;color:var(--text);margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+    </style>
+
+    <div class="bgtitle">❌ Mistake 1 — Too vague, no context</div>
+    <div class="bg-pair">
+      <div class="bg-bad">
+        <div class="bg-label bad">❌ What you typed</div>
+        <div class="bg-prompt">Fix my code</div>
+        <div class="bg-why"><strong>What goes wrong:</strong> Claude doesn't know which file, which function, what the error is, or what "fixed" looks like. It will either ask clarifying questions or guess — and guess wrong. It might refactor things that weren't broken.</div>
+      </div>
+      <div class="bg-good">
+        <div class="bg-label good">✅ What to type instead</div>
+        <div class="bg-prompt">In src/api/users.js, the POST /api/users endpoint returns 500 when the email field is missing from the request body. It should return 400 with JSON: {"error": "email is required"}. Fix only this endpoint — don't touch the other routes.</div>
+        <div class="bg-why"><strong>Why it works:</strong> File path, endpoint, exact error, expected behaviour, scope boundary. Claude has everything it needs and nothing it doesn't.</div>
+      </div>
+    </div>
+
+    <div class="bgtitle">❌ Mistake 2 — No scope, Claude touches everything</div>
+    <div class="bg-pair">
+      <div class="bg-bad">
+        <div class="bg-label bad">❌ What you typed</div>
+        <div class="bg-prompt">Add dark mode to the app</div>
+        <div class="bg-why"><strong>What goes wrong:</strong> Claude will pick a random implementation approach and touch files across the whole project. If your app has 40 components, you'll get 40 edits you didn't review and didn't want.</div>
+      </div>
+      <div class="bg-good">
+        <div class="bg-label good">✅ What to type instead</div>
+        <div class="bg-prompt">Add a dark mode toggle to the app. CSS uses custom properties in src/styles/variables.css. Add a data-theme="dark" attribute on &lt;html&gt; when toggled, and add a dark palette block to variables.css. The toggle button goes in src/components/Header.jsx only. Don't touch any other component files yet.</div>
+        <div class="bg-why"><strong>Why it works:</strong> You defined the architecture (CSS vars), the pattern (data-theme), the exact files, and what to leave alone. No surprise edits.</div>
+      </div>
+    </div>
+
+    <div class="bgtitle">❌ Mistake 3 — Pasting an error with no surrounding code</div>
+    <div class="bg-pair">
+      <div class="bg-bad">
+        <div class="bg-label bad">❌ What you typed</div>
+        <div class="bg-prompt">TypeError: Cannot read properties of undefined (reading 'map')
+Why is this happening?</div>
+        <div class="bg-why"><strong>What goes wrong:</strong> This error occurs in thousands of different scenarios. Claude gives generic debugging advice ("maybe the data isn't loaded yet") that doesn't apply to your specific code.</div>
+      </div>
+      <div class="bg-good">
+        <div class="bg-label good">✅ What to type instead</div>
+        <div class="bg-prompt">Getting this in src/pages/Dashboard.jsx line 42:
+TypeError: Cannot read properties of undefined (reading 'map')
+
+The line is: {userData.orders.map(order => ...)}
+userData comes from the useUser() hook.
+Error only happens on first load — works after a refresh. Root cause and fix?</div>
+        <div class="bg-why"><strong>Why it works:</strong> File, line, the actual code, the data source, the reproduction pattern. Claude can now diagnose the real problem (async data not yet loaded) and give a precise fix.</div>
+      </div>
+    </div>
+
+    <div class="bgtitle">❌ Mistake 4 — "Make it better" with no definition of better</div>
+    <div class="bg-pair">
+      <div class="bg-bad">
+        <div class="bg-label bad">❌ What you typed</div>
+        <div class="bg-prompt">Can you improve this function?</div>
+        <div class="bg-why"><strong>What goes wrong:</strong> "Better" means nothing. Claude might add comments (you wanted speed), rename variables (you wanted error handling), or restructure (you wanted it left alone). You get changes you didn't want.</div>
+      </div>
+      <div class="bg-good">
+        <div class="bg-label good">✅ What to type instead</div>
+        <div class="bg-prompt">This function processes 50,000 records and takes ~8s. Optimise for speed only — I don't care about readability. Don't change the function signature or return type. The bottleneck is likely the nested loop on lines 14–22.
+
+[paste function]</div>
+        <div class="bg-why"><strong>Why it works:</strong> You defined "better" (speed), gave the constraint (keep the signature), pointed at the bottleneck, and said what not to change.</div>
+      </div>
+    </div>
+
+    <div class="bgtitle">❌ Mistake 5 — One giant task with no checkpoints</div>
+    <div class="bg-pair">
+      <div class="bg-bad">
+        <div class="bg-label bad">❌ What you typed</div>
+        <div class="bg-prompt">Build a full user auth system — login, signup, password reset, email verification, OAuth with Google, and a dashboard showing login history.</div>
+        <div class="bg-why"><strong>What goes wrong:</strong> Claude writes thousands of lines across dozens of files. If it misunderstands your database schema at step 2, everything after is built on a broken foundation — and you don't find out until the end.</div>
+      </div>
+      <div class="bg-good">
+        <div class="bg-label good">✅ What to type instead</div>
+        <div class="bg-prompt">Step 1 only: Set up the database schema for users. Tables: users (id, email, password_hash, created_at, verified_at) and sessions (id, user_id, token, expires_at). Use our existing Prisma setup in prisma/schema.prisma. Don't build any API routes yet — I'll review the schema before we continue.</div>
+        <div class="bg-why"><strong>Why it works:</strong> One step, one file, a clear stop point. You review before Claude builds anything on top of it. Each chunk is correctable without unravelling everything after it.</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:4px">
+      <div class="card-head"><div class="card-icon" style="background:#1a1a2e;">💡</div><div><div class="card-title">The one habit that prevents most of the above</div></div></div>
+      <p style="font-size:.87rem;color:var(--text2);margin-bottom:12px">Before any task touching more than 2 files, add this to the start of your prompt:</p>
+      <div class="code-block"><code><span class="str">"Before making any changes: tell me which files you'll edit, what you'll change in each, and any assumptions you're making. Wait for my approval before you start."</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <p style="font-size:.83rem;color:var(--text2);margin-top:10px">This one sentence catches 80% of misunderstandings before a single line of code is written.</p>
+    </div>
+  </div>
+
+  <div data-level="intermediate" data-section="advanced-tab">
+    <div class="section-title">Prompt Engineering for Code</div>
+    <div class="section-sub">The anatomy of a great prompt — and six anti-patterns that waste tokens and time.</div>
+
+    <!-- STAR FRAMEWORK -->
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d1e3e;">🎯</div><div><div class="card-title">The CSTE Framework — the anatomy of a complete prompt</div><div class="card-sub">Context · Scope · Task · Expectation</div></div></div>
+      <div class="feature-grid">
+        <div class="feature-row"><div class="feature-label">C — Context</div><div class="feature-val">Stack, file paths, relevant architecture: "Node.js / Express API, Postgres via Prisma, file: src/routes/auth.ts"</div></div>
+        <div class="feature-row"><div class="feature-label">S — Scope</div><div class="feature-val">What Claude can and cannot touch: "Only edit this file. Don't change the Prisma schema or any test files."</div></div>
+        <div class="feature-row"><div class="feature-label">T — Task</div><div class="feature-val">What exactly needs to be done: "Add rate limiting — 5 req/min per IP on all /auth routes"</div></div>
+        <div class="feature-row"><div class="feature-label">E — Expectation</div><div class="feature-val">The success criteria: "Return 429 + JSON {error, retryAfterSeconds}. Run tests after."</div></div>
+      </div>
+      <div class="code-block"><code><span class="comment"># Full CSTE prompt in practice:</span>
+<span class="str">We have a Node.js/Express API. Auth routes are in src/routes/auth.ts,     [C]
+using express-rate-limit (already installed).
+Only edit auth.ts — don't touch server.ts or any test files.              [S]
+Add rate limiting: 5 requests per minute per IP on every /auth route.     [T]
+On limit exceeded: return 429 with JSON {error:"Too many requests",        [E]
+  retryAfterSeconds: N}. Run npm test after the change and show output.</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    </div>
+
+    <!-- ANTI-PATTERNS -->
+    <div class="section-title" style="margin-top:36px">Six Anti-Patterns — With Full Before/After</div>
+    <div class="section-sub">These are the patterns that cause Claude to produce useless output, refactor the wrong thing, or quietly go off-track.</div>
+
+    <div class="bgtitle">Anti-pattern 1 — Describing the solution, not the problem</div>
+    <div class="bg-pair">
+      <div class="bg-bad">
+        <div class="bg-label bad">❌ What you typed</div>
+        <div class="bg-prompt">Add a debounce function to the search input so it waits 300ms before calling the API</div>
+        <div class="bg-why"><strong>What goes wrong:</strong> You've already decided on the solution (debounce, 300ms). Claude will implement exactly that — even if the real problem is that you're calling the API on every keystroke and a simple controlled input with onBlur would be cleaner. Claude can't push back on a solution it doesn't know you chose arbitrarily.</div>
+      </div>
+      <div class="bg-good">
+        <div class="bg-label good">✅ What to type instead</div>
+        <div class="bg-prompt">In src/components/SearchBar.jsx, the API call fires on every single keystroke. This is hammering our /api/search endpoint. What's the right fix? I was thinking debounce at 300ms but open to other approaches. Show me the code once we agree on the approach.</div>
+        <div class="bg-why"><strong>Why it works:</strong> You described the problem (API called on every keystroke), your tentative solution, and asked for agreement before implementation. Claude can now suggest debounce, throttle, or a controlled input pattern — and you pick the right one.</div>
+      </div>
+    </div>
+
+    <div class="bgtitle">Anti-pattern 2 — No constraint on what NOT to change</div>
+    <div class="bg-pair">
+      <div class="bg-bad">
+        <div class="bg-label bad">❌ What you typed</div>
+        <div class="bg-prompt">Refactor the UserService class to use async/await instead of .then() chains</div>
+        <div class="bg-why"><strong>What goes wrong:</strong> Claude refactors every method in the class — including ones that are passing tests, touch the database layer, and have subtle error-handling logic. You wanted to modernise the syntax; Claude rewrote business logic you didn't touch in two years.</div>
+      </div>
+      <div class="bg-good">
+        <div class="bg-label good">✅ What to type instead</div>
+        <div class="bg-prompt">In src/services/UserService.js, refactor only the getUserById() and updateEmail() methods from .then() chains to async/await. Don't touch any other methods, don't change error handling behaviour, don't change the return types. The tests in tests/UserService.test.js should pass without modification after your change.</div>
+        <div class="bg-why"><strong>Why it works:</strong> Two specific methods. Three explicit don't-touch rules. A pass/fail test criterion. Claude can't over-reach because you've drawn the exact boundary.</div>
+      </div>
+    </div>
+
+    <div class="bgtitle">Anti-pattern 3 — Asking for a review without telling Claude what to look for</div>
+    <div class="bg-pair">
+      <div class="bg-bad">
+        <div class="bg-label bad">❌ What you typed</div>
+        <div class="bg-prompt">Review this code and tell me if it looks good
+
+[pastes 200 lines]</div>
+        <div class="bg-why"><strong>What goes wrong:</strong> "Looks good" is unmeasurable. Claude produces a generic checklist — comments about naming conventions, suggests adding a README, notes that tests would be nice. None of which is what you needed before shipping.</div>
+      </div>
+      <div class="bg-good">
+        <div class="bg-label good">✅ What to type instead</div>
+        <div class="bg-prompt">Review this payment processing code before we ship it tomorrow. I specifically need you to check:
+1. Any place where an exception could be swallowed silently
+2. Whether the Stripe webhook signature is being verified correctly
+3. Any race condition risk between the charge and the DB write
+Ignore code style — we have a linter for that.
+
+[pastes code]</div>
+        <div class="bg-why"><strong>Why it works:</strong> Three specific, high-stakes concerns. One explicit exclusion. Claude reviews what actually matters for production safety, not what's easy to comment on.</div>
+      </div>
+    </div>
+
+    <div class="bgtitle">Anti-pattern 4 — Using Claude as a search engine for docs</div>
+    <div class="bg-pair">
+      <div class="bg-bad">
+        <div class="bg-label bad">❌ What you typed</div>
+        <div class="bg-prompt">How do I use React Query?</div>
+        <div class="bg-why"><strong>What goes wrong:</strong> You get a generic tutorial that explains React Query from scratch. It won't match your version, your data-fetching pattern, your error handling, or your file structure. You spend 20 minutes reading before writing one line of code.</div>
+      </div>
+      <div class="bg-good">
+        <div class="bg-label good">✅ What to type instead</div>
+        <div class="bg-prompt">We're using React Query v5 with a REST API. I need to add a query for fetching a user's orders from GET /api/orders?userId=X. Our existing query setup is in src/hooks/useUser.ts — match that pattern exactly. Show me just the new hook, nothing else.</div>
+        <div class="bg-why"><strong>Why it works:</strong> Specific version, specific endpoint, a reference file to match. Claude produces one hook in your exact style. You copy-paste and move on.</div>
+      </div>
+    </div>
+
+    <div class="bgtitle">Anti-pattern 5 — Letting Claude write tests without defining what to test</div>
+    <div class="bg-pair">
+      <div class="bg-bad">
+        <div class="bg-label bad">❌ What you typed</div>
+        <div class="bg-prompt">Write tests for the checkout function</div>
+        <div class="bg-why"><strong>What goes wrong:</strong> Claude writes happy-path tests — the ones that always pass. It won't know about the edge cases that have actually broken in production: the empty cart, the expired coupon code, the item that went out of stock mid-checkout.</div>
+      </div>
+      <div class="bg-good">
+        <div class="bg-label good">✅ What to type instead</div>
+        <div class="bg-prompt">Write Jest tests for src/lib/checkout.ts. I need coverage for these cases:
+- Cart is empty (should throw CartEmptyError)
+- Coupon code is expired (should return error, not throw)
+- Item goes out of stock between cart and checkout (should fail gracefully)
+- Payment succeeds but DB write fails (should refund and return error)
+- Happy path: valid cart, valid coupon, payment succeeds
+Use our existing test setup from tests/setup.ts. Mock Stripe using the pattern in tests/payment.test.ts.</div>
+        <div class="bg-why"><strong>Why it works:</strong> You defined the exact cases — especially the failure modes you already know about. The tests Claude writes will actually catch real bugs, not just verify that working code works.</div>
+      </div>
+    </div>
+
+    <div class="bgtitle">Anti-pattern 6 — Not giving Claude a way to know when it's done</div>
+    <div class="bg-pair">
+      <div class="bg-bad">
+        <div class="bg-label bad">❌ What you typed</div>
+        <div class="bg-prompt">Add caching to the dashboard API calls</div>
+        <div class="bg-why"><strong>What goes wrong:</strong> Claude adds Redis caching, installs a package, modifies 4 files, and sets a 5-minute TTL. You wanted a simple in-memory cache with a 30-second TTL. There's no way for Claude to know the task is done — or that it went in a completely different direction than you intended.</div>
+      </div>
+      <div class="bg-good">
+        <div class="bg-label good">✅ What to type instead</div>
+        <div class="bg-prompt">Add in-memory caching to GET /api/dashboard in src/routes/dashboard.ts. Use a plain JS Map — no new packages. Cache key: the userId. TTL: 30 seconds. If cache hit, return cached response and log "cache hit: [userId]". After making the change, test it by calling the endpoint twice in quick succession and show me the logs to confirm caching is working.</div>
+        <div class="bg-why"><strong>Why it works:</strong> Implementation specified (Map, not Redis), no new packages, cache key, TTL, log message, and a concrete verification step. Claude knows exactly when it's done and can prove it.</div>
+      </div>
+    </div>
+
+    <!-- COPY-PASTE TEMPLATES -->
+    <div class="card" style="margin-top:8px">
+      <div class="card-head"><div class="card-icon" style="background:#0d2e20;">📋</div><div><div class="card-title">Copy-paste prompt templates for common tasks</div></div></div>
+      <div class="code-block"><code><span class="comment"># Bug fix</span>
+<span class="str">"In [file], [function/endpoint] does [wrong thing] when [condition].
+It should [correct behaviour]. Fix only this — don't touch other functions.
+Run tests after and show output."</span>
+
+<span class="comment"># Refactor (safe)</span>
+<span class="str">"Refactor [specific function] in [file] to [goal].
+Don't change the function signature, return type, or behaviour.
+The test file [test file] should pass without modification."</span>
+
+<span class="comment"># New feature</span>
+<span class="str">"Add [feature] to [file]. Requirements:
+- [requirement 1]
+- [requirement 2]
+Don't modify [file A] or [file B]. If you need a new file, put it in [dir]."</span>
+
+<span class="comment"># Code review</span>
+<span class="str">"Review [file] before we ship. Check specifically for:
+1. [concern 1]
+2. [concern 2]
+Ignore style — we have a linter. Tell me what you find, then wait for me to confirm fixes."</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    </div>
+  </div>
+
+  <div data-level="advanced" data-section="advanced-tab">
+    <div class="section-title">Advanced Prompting — Large Codebases &amp; Production Systems</div>
+    <div class="section-sub">The patterns that matter when the codebase is complex, the stakes are high, and one wrong prompt costs hours.</div>
+
+    <!-- ANTI-PATTERN: no architectural context -->
+    <div class="bgtitle">Anti-pattern 7 — Asking for a change without explaining the architecture</div>
+    <div class="bg-pair">
+      <div class="bg-bad">
+        <div class="bg-label bad">❌ What you typed</div>
+        <div class="bg-prompt">Add logging to the order service</div>
+        <div class="bg-why"><strong>What goes wrong:</strong> Claude picks a logging library (probably winston or console.log), adds it to one file, and invents a log format. Your codebase already has a centralised logger, a log correlation ID pattern, and a team convention for log levels. Claude doesn't know any of that — and you won't catch the mismatch until code review.</div>
+      </div>
+      <div class="bg-good">
+        <div class="bg-label good">✅ What to type instead</div>
+        <div class="bg-prompt">Add structured logging to src/services/OrderService.ts. We use our internal logger: import { logger } from 'src/lib/logger'. Log pattern to follow: logger.info('order.created', { orderId, userId, total }). Log these events: order created, payment charged, fulfilment queued, any error (log level 'error' with the full error object). Don't add any new logging package — only use our existing logger.</div>
+        <div class="bg-why"><strong>Why it works:</strong> You gave the import path, the exact call signature, the event names to log, the log levels, and explicitly prevented new package installs. Claude slots into your existing system rather than inventing a new one.</div>
+      </div>
+    </div>
+
+    <!-- ANTI-PATTERN: migrations -->
+    <div class="bgtitle">Anti-pattern 8 — Database migrations without guardrails</div>
+    <div class="bg-pair">
+      <div class="bg-bad">
+        <div class="bg-label bad">❌ What you typed</div>
+        <div class="bg-prompt">Add a status column to the orders table</div>
+        <div class="bg-why"><strong>What goes wrong:</strong> Claude writes a migration that adds the column but forgets a default value — your 2 million existing rows now have NULL in a non-nullable column. Or it uses the wrong migration tool. Or runs the migration instead of just generating it. On a production database, any of these is a serious incident.</div>
+      </div>
+      <div class="bg-good">
+        <div class="bg-label good">✅ What to type instead</div>
+        <div class="bg-prompt">Generate a Prisma migration to add a status column to the orders table. Type: enum OrderStatus {PENDING, PROCESSING, SHIPPED, CANCELLED}. Default value for existing rows: PENDING. The migration should be backwards-compatible — existing rows must not break. Only generate the migration file in prisma/migrations/ — do NOT run it. I will review and run it manually. After generating, also update the Order model in prisma/schema.prisma.</div>
+        <div class="bg-why"><strong>Why it works:</strong> Tool specified (Prisma), enum values defined, default for existing rows, backwards-compat requirement, and an explicit "generate but do not run" instruction. You stay in control of when the migration touches the database.</div>
+      </div>
+    </div>
+
+    <!-- ANTI-PATTERN: performance -->
+    <div class="bgtitle">Anti-pattern 9 — "Make it faster" on a slow query</div>
+    <div class="bg-pair">
+      <div class="bg-bad">
+        <div class="bg-label bad">❌ What you typed</div>
+        <div class="bg-prompt">This query is slow, optimise it
+
+[pastes SQL]</div>
+        <div class="bg-why"><strong>What goes wrong:</strong> Claude rewrites the query using techniques that look good syntactically but may not help — or actively hurt — without knowing your indexes, table sizes, query plan, or Postgres version. Generic SQL optimisation advice is often wrong for your specific schema.</div>
+      </div>
+      <div class="bg-good">
+        <div class="bg-label good">✅ What to type instead</div>
+        <div class="bg-prompt">This query takes ~4s on our orders table (8M rows, Postgres 15). Indexes that exist: orders(created_at), orders(user_id), orders(status). EXPLAIN ANALYZE output:
+
+[paste EXPLAIN output]
+
+Goal: under 200ms. Suggest changes — indexes, query rewrite, or both. Don't change the result set. Explain the trade-offs before I implement anything.</div>
+        <div class="bg-why"><strong>Why it works:</strong> Table size, Postgres version, existing indexes, EXPLAIN output, a target latency, and a constraint on the result set. Claude now has what a DBA would need to give real advice — not guesses.</div>
+      </div>
+    </div>
+
+    <!-- SUB-AGENT PATTERN -->
+    <div class="card" style="margin-top:8px">
+      <div class="card-head"><div class="card-icon" style="background:#1a0d2e;">🏗️</div><div><div class="card-title">Sub-agent orchestration for large epics</div><div class="card-sub">How to decompose a 3-day feature into Claude-sized tasks</div></div></div>
+      <p style="font-size:.87rem;color:var(--text2);margin-bottom:12px">Use an orchestrator session to decompose first, then delegate. The orchestrator prompt is as important as the sub-task prompts.</p>
+      <div class="code-block"><code><span class="comment"># Step 1: Orchestrator session — decompose the epic</span>
+<span class="str">"We need to add multi-tenancy to this SaaS app. Before writing any code:
+1. List every file that will need changes
+2. For each change, describe: what changes, why, and what could break
+3. Identify the order — which changes must happen before others?
+4. Flag any changes that touch the database (need migration review)
+Output as a numbered task list. I will approve it before you touch any code."</span>
+
+<span class="comment"># Step 2: Run approved tasks in isolated worktrees</span>
+<span class="cmd">git</span> worktree add ../feat-multitenancy-db   -b feat/multitenancy-db
+<span class="cmd">git</span> worktree add ../feat-multitenancy-api  -b feat/multitenancy-api
+<span class="cmd">git</span> worktree add ../feat-multitenancy-ui   -b feat/multitenancy-ui
+
+<span class="comment"># Step 3: Each sub-agent gets an isolated, scoped prompt</span>
+<span class="cmd">cd</span> ../feat-multitenancy-db
+<span class="cmd">claude</span> <span class="str">"Task: Add tenant_id column to users, orders, and products tables.
+Constraint: Generate migrations only — do not run them.
+Constraint: Do not touch any files outside /prisma.
+Done when: 3 migration files exist and schema.prisma is updated."</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    </div>
+
+    <!-- SECURITY -->
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d2e20;">🔒</div><div><div class="card-title">Security guardrails for agentic Claude</div><div class="card-sub">What to put in CLAUDE.md when Claude has real power</div></div></div>
+      <div class="code-block"><code><span class="comment"># In your CLAUDE.md — hard limits that Claude will see on every session</span>
+
+<span class="str">## BOUNDARIES — Non-negotiable
+
+### Files you may NEVER touch:
+- .env, .env.*, any secrets file
+- prisma/migrations/ — generate only, never run
+- infrastructure/ (Terraform, k8s configs)
+- Any file not under src/ or tests/
+
+### Actions you may NEVER take:
+- Run database migrations
+- Deploy or push to any remote
+- Delete files (ask me first)
+- Install packages without telling me first
+
+### When uncertain:
+Stop and ask. Do not assume. Do not proceed with a guess.
+A wrong assumption costs more to fix than pausing to confirm.</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <div class="feature-grid" style="margin-top:14px">
+        <div class="feature-row"><div class="feature-label">Prompt injection</div><div class="feature-val">If Claude reads external content (PRs, issues, emails), those can contain injected instructions. Run with --verbose and audit tool calls in sensitive workflows.</div></div>
+        <div class="feature-row"><div class="feature-label">Audit trail</div><div class="feature-val"><code style="font-family:var(--mono);color:var(--accent3)">claude --verbose 2>&amp;1 | tee claude-$(date +%s).log</code> — every tool call recorded, timestamped.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FUTURE ═══════════════ -->
+<div id="future" class="page">
+  <div class="hero">
+    <div class="hero-badge">🔮 What's Next</div>
+    <h1>The Future of <span>AI Coding</span></h1>
+    <p>Where Claude Code came from, where it is today, and where the entire field is heading.</p>
+  </div>
+
+  <div class="section-title">Timeline: AI Coding Tools</div>
+  <div class="section-sub">The evolution from autocomplete to autonomous engineering agents.</div>
+  <div class="timeline" style="margin-bottom:40px;">
+    <div class="tl-item">
+      <div class="tl-date">2021</div>
+      <div class="tl-title">GitHub Copilot launches</div>
+      <div class="tl-body">First mainstream AI coding assistant. Autocompletes single lines and functions. Changes how developers think about code as input. Over 1 million users within first year.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2022</div>
+      <div class="tl-title">ChatGPT changes the game</div>
+      <div class="tl-body">Developers start using chat interfaces for coding. Copy-paste workflow becomes widespread. GPT-4's code understanding unlocks complex refactoring via conversation.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2023</div>
+      <div class="tl-title">First agentic experiments</div>
+      <div class="tl-body">AutoGPT, AgentGPT, Devin (preview) show agents that can plan and execute multi-step tasks. Cursor IDE integrates LLMs deeply. Codebase-aware tools emerge.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2024</div>
+      <div class="tl-title">Claude Code (beta) + Devin GA</div>
+      <div class="tl-body">Claude 3.5 Sonnet achieves 49% on SWE-bench — a real-world software engineering benchmark. Claude Code enters beta. Devin ships commercially. The "AI junior developer" era begins.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2025</div>
+      <div class="tl-title">Claude Code goes GA + agent networks</div>
+      <div class="tl-body">Claude Code reaches general availability. Multi-agent workflows become practical. Companies run Claude in CI/CD pipelines. Sub-agent orchestration patterns emerge. GitHub integrations deepen.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026–2028</div>
+      <div class="tl-title">The autonomous engineering era</div>
+      <div class="tl-body">Predicted: AI agents handle 50%+ of new feature development at leading tech companies. Developer role shifts toward architecture, review, and product thinking. AI-AI collaboration becomes standard.</div>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num">49%</div><div class="stat-label">SWE-bench score (Claude 3.5 Sonnet)</div></div>
+    <div class="stat-card"><div class="stat-num">1.8M</div><div class="stat-label">GitHub Copilot subscribers (2024)</div></div>
+    <div class="stat-card"><div class="stat-num">55%</div><div class="stat-label">Devs using AI tools daily (2024 survey)</div></div>
+    <div class="stat-card"><div class="stat-num">30%</div><div class="stat-label">Microsoft code written by AI (2024)</div></div>
+    <div class="stat-card"><div class="stat-num">10x</div><div class="stat-label">Faster boilerplate generation vs manual</div></div>
+    <div class="stat-card"><div class="stat-num">$1.3T</div><div class="stat-label">Estimated developer productivity unlocked by 2030</div></div>
+  </div>
+
+  <div class="section-title" style="margin-top:8px;">Future Directions</div>
+  <div class="future-grid">
+    <div class="future-card">
+      <div class="year">2025–2026</div>
+      <h4>🧠 Long-running agents</h4>
+      <p>Claude handles multi-day tasks: "Build this microservice from the spec." Sets goals, tracks progress, recovers from errors — without human supervision for hours at a time.</p>
+    </div>
+    <div class="future-card" style="border-top-color:var(--accent2);">
+      <div class="year" style="color:var(--accent2);">2026</div>
+      <h4>🤝 Agent teams</h4>
+      <p>Multiple specialized Claude agents collaborate: one writes code, one reviews security, one writes tests, one manages dependencies. Coordinated via an orchestrator agent.</p>
+    </div>
+    <div class="future-card" style="border-top-color:var(--green);">
+      <div class="year" style="color:var(--green);">2026–2027</div>
+      <h4>📊 AI-native testing</h4>
+      <p>Claude generates tests by understanding product requirements (not just code), discovers edge cases humans miss, and maintains test coverage automatically as code evolves.</p>
+    </div>
+    <div class="future-card" style="border-top-color:var(--yellow);">
+      <div class="year" style="color:var(--yellow);">2027+</div>
+      <h4>🏗️ Architecture co-pilot</h4>
+      <p>Claude doesn't just write code — it proposes system design, identifies scalability bottlenecks, and simulates load before any code is written. From spec to scalable architecture.</p>
+    </div>
+  </div>
+
+  <div class="callout info">
+    <div class="callout-icon">🎯</div>
+    <p><strong>The skill that matters most in 2026:</strong> Being able to clearly specify what you want, break complex problems into well-defined tasks, review AI-generated code critically, and orchestrate multiple AI agents toward a coherent goal. The best developers won't be those who type fastest — they'll be those who think clearest.</p>
+  </div>
+
+  <div class="card" style="margin-top:24px;">
+    <div class="card-head"><div class="card-icon" style="background:#0d1e3e;">📚</div><div><div class="card-title">Continue Learning</div></div></div>
+    <div class="grid-2" style="margin-top:8px;">
+      <div>
+        <p style="font-size:0.85rem;color:var(--text2);"><strong style="color:var(--text);">Official Docs</strong><br>docs.anthropic.com/claude-code — full reference, changelog, MCP guide.</p>
+        <p style="font-size:0.85rem;color:var(--text2);margin-top:10px;"><strong style="color:var(--text);">SWE-bench</strong><br>swebench.com — the definitive coding AI benchmark. See how models compare.</p>
+      </div>
+      <div>
+        <p style="font-size:0.85rem;color:var(--text2);"><strong style="color:var(--text);">Anthropic Blog</strong><br>anthropic.com/news — research updates, new capabilities, safety research.</p>
+        <p style="font-size:0.85rem;color:var(--text2);margin-top:10px;"><strong style="color:var(--text);">Model Context Protocol</strong><br>modelcontextprotocol.io — extend Claude Code with custom tools and integrations.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function setLevel(level, section) {
+  // Update buttons in this section
+  const page = document.querySelector('.page.active');
+  page.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  // Show/hide content
+  page.querySelectorAll('[data-level]').forEach(el => {
+    if (!el.dataset.section || el.dataset.section === section) {
+      el.classList.toggle('show', el.dataset.level === level);
+    }
+  });
+}
+
+function toggleAcc(head) {
+  head.classList.toggle('open');
+  const body = head.nextElementSibling;
+  body.classList.toggle('show');
+}
+
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code');
+  const text = code.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+
+  const iframe = document.createElement('iframe');
+  iframe.src = 'https://www.youtube.com/embed/' + id;
+  iframe.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  iframe.allowFullscreen = true;
+  wrap.innerHTML = '';
+  wrap.appendChild(iframe);
+}
+</script>
+
+<!-- FOOTER -->
+<footer role="contentinfo" style="padding:3rem 2rem;text-align:center;color:var(--text3);font-size:.83rem;border-top:1px solid var(--border);">
+  <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.9rem;">
+    <a href="index.html" style="color:var(--accent2);">← Back to All Modules</a>
+    <a href="terminology.html" style="color:var(--accent2);">AI Terminology</a>
+    <a href="core-ai.html" style="color:var(--accent2);">Core Architecture</a>
+    <a href="comparisons.html" style="color:var(--accent2);">Model Comparisons</a>
+    <a href="prompting.html" style="color:var(--accent2);">Prompt Engineering</a>
+    <a href="use-cases.html" style="color:var(--accent2);">Use Cases</a>
+    <a href="ai-integration.html" style="color:var(--accent2);">AI Integration</a>
+    <a href="enterprise-ai.html" style="color:var(--accent2);">Enterprise AI</a>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.9rem;">
+    <a href="about.html" style="color:var(--accent2);">About</a>
+    <a href="contact.html" style="color:var(--accent2);">Contact</a>
+    <a href="privacy-policy.html" style="color:var(--accent2);">Privacy Policy</a>
+  </div>
+  <div style="line-height:1.8;">
+    <strong style="color:var(--text2);">AI Literate</strong> — Free AI education for everyone.<br>
+    AI information changes rapidly — verify with official sources. Not affiliated with any AI company.<br>
+    <span>&copy; <span class="footer-yr"></span> AI Literate. All rights reserved.</span>
+  </div>
+</footer>
+<script>document.querySelectorAll('.footer-yr').forEach(e=>e.textContent=new Date().getFullYear());</script>
+
+</body>
+</html>

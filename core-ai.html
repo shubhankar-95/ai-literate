@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Core AI Architecture: How Transformers, Neural Networks & LLMs Work — AI Literate</title>
+<meta name="description" content="Understand how AI actually works: the Transformer architecture step-by-step, self-attention mechanism with interactive demo, neural network visualizer, RLHF training pipeline, scaling laws, and how LLMs generate text. Interactive, visual, and detailed.">
+<meta name="keywords" content="transformer architecture explained, how LLMs work, self-attention mechanism, neural network explained, RLHF training, scaling laws AI, how ChatGPT works, LLM internals, KV cache, autoregressive generation, AI training pipeline">
+<meta name="robots" content="index, follow">
+<meta name="author" content="AI Literate">
+<meta property="og:title" content="Core AI Architecture: Transformers, Neural Networks & LLMs Explained">
+<meta property="og:description" content="Visual, interactive explanation of how AI actually works — transformer architecture, attention mechanism, neural networks, RLHF training, and text generation.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ai-literate.online/core-ai.html">
+<meta property="og:site_name" content="AI Literate">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How AI Works: Transformers, Neural Networks & LLMs">
+<meta name="twitter:description" content="Interactive guide to AI architecture — transformer, attention, neural nets, RLHF, scaling laws. With visual demos.">
+<link rel="canonical" href="https://ai-literate.online/core-ai.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Core AI Architecture: How Transformers, Neural Networks and LLMs Work",
+  "description": "Interactive visual explanation of transformer architecture, self-attention, RLHF training, and LLM text generation.",
+  "author": {"@type": "Organization", "name": "AI Literate"},
+  "publisher": {"@type": "Organization", "name": "AI Literate", "url": "https://ai-literate.online"},
+  "url": "https://ai-literate.online/core-ai.html",
+  "inLanguage": "en-US"
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0f1117;--surface:#1a1d2e;--surface2:#242840;--surface3:#2e3250;--accent:#6c63ff;--accent2:#a78bfa;--green:#10b981;--yellow:#f59e0b;--red:#ef4444;--blue:#3b82f6;--pink:#ec4899;--orange:#f97316;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--border:#2e3250;--r:12px}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+a{color:var(--accent2)}a:hover{text-decoration:underline}
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(15,17,23,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:1rem}
+.nav-back{display:flex;align-items:center;gap:.4rem;color:var(--text2);font-size:.85rem;text-decoration:none;padding:.35rem .8rem;border-radius:8px;border:1px solid var(--border);transition:all .2s;white-space:nowrap}
+.nav-back:hover{border-color:var(--accent);color:var(--text);text-decoration:none}
+.nav-title{font-size:1rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-tabs{display:flex;gap:.25rem;overflow-x:auto;margin-left:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{padding:.3rem .85rem;border-radius:6px;border:1px solid transparent;background:transparent;color:var(--text3);font-size:.78rem;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .2s}
+.nav-tab:hover{color:var(--text2);border-color:var(--border)}
+.nav-tab.active{background:var(--surface2);color:var(--text);border-color:var(--border)}
+/* MAIN */
+main{padding-top:56px}
+.page{display:none;max-width:960px;margin:0 auto;padding:3rem 2rem 5rem}
+.page.active{display:block}
+/* SECTION HERO */
+.page-hero{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.page-label{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+.page-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.2;margin-bottom:.75rem}
+.page-desc{font-size:1rem;color:var(--text2);max-width:640px;line-height:1.7}
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1.2rem;transition:border-color .2s}
+.card:hover{border-color:rgba(108,99,255,.4)}
+.card h3{font-size:1.05rem;font-weight:700;margin-bottom:.5rem}
+.card p{font-size:.9rem;color:var(--text2);line-height:1.7;margin-bottom:.75rem}
+.card p:last-child{margin-bottom:0}
+.card p strong{color:var(--text)}
+/* VISUAL BOXES */
+.diagram-box{background:#0d1117;border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin:1.25rem 0;overflow-x:auto}
+.diagram-box pre{font-family:'Fira Code',monospace;font-size:.8rem;color:var(--text2);line-height:1.8;margin:0}
+/* PIPELINE STEPS */
+.pipeline{display:flex;flex-direction:column;gap:0;margin:1.5rem 0}
+.pipe-step{display:flex;align-items:stretch;gap:1.25rem}
+.pipe-left{display:flex;flex-direction:column;align-items:center;width:44px;min-width:44px}
+.pipe-num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;color:#fff;flex-shrink:0}
+.pipe-line{flex:1;width:2px;background:linear-gradient(to bottom,var(--accent),var(--border));margin:4px 0}
+.pipe-body{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem 1.5rem;margin-bottom:1rem}
+.pipe-body h4{font-size:.95rem;font-weight:700;margin-bottom:.4rem;color:var(--text)}
+.pipe-body p{font-size:.86rem;color:var(--text2);line-height:1.6;margin-bottom:.5rem}
+.pipe-body p:last-child{margin-bottom:0}
+.pipe-body code{font-family:'Fira Code',monospace;background:var(--surface2);padding:.1rem .4rem;border-radius:4px;font-size:.8rem;color:var(--accent2)}
+/* ATTENTION DEMO */
+#attn-demo{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin:1.5rem 0}
+#attn-demo h3{font-size:1rem;font-weight:700;margin-bottom:.35rem}
+#attn-demo p.desc{font-size:.85rem;color:var(--text2);margin-bottom:1.25rem}
+.attn-sentence{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.25rem}
+.attn-word{padding:.45rem .9rem;border-radius:8px;background:var(--surface2);border:2px solid var(--border);cursor:pointer;font-size:.92rem;font-weight:500;transition:all .2s;user-select:none}
+.attn-word:hover{border-color:var(--accent)}
+.attn-word.selected{background:rgba(108,99,255,.2);border-color:var(--accent);color:var(--accent2)}
+.attn-grid{display:grid;gap:4px;margin-bottom:1rem}
+.attn-row{display:flex;align-items:center;gap:4px}
+.attn-label{width:90px;font-size:.75rem;color:var(--text3);text-align:right;padding-right:6px}
+.attn-cell{height:28px;border-radius:4px;flex:1;transition:background .3s}
+.attn-cell-label{font-size:.7rem;color:var(--text3);text-align:center;margin-top:2px;padding:0 2px}
+#attn-explanation{font-size:.85rem;color:var(--text2);padding:.75rem 1rem;background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.2);border-radius:8px;min-height:50px}
+/* NEURAL NET VIZ */
+#nn-demo{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin:1.5rem 0}
+.nn-canvas-wrap{overflow-x:auto;padding-bottom:.5rem}
+canvas#nn-canvas{display:block;margin:0 auto}
+/* TRAINING CHART */
+#training-demo{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin:1.5rem 0}
+.train-controls{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+.btn{padding:.5rem 1.25rem;border-radius:8px;border:1px solid var(--accent);background:transparent;color:var(--accent2);font-family:inherit;font-size:.85rem;cursor:pointer;transition:all .2s}
+.btn:hover,.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.train-stat{font-size:.82rem;color:var(--text2);padding:.4rem .8rem;background:var(--surface2);border-radius:6px}
+/* INFOGRAPHIC CARDS */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin:1.25rem 0}
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;position:relative;overflow:hidden}
+.info-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.ic-1::before{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.ic-2::before{background:linear-gradient(90deg,var(--green),#34d399)}
+.ic-3::before{background:linear-gradient(90deg,var(--blue),#60a5fa)}
+.ic-4::before{background:linear-gradient(90deg,var(--yellow),#fcd34d)}
+.ic-5::before{background:linear-gradient(90deg,var(--pink),#f9a8d4)}
+.ic-6::before{background:linear-gradient(90deg,var(--orange),#fdba74)}
+.info-card .ic-emoji{font-size:1.5rem;margin-bottom:.5rem}
+.info-card h4{font-size:.9rem;font-weight:700;margin-bottom:.35rem}
+.info-card p{font-size:.82rem;color:var(--text2);line-height:1.5}
+/* TAGS */
+.tag{display:inline-block;padding:.2rem .65rem;border-radius:999px;font-size:.72rem;font-weight:600;margin-right:.35rem}
+.t-purple{background:rgba(108,99,255,.15);color:var(--accent2);border:1px solid rgba(108,99,255,.3)}
+.t-green{background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.3)}
+.t-blue{background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.3)}
+.t-yellow{background:rgba(245,158,11,.15);color:#fcd34d;border:1px solid rgba(245,158,11,.3)}
+.t-red{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.3)}
+/* CALLOUT */
+.callout{border-radius:var(--r);padding:1rem 1.25rem;font-size:.88rem;line-height:1.7;margin:1rem 0}
+.callout.blue{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.25);color:#93c5fd}
+.callout.green{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#6ee7b7}
+.callout.yellow{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fcd34d}
+.callout.purple{background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.25);color:var(--accent2)}
+/* TIMELINE */
+.timeline{position:relative;padding-left:2rem;margin:1.25rem 0}
+.timeline::before{content:'';position:absolute;left:.35rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),var(--border))}
+.tl-item{position:relative;margin-bottom:1.5rem}
+.tl-dot{position:absolute;left:-1.8rem;top:.3rem;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tl-item h4{font-size:.9rem;font-weight:600;margin-bottom:.25rem}
+.tl-item p{font-size:.83rem;color:var(--text2);line-height:1.5}
+/* CODE */
+pre{background:#0d1117;border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.8rem;line-height:1.7;margin:.75rem 0}
+code.il{background:var(--surface2);padding:.1rem .4rem;border-radius:4px;font-family:'Fira Code',monospace;font-size:.8rem;color:var(--accent2)}
+/* GRID */
+.g2{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;margin:1.2rem 0}
+.divider{height:1px;background:var(--border);margin:2.5rem 0}
+h2.section-h{font-size:1.3rem;font-weight:700;margin:2rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+h2.section-h::before{content:'';width:3px;height:1.2rem;background:var(--accent);border-radius:2px;display:inline-block}
+/* SCALING CHART */
+.scale-bar-wrap{margin:1.25rem 0}
+.scale-bar-row{display:flex;align-items:center;gap:.75rem;margin-bottom:.6rem}
+.scale-bar-label{width:130px;font-size:.78rem;color:var(--text2);text-align:right}
+.scale-bar{height:22px;border-radius:4px;transition:width 1s ease;display:flex;align-items:center;padding:0 .5rem;font-size:.7rem;font-weight:600;color:#fff;white-space:nowrap}
+/* Responsive */
+@media(max-width:640px){.page{padding:2rem 1rem 4rem}.nav-tabs{display:none}}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://ai-literate.online/"},
+    {"@type":"ListItem","position":2,"name":"Core AI Architecture","item":"https://ai-literate.online/core-ai.html"}
+  ]
+}
+</script>
+</head>
+<body>
+
+<nav id="nav" aria-label="Main navigation">
+  <a href="index.html" style="font-size:1.05rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;">🤖 AI Literate</a>
+  <div style="display:flex;gap:1.5rem;margin-left:auto;align-items:center;">
+    <a href="index.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">All Modules</a>
+    <a href="about.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">About</a>
+    <a href="contact.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">Contact</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ═══════════ PAGE 1: TRANSFORMER ═══════════ -->
+<div class="page active" id="page-transformer">
+  <div class="page-hero">
+    <div class="page-label">Deep Dive — Architecture</div>
+    <h1 class="page-title">⚡ The Transformer Architecture</h1>
+    <p class="page-desc">The 2017 invention that powers everything — GPT-4, Claude, Gemini, Llama. Understanding the Transformer gives you the mental model for all of modern AI.</p>
+  </div>
+
+  <div class="callout blue">📖 This page explains the Transformer introduced in <a href="https://arxiv.org/abs/1706.03762" target="_blank">"Attention Is All You Need" (Vaswani et al., 2017)</a> — one of the most cited papers in the history of computer science.</div>
+
+  <h2 class="section-h">The Problem Transformers Solved</h2>
+  <div class="card">
+    <h3>Before Transformers: Sequential Reading</h3>
+    <p>Previous architectures — RNNs, LSTMs — processed text sequentially, like reading left to right. This created two fatal problems: <strong>vanishing gradients</strong> (information from early in a sequence dissolves over many steps, making long-range dependencies impossible to learn) and <strong>no parallelism</strong> (token 100 can only be processed after tokens 1–99, preventing efficient GPU utilisation).</p>
+    <p>The result: these models struggled with long documents and were slow to train. The field needed a fundamentally different approach.</p>
+  </div>
+  <div class="card">
+    <h3>The Transformer's Solution: Attention Over Everything</h3>
+    <p>The Transformer discards sequential processing entirely. Instead, every token attends to every other token in the sequence simultaneously. The model processes all positions in parallel and uses <strong>attention weights</strong> to determine how much each position should influence the representation of every other position.</p>
+    <p>Result: long-range dependencies are learned as easily as short-range ones. The word at position 1 can directly influence the representation at position 500, with no information loss. And parallel processing of all positions means GPUs — which excel at parallel operations — can be fully utilised.</p>
+  </div>
+
+  <h2 class="section-h">The Architecture Step by Step</h2>
+
+  <div class="pipeline">
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">1</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Input Tokenisation</h4>
+        <p>Your text is split into tokens using a learned vocabulary (e.g., 50,000 items for GPT). "Hello, world!" → <code>["Hello", ",", " world", "!"]</code> → <code>[15496, 11, 995, 0]</code> (integer IDs). These IDs are the model's actual input.</p>
+        <p>Tokenisation algorithms like Byte-Pair Encoding (BPE) balance vocabulary size against coverage of all possible text, including code, maths, and multilingual content.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">2</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Token Embeddings</h4>
+        <p>Each integer ID is looked up in an embedding matrix (dimensions: vocab_size × d_model). This produces a dense vector for each token — e.g., a 4,096-dimensional vector for GPT-3 large. These vectors encode semantic meaning and are the starting representation of each token.</p>
+        <p>At the start of training, embeddings are random. Through backpropagation, they organise themselves so that semantically similar tokens end up close together in this high-dimensional space.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">3</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Positional Encoding</h4>
+        <p>Attention is order-agnostic — without extra information, the model can't distinguish "dog bites man" from "man bites dog." Positional encodings add order information. The original paper used sinusoidal functions; modern models learn positional encodings, or use rotary position embeddings (RoPE) that scale to long contexts more gracefully.</p>
+        <p>The final input to the first transformer layer is: <code>embedding + positional_encoding</code> — a vector containing both meaning and position.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">4</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Multi-Head Self-Attention (The Core)</h4>
+        <p>For each token, three projections are computed from the embedding: <strong>Query (Q)</strong> — "what am I looking for?", <strong>Key (K)</strong> — "what do I contain?", <strong>Value (V)</strong> — "what information do I provide?"</p>
+        <p>Attention score between token i and token j = <code>softmax(Q_i · K_j / √d_k)</code>. These scores become attention weights — a probability distribution over all positions. The output for position i is a weighted sum of all Value vectors: <code>output_i = Σ weight_{ij} × V_j</code>.</p>
+        <p><strong>Multi-head:</strong> This is done h times in parallel with different weight matrices (typically h=8 to 96 heads). Each head can specialise in different relationship types. Results are concatenated and linearly projected.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">5</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Add & Norm (Residual Connection)</h4>
+        <p>The output of attention is added back to the original input (residual/skip connection): <code>output = LayerNorm(x + Attention(x))</code>. This serves two purposes: it preserves gradient flow (preventing vanishing gradients in deep networks) and allows the network to learn "adjustments" rather than complete transformations — making training much more stable.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">6</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Feed-Forward Network (FFN)</h4>
+        <p>After attention, each token's representation passes through an identical two-layer MLP applied position-wise: <code>FFN(x) = max(0, xW₁ + b₁)W₂ + b₂</code>. The intermediate dimension is typically 4× the model dimension (e.g., 4,096 → 16,384 → 4,096 for GPT-3 base).</p>
+        <p>The FFN adds computation capacity beyond what attention provides. Recent research suggests the FFN layers act as "key-value memories" storing factual associations learned during training. Another residual connection + layer norm follows.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">7</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Stack N Layers</h4>
+        <p>Steps 4–6 form one "transformer block." These blocks are stacked: GPT-2 small uses 12 layers; GPT-3 uses 96; GPT-4 is rumoured to use 120+ layers. Each layer refines representations. Lower layers learn syntactic features (grammar, word order). Higher layers learn semantic features (reasoning, facts, pragmatics).</p>
+        <p>This stacking is where "deep" learning lives — not the depth of individual operations, but the depth of stacked transformation stages.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">8</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Output: Predicting the Next Token</h4>
+        <p>The final layer's output for the last token position is projected through a linear layer (d_model → vocab_size) followed by softmax, producing a probability distribution over all ~50,000 possible next tokens.</p>
+        <p>The model samples from this distribution (controlled by temperature) to select the next token, appends it to the context, and runs another forward pass. This autoregressive loop generates text one token at a time.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTENTION DEMO -->
+  <div id="attn-demo">
+    <h3>🔬 Interactive Attention Demo</h3>
+    <p class="desc">Click any word below to see which other words it "attends to" most strongly. This simulates what the attention mechanism computes for each token.</p>
+    <div id="attn-words" class="attn-sentence"></div>
+    <div id="attn-bars" class="attn-grid"></div>
+    <div id="attn-explanation">👆 Click a word above to see its attention pattern</div>
+  </div>
+
+  <div class="divider"></div>
+  <h2 class="section-h">Architecture Variants</h2>
+  <div class="info-grid">
+    <div class="info-card ic-1">
+      <div class="ic-emoji">📝</div>
+      <h4>Decoder-only (GPT family)</h4>
+      <p>Uses causal (masked) self-attention — each token only attends to previous tokens. Used for text generation. GPT-4, Claude, Gemini, Llama all use decoder-only architecture.</p>
+    </div>
+    <div class="info-card ic-2">
+      <div class="ic-emoji">🔄</div>
+      <h4>Encoder-Decoder (T5, BART)</h4>
+      <p>Original Transformer design. Encoder processes input with full bidirectional attention; decoder generates output attending to encoder. Best for translation and summarisation.</p>
+    </div>
+    <div class="info-card ic-3">
+      <div class="ic-emoji">👁️</div>
+      <h4>Encoder-only (BERT)</h4>
+      <p>Bidirectional attention over the full input. Can't generate text. Used for classification, NER, embeddings. Fine-tunes efficiently on small datasets.</p>
+    </div>
+    <div class="info-card ic-4">
+      <div class="ic-emoji">🖼️</div>
+      <h4>Vision Transformer (ViT)</h4>
+      <p>Images split into 16×16 patches, each treated as a token. Same transformer architecture applied to visual data. Now the dominant architecture for image tasks.</p>
+    </div>
+    <div class="info-card ic-5">
+      <div class="ic-emoji">🧩</div>
+      <h4>Mixture of Experts (MoE)</h4>
+      <p>Multiple specialist "expert" FFN networks. A routing network selects 2–4 experts per token. Used in Mixtral, GPT-4 (speculated), and Gemini. Same compute as dense model but more parameters.</p>
+    </div>
+    <div class="info-card ic-6">
+      <div class="ic-emoji">⚡</div>
+      <h4>Flash Attention</h4>
+      <p>An algorithm optimisation (not architecture change) that makes attention computation 2–4x faster with less memory by fusing operations and using hardware-aware tiling. Now standard.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 2: NEURAL NETWORKS ═══════════ -->
+<div class="page" id="page-neural">
+  <div class="page-hero">
+    <div class="page-label">Deep Dive — Fundamentals</div>
+    <h1 class="page-title">🕸️ Neural Networks — From Neurons to Depth</h1>
+    <p class="page-desc">Understanding neural networks is understanding the foundation of all modern AI. This section builds from a single artificial neuron to the 100-billion parameter systems running today.</p>
+  </div>
+
+  <h2 class="section-h">The Biological Inspiration</h2>
+  <div class="card">
+    <p>The brain contains ~86 billion neurons. Each neuron receives signals from thousands of other neurons through dendrites, accumulates these signals, and if the total exceeds a threshold, fires an output signal down its axon to the next neurons. Neural networks are a loose mathematical model of this process — not a literal simulation of the brain, but inspired by its architecture.</p>
+    <p>A single artificial neuron: takes inputs <code>x₁, x₂, ... xₙ</code>, multiplies each by a learned weight <code>w₁, w₂, ... wₙ</code>, sums them up (plus a bias term), and passes the result through a non-linear activation function. Simple. Chain thousands of these together and stack them in layers, and you get a neural network capable of approximating any continuous function.</p>
+  </div>
+
+  <!-- NN DIAGRAM -->
+  <div id="nn-demo">
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:.5rem">🔬 Neural Network Visualiser</h3>
+    <p style="font-size:.82rem;color:var(--text2);margin-bottom:1rem">Hover over nodes to see connections highlighted. This shows a small 4-layer network. Real LLMs have millions of neurons per layer and 96+ layers.</p>
+    <div class="nn-canvas-wrap">
+      <canvas id="nn-canvas" width="700" height="280"></canvas>
+    </div>
+  </div>
+
+  <h2 class="section-h">Layers and Depth</h2>
+  <div class="g2">
+    <div class="card">
+      <span class="tag t-blue">Input Layer</span>
+      <h3>Raw Data Entry</h3>
+      <p>The input layer receives raw data — pixel values, token embeddings, audio spectrograms. No transformation happens here; it simply passes data to the first hidden layer. The number of input neurons matches the data dimensionality.</p>
+    </div>
+    <div class="card">
+      <span class="tag t-purple">Hidden Layers</span>
+      <h3>Where Learning Happens</h3>
+      <p>Hidden layers learn increasingly abstract representations. Layer 1 might learn edges in images. Layer 5 learns textures. Layer 20 learns object parts. Layer 50 learns entire objects in context. The more layers (depth), the more complex the learned hierarchy.</p>
+    </div>
+    <div class="card">
+      <span class="tag t-green">Output Layer</span>
+      <h3>Final Prediction</h3>
+      <p>The output layer produces the final result. For classification: N neurons (one per class), softmax activation to get probabilities. For generation: vocab_size neurons, each representing the probability of that token being next.</p>
+    </div>
+    <div class="card">
+      <span class="tag t-yellow">Activation Functions</span>
+      <h3>The Non-linearity</h3>
+      <p>Without activation functions, any number of linear layers collapses to a single linear function. ReLU (max(0,x)) is the standard: simple, efficient, doesn't suffer from vanishing gradients like sigmoid. Variants: LeakyReLU, GELU (used in transformers), SiLU.</p>
+    </div>
+  </div>
+
+  <h2 class="section-h">Backpropagation — How Networks Learn</h2>
+  <div class="card">
+    <h3>The Learning Algorithm</h3>
+    <p><strong>Forward pass:</strong> Input flows through the network, layer by layer, to produce a prediction. Compare the prediction to the true label using a <em>loss function</em> (e.g., cross-entropy for classification). The loss is a single number measuring how wrong the prediction was.</p>
+    <p><strong>Backward pass:</strong> Using calculus (the chain rule), compute the gradient of the loss with respect to every weight in the network — how much should each weight change to reduce the loss? This computation flows backwards from the output to the input (hence "backpropagation").</p>
+    <p><strong>Weight update:</strong> Each weight is adjusted by a small step in the direction of the negative gradient: <code>w ← w - learning_rate × ∂L/∂w</code>. This is Stochastic Gradient Descent (SGD) or its variants (Adam, AdamW). Repeat millions of times on mini-batches of training data, and the weights converge toward values that minimise loss on the training set.</p>
+  </div>
+
+  <div class="diagram-box">
+    <pre>
+Forward Pass:
+  Input → Layer 1 → Layer 2 → ... → Output → Loss = 2.7
+
+Backward Pass (chain rule):
+  ∂Loss/∂w_last = -0.3   ← how much does last layer's weight affect loss?
+  ∂Loss/∂w_prev = -0.1   ← propagate gradient backwards through layers
+  ∂Loss/∂w_first = +0.05 ← gradient at first layer
+
+Weight Update (lr=0.01):
+  w_last  ← w_last  - 0.01 × (-0.3) = w_last  + 0.003  ✓ moves toward lower loss
+  w_prev  ← w_prev  - 0.01 × (-0.1) = w_prev  + 0.001
+  w_first ← w_first - 0.01 × (+0.05)= w_first - 0.0005
+    </pre>
+  </div>
+
+  <h2 class="section-h">Key Training Concepts</h2>
+  <div class="g2">
+    <div class="card">
+      <span class="tag t-red">Problem</span>
+      <h3>Vanishing Gradients</h3>
+      <p>In deep networks, gradients can become exponentially small as they propagate backwards, making early layers train extremely slowly. Solved by: ReLU activations, residual connections, batch normalisation, careful initialisation.</p>
+    </div>
+    <div class="card">
+      <span class="tag t-yellow">Problem</span>
+      <h3>Overfitting</h3>
+      <p>The model memorises training data rather than learning generalisable patterns. Solutions: dropout (randomly deactivating neurons during training), weight decay (penalising large weights), data augmentation, early stopping.</p>
+    </div>
+    <div class="card">
+      <span class="tag t-green">Technique</span>
+      <h3>Batch Normalisation</h3>
+      <p>Normalise layer activations across the training mini-batch. Stabilises training, allows higher learning rates, and acts as regularisation. Transformers use Layer Normalisation (normalise across features, not batch) instead.</p>
+    </div>
+    <div class="card">
+      <span class="tag t-purple">Technique</span>
+      <h3>Transfer Learning</h3>
+      <p>Take a network trained on task A (e.g., ImageNet classification), freeze the early layers (generic features), and fine-tune the later layers on task B (e.g., medical imaging). Requires dramatically less data for task B. Foundation of all modern LLM applications.</p>
+    </div>
+  </div>
+
+  <div class="callout green">💡 The Universal Approximation Theorem states that a sufficiently wide single hidden-layer neural network can approximate any continuous function to arbitrary precision. Depth (multiple layers) provides efficiency — deep networks can represent functions exponentially more compactly than shallow ones. This mathematical fact underpins all of deep learning's expressive power.</div>
+</div>
+
+<!-- ═══════════ PAGE 3: TRAINING PIPELINE ═══════════ -->
+<div class="page" id="page-training">
+  <div class="page-hero">
+    <div class="page-label">Deep Dive — Process</div>
+    <h1 class="page-title">🏋️ How LLMs Are Trained</h1>
+    <p class="page-desc">From raw internet text to a helpful AI assistant — the complete training pipeline that creates models like Claude, GPT-4, and Gemini.</p>
+  </div>
+
+  <div class="callout yellow">💰 Training a frontier LLM is one of the most expensive computational endeavours in history. GPT-4 reportedly cost over $100M to train. Claude 3 Opus training costs are similarly massive. This section explains why — and every step that justifies it.</div>
+
+  <h2 class="section-h">Phase 1: Data Collection & Curation</h2>
+  <div class="card">
+    <h3>Building the Training Corpus</h3>
+    <p>Modern LLMs train on datasets measured in <strong>trillions of tokens</strong> (roughly equivalent to millions of books). The primary source is web text — Common Crawl, a massive periodic scrape of the public web, contains petabytes of text. This is supplemented with curated sources: books (BookCorpus, Project Gutenberg), Wikipedia, academic papers (arXiv, PubMed), code (GitHub), and high-quality filtered web content.</p>
+    <p>Raw web data is noisy — spam, duplicate content, low-quality pages, toxic content, personally identifiable information. Significant engineering effort goes into filtering: deduplication (removing near-duplicate documents), quality filtering (heuristics and classifiers to remove low-quality text), safety filtering (removing CSAM, extreme content), and mixing ratios (balancing code vs natural language vs books).</p>
+    <p>The data mix matters enormously for the resulting model's capabilities. More code → better coding. More multilingual text → better non-English performance. More scientific text → better reasoning. Data curation is a competitive moat for frontier labs.</p>
+  </div>
+
+  <h2 class="section-h">Phase 2: Pre-Training</h2>
+  <div class="card">
+    <h3>The Next-Token Prediction Task</h3>
+    <p>The training objective is simple: given all preceding tokens, predict the next one. Given "The capital of France is", the model should assign high probability to "Paris". This is a <em>self-supervised</em> task — the labels are the text itself, requiring no human annotation. A trillion tokens of text provides a trillion training examples.</p>
+    <p>During pre-training, the model processes mini-batches of text sequences. Each forward pass produces loss across all token positions. Backpropagation adjusts all ~100B–1T parameters to reduce this loss. With a typical learning rate schedule (warmup then cosine decay), this runs for weeks to months on thousands of GPUs.</p>
+  </div>
+
+  <!-- Training loss chart -->
+  <div id="training-demo">
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:.4rem">📉 Interactive: Training Loss Simulation</h3>
+    <p style="font-size:.82rem;color:var(--text2);margin-bottom:1rem">Watch how training loss decreases as the model learns. Real training runs for days with billions of steps; this is a simplified visualisation.</p>
+    <div class="train-controls">
+      <button class="btn primary" id="train-btn" onclick="startTraining()">▶ Start Training</button>
+      <button class="btn" id="reset-btn" onclick="resetTraining()">↺ Reset</button>
+      <span class="train-stat">Step: <span id="t-step">0</span></span>
+      <span class="train-stat">Loss: <span id="t-loss">—</span></span>
+      <span class="train-stat">Accuracy: <span id="t-acc">—</span></span>
+    </div>
+    <canvas id="train-canvas" width="700" height="200" style="border:1px solid var(--border);border-radius:8px;max-width:100%;display:block"></canvas>
+  </div>
+
+  <h2 class="section-h">Phase 3: Supervised Fine-Tuning (SFT)</h2>
+  <div class="card">
+    <h3>From Text Predictor to Instruction Follower</h3>
+    <p>After pre-training, the model can continue any text — but it isn't an assistant. If you ask "What is the capital of France?", it might continue with "What is the capital of Germany? What is the capital of Spain?" (continuing the pattern of geographic questions) rather than answering.</p>
+    <p>SFT fixes this. Human contractors write high-quality demonstration data: (instruction, ideal response) pairs covering thousands of tasks. "Summarise this article:" → "[clean summary]". "Write Python code to sort a list:" → "[working code with explanation]". "I'm feeling sad:" → "[empathetic, helpful response]".</p>
+    <p>The model is fine-tuned on these examples using standard supervised learning. After SFT, the model follows instructions reliably — but may still sometimes refuse reasonable requests, be inconsistent about content policies, or produce suboptimal responses that the next phase addresses.</p>
+  </div>
+
+  <h2 class="section-h">Phase 4: RLHF — Reinforcement Learning from Human Feedback</h2>
+  <div class="pipeline">
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">1</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Collect Comparison Data</h4>
+        <p>For each of thousands of prompts, the SFT model generates multiple responses (usually 4–9). Human raters compare pairs: "Which of these two responses is better?" This comparison task is much easier and more reliable than writing ideal responses from scratch — humans are better at judging than generating.</p>
+        <p>Rater guidelines cover: helpfulness, accuracy, safety, harmlessness, tone, and instruction-following. Different labs weight these dimensions differently.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">2</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Train a Reward Model (RM)</h4>
+        <p>A separate neural network (typically a smaller version of the LLM) is trained to predict human preference scores. Input: (prompt, response). Output: scalar reward score. Trained on the comparison data to give higher scores to responses humans preferred.</p>
+        <p>The reward model generalises from rated examples to novel prompts and responses — it becomes a proxy for human preference, scalably applying human judgment to any response.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">3</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Optimise LLM Against Reward Model (PPO)</h4>
+        <p>Using Proximal Policy Optimisation (a reinforcement learning algorithm), the LLM is updated to generate responses that maximise the reward model's score. The LLM is the "policy"; generating responses is the "action"; the reward model provides the "reward signal".</p>
+        <p>A KL-divergence penalty prevents the LLM from drifting too far from the SFT model (preventing reward hacking — producing gibberish that scores high on the reward model but is useless in practice).</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">4</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Iterate</h4>
+        <p>The process repeats: collect more comparisons on the updated model, retrain the reward model, run more PPO. Each iteration refines the model's alignment with human preferences. Major labs run multiple RLHF iterations before release.</p>
+        <p>The final result: a model that is measurably more helpful, more honest, less harmful, and better at following instructions than the SFT baseline — quantified by human preference studies.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-h">Alternative: Constitutional AI (Anthropic's Approach)</h2>
+  <div class="card">
+    <h3>Scaling Alignment Without Unlimited Human Labels</h3>
+    <p>RLHF requires expensive human comparison data. Anthropic's Constitutional AI (CAI) approach reduces this bottleneck. A written "constitution" — a set of principles the model should follow — replaces some human preference labelling.</p>
+    <p><strong>Step 1 — Critique and Revision:</strong> The model generates an initial response, then critiques it against each constitutional principle ("Does this response assist with illegal activity? If so, rewrite it to refuse helpfully."). The model revises its own output. This generates a large dataset of (harmful initial response, safe revised response) pairs automatically.</p>
+    <p><strong>Step 2 — AI Feedback:</strong> Rather than human raters comparing responses, another AI model (guided by the constitution) provides the preference rankings used to train the reward model. This "RLAIF" (Reinforcement Learning from AI Feedback) scales more cheaply than pure human labelling.</p>
+    <p>The result is more transparent (the constitution is inspectable), more consistent (AI raters don't fatigue), and more scalable. Claude's helpful, harmless, and honest character is the result of this methodology applied through multiple training iterations.</p>
+    <div style="margin-top:.75rem">📖 <a href="https://arxiv.org/abs/2212.08073" target="_blank">Constitutional AI: Harmlessness from AI Feedback (Anthropic, 2022)</a></div>
+  </div>
+
+  <h2 class="section-h">The Compute Stack</h2>
+  <div class="info-grid">
+    <div class="info-card ic-1"><div class="ic-emoji">🖥️</div><h4>GPUs / TPUs</h4><p>NVIDIA A100s and H100s (GPUs) or Google TPU v4/v5 pods process matrix multiplications at scale. A frontier training run uses thousands simultaneously.</p></div>
+    <div class="info-card ic-2"><div class="ic-emoji">🔗</div><h4>High-Speed Interconnects</h4><p>GPUs communicate over NVLink (intra-node) and InfiniBand/RoCE (inter-node). Gradient synchronisation requires enormous bandwidth — hundreds of GB/s between cards.</p></div>
+    <div class="info-card ic-3"><div class="ic-emoji">⚡</div><h4>Mixed Precision</h4><p>Weights stored in float16 or bfloat16 (not float32) to halve memory usage and increase throughput. Master weights kept in float32 to prevent precision loss during updates.</p></div>
+    <div class="info-card ic-4"><div class="ic-emoji">🔀</div><h4>3D Parallelism</h4><p>Training uses data parallelism (same model, different data batches), tensor parallelism (split model layers across GPUs), and pipeline parallelism (split layers across stages) simultaneously.</p></div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 4: TEXT GENERATION ═══════════ -->
+<div class="page" id="page-generation">
+  <div class="page-hero">
+    <div class="page-label">Deep Dive — Inference</div>
+    <h1 class="page-title">✨ How LLMs Generate Text</h1>
+    <p class="page-desc">What actually happens inside the model from the moment you press Send to when the first word appears? The mechanics of inference, sampling, and the autoregressive loop.</p>
+  </div>
+
+  <h2 class="section-h">The Autoregressive Loop</h2>
+  <div class="card">
+    <p>Text generation is <em>autoregressive</em> — the model generates one token at a time, and each new token is appended to the context before the next token is generated. There's no "planning ahead" — the model doesn't decide what to say and then write it. It produces one piece at a time, with each piece influencing all subsequent pieces.</p>
+  </div>
+
+  <div class="pipeline">
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">1</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Tokenise the Input</h4>
+        <p>Your prompt is tokenised into a sequence of integers. "What is the capital of France?" → [2061, 374, 279, 6864, 315, 9822, 30]. These IDs enter the model.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">2</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Full Forward Pass Through All Layers</h4>
+        <p>The entire input sequence is processed through all transformer layers simultaneously. For the last token position, the model produces a 50,000-dimensional vector (one value per vocabulary token). After softmax, this is a probability distribution: P("Paris" | context) = 0.87, P("London" | context) = 0.02, etc.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">3</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Sample the Next Token</h4>
+        <p>With the probability distribution, the model samples the next token. The sampling strategy (controlled by temperature, top-p, top-k) determines how it samples. Temperature=0: always pick the highest probability token ("Paris"). Temperature=1: sample proportionally. Temperature=1.5: flatten the distribution, giving unusual tokens more chance.</p>
+      </div>
+    </div>
+    <div class="pipe-step">
+      <div class="pipe-left"><div class="pipe-num">4</div><div class="pipe-line"></div></div>
+      <div class="pipe-body">
+        <h4>Append and Repeat</h4>
+        <p>The sampled token is appended to the context sequence. The model now runs another full forward pass on this extended sequence, producing a distribution for the next token. This repeats until a special end-of-sequence token is generated, a maximum length is reached, or a stopping condition is met.</p>
+        <p>For a 500-token response, this loop runs 500 times. At 100 tokens/second, that's a 5-second wait — why streaming responses are so important for UX.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-h">Key-Value Cache: Speeding Up Inference</h2>
+  <div class="card">
+    <h3>Why Repeat Computation? Cache It.</h3>
+    <p>In the autoregressive loop, the same prompt tokens are re-processed in every generation step. For a 1,000-token prompt followed by 500 generated tokens, that's recomputing the same 1,000-token context 500 times — enormously wasteful.</p>
+    <p>The <strong>KV cache</strong> (Key-Value cache) solves this. After the initial forward pass, the Key and Value vectors computed in each attention layer for each prompt token are stored (cached). Subsequent generation steps only compute K and V for the newly added token, looking up cached values for all previous tokens. This reduces per-step compute from O(context_length) to O(1), making generation ~5-10x faster on long contexts.</p>
+    <p>The trade-off: KV cache memory grows linearly with context length and batch size. For a 200K token context with a 70B model, the KV cache alone can require dozens of GB of GPU memory — a key constraint in deploying large-context models.</p>
+  </div>
+
+  <h2 class="section-h">Sampling Strategies Compared</h2>
+  <div class="g2">
+    <div class="card"><span class="tag t-blue">Strategy</span><h3>Greedy Decoding (Temp=0)</h3><p>Always pick the highest-probability token. Fast, deterministic, reproducible. But can get stuck in repetitive loops. Good for factual tasks; bad for creative writing.</p></div>
+    <div class="card"><span class="tag t-green">Strategy</span><h3>Temperature Sampling</h3><p>Sample from the probability distribution scaled by temperature. Temp&lt;1 = conservative; Temp>1 = creative. The standard approach for most use cases.</p></div>
+    <div class="card"><span class="tag t-purple">Strategy</span><h3>Top-k Sampling</h3><p>Only consider the k highest-probability tokens. k=40 means only the 40 most likely tokens are eligible. Prevents sampling from very low-probability tail — prevents extremely unlikely outputs.</p></div>
+    <div class="card"><span class="tag t-yellow">Strategy</span><h3>Nucleus (Top-p) Sampling</h3><p>Include tokens until cumulative probability reaches p (e.g., 0.9). Dynamically adjusts: when model is confident (few tokens have most probability), fewer candidates; when uncertain, more. Best overall sampling strategy for most tasks.</p></div>
+    <div class="card"><span class="tag t-red">Strategy</span><h3>Beam Search</h3><p>Track multiple candidate sequences simultaneously, expanding the best ones. Produces more globally coherent sequences. Used in machine translation; less common for long-form generation where greedy/sampling works better.</p></div>
+    <div class="card"><span class="tag t-purple">Strategy</span><h3>Repetition Penalty</h3><p>Reduce the probability of tokens that have already appeared in the output. Prevents boring, repetitive text. Can be too aggressive if the model needs to reference something it already said.</p></div>
+  </div>
+
+  <h2 class="section-h">Structured Output</h2>
+  <div class="card">
+    <h3>Constrained Decoding</h3>
+    <p>For applications requiring specific output formats (valid JSON, Python code, specific schema), <em>constrained decoding</em> modifies the sampling process to only allow tokens that keep the output in a valid state according to a grammar or schema. At each step, a parser checks what tokens could legally follow the current partial output; only those tokens are candidates for sampling.</p>
+    <p>This approach guarantees structural validity (the output will always be valid JSON, for example) while allowing the model to fill in the content freely within those structural constraints. Used in production systems where reliability of output format is critical.</p>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 5: SCALING LAWS ═══════════ -->
+<div class="page" id="page-scale">
+  <div class="page-hero">
+    <div class="page-label">Deep Dive — Theory</div>
+    <h1 class="page-title">📈 Scaling Laws</h1>
+    <p class="page-desc">Why bigger models are generally better — the mathematical relationship between model size, data, compute, and capability.</p>
+  </div>
+
+  <div class="callout blue">📖 This section is based on <a href="https://arxiv.org/abs/2001.08361" target="_blank">Scaling Laws for Neural Language Models (Kaplan et al., 2020)</a> and <a href="https://arxiv.org/abs/2203.15556" target="_blank">Training Compute-Optimal LLMs (Hoffmann et al., "Chinchilla", 2022)</a>.</div>
+
+  <h2 class="section-h">The Empirical Power Laws</h2>
+  <div class="card">
+    <p>Kaplan et al. discovered that LLM performance (measured by test loss, lower = better) follows smooth power laws with model size (N parameters), dataset size (D tokens), and compute budget (C FLOPs). These are not step-function improvements or random — they are remarkably smooth and predictable.</p>
+    <p><code>Loss(N) ∝ N^(-0.076)</code> — doubling model size reduces loss by ~5%. <code>Loss(D) ∝ D^(-0.095)</code> — doubling data reduces loss by ~6%. <code>Loss(C) ∝ C^(-0.050)</code> — doubling compute reduces loss by ~3%.</p>
+    <p>The key insight: you can predict how good a larger model will be before training it. This enabled systematic scaling — labs could chart improvement curves and plan multi-year compute investments with confidence.</p>
+  </div>
+
+  <h2 class="section-h">Model Size Comparison</h2>
+  <div class="scale-bar-wrap" id="scale-bars">
+    <div class="scale-bar-row"><div class="scale-bar-label">GPT-2 (2019)</div><div class="scale-bar" style="background:rgba(108,99,255,.4);width:5%">1.5B</div></div>
+    <div class="scale-bar-row"><div class="scale-bar-label">GPT-3 (2020)</div><div class="scale-bar" style="background:rgba(108,99,255,.55);width:20%">175B</div></div>
+    <div class="scale-bar-row"><div class="scale-bar-label">Gopher (2021)</div><div class="scale-bar" style="background:rgba(108,99,255,.6);width:25%">280B</div></div>
+    <div class="scale-bar-row"><div class="scale-bar-label">PaLM (2022)</div><div class="scale-bar" style="background:rgba(108,99,255,.7);width:40%">540B</div></div>
+    <div class="scale-bar-row"><div class="scale-bar-label">GPT-4 (2023, est.)</div><div class="scale-bar" style="background:linear-gradient(90deg,var(--accent),var(--accent2));width:80%">~1T (est.)</div></div>
+    <div class="scale-bar-row"><div class="scale-bar-label">Llama 3.1 405B</div><div class="scale-bar" style="background:rgba(59,130,246,.6);width:35%">405B</div></div>
+    <div class="scale-bar-row"><div class="scale-bar-label">Llama 3 8B</div><div class="scale-bar" style="background:rgba(59,130,246,.4);width:6%">8B</div></div>
+  </div>
+  <p style="font-size:.78rem;color:var(--text3);margin-top:.5rem">Bar widths are relative; GPT-4 parameter count is unconfirmed. Scale from 2019–2023: ~700x increase.</p>
+
+  <h2 class="section-h">The Chinchilla Lesson: Data Matters as Much as Size</h2>
+  <div class="card">
+    <h3>Compute-Optimal Training</h3>
+    <p>The original Kaplan scaling laws implied that, for a fixed compute budget, you should train the largest possible model for the fewest steps. This led to GPT-3 (175B parameters) being trained on only 300B tokens — potentially underfit for its size.</p>
+    <p>DeepMind's 2022 Chinchilla paper revised this. For compute-optimal training, <em>model size and training tokens should scale equally</em>. For every doubling of model parameters, training data should also double. Chinchilla (70B parameters, 1.4T tokens) outperformed Gopher (280B parameters, 300B tokens) — 4x fewer parameters but 5x more data.</p>
+    <p>This reshaped the field. Llama models, Mistral, and others adopted compute-optimal training ratios, producing smaller models with better performance per parameter — and crucially, cheaper to run at inference time.</p>
+  </div>
+
+  <h2 class="section-h">Emergent Abilities — The Unexpected Surprise</h2>
+  <div class="card">
+    <h3>Capabilities That Appear With Scale</h3>
+    <p>Beyond smooth power-law improvements, certain capabilities appear abruptly at scale thresholds — they are essentially absent in smaller models and present in larger ones. These "emergent abilities" were documented in a 2022 survey across dozens of tasks:</p>
+    <p><strong>In-context learning (few-shot):</strong> Following examples in the prompt without gradient updates. Not present at small scale; appears strongly around 10B+ parameters.</p>
+    <p><strong>Chain-of-thought reasoning:</strong> Breaking down problems step by step. Appears around 100B parameters; dramatically improves with scale.</p>
+    <p><strong>Instruction following:</strong> Following novel, complex instructions without fine-tuning. Scales non-linearly.</p>
+    <p>The mechanism behind emergence is debated — some argue it's an artefact of how capabilities are measured; others argue it reflects genuine phase transitions in learned representations. Either way, the practical implication is clear: scale unlocks qualitatively new capabilities, not just quantitatively better performance.</p>
+    <div style="margin-top:.75rem">📖 <a href="https://arxiv.org/abs/2206.07682" target="_blank">Emergent Abilities of Large Language Models (Wei et al., 2022)</a></div>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE 6: MODEL TYPES ═══════════ -->
+<div class="page" id="page-modeltypes">
+  <div class="page-hero">
+    <div class="page-label">Deep Dive — Taxonomy</div>
+    <h1 class="page-title">📦 The AI Model Landscape</h1>
+    <p class="page-desc">Not all AI is the same. This page maps the full landscape of model types — what they do, how they work, and when to use each.</p>
+  </div>
+
+  <div class="g2">
+    <div class="card"><span class="tag t-purple">Language</span><h3>💬 Large Language Models</h3><p>Decoder-only transformers trained on text. Generate text autoregressively. Power chatbots, code assistants, document analysis, summarisation. Examples: GPT-4, Claude, Gemini, Llama 3, Mistral.</p></div>
+    <div class="card"><span class="tag t-green">Embedding</span><h3>📐 Embedding Models</h3><p>Encoder-only models that convert text to dense vectors. Used for semantic search, RAG retrieval, clustering. Don't generate text. Examples: text-embedding-3, E5-large, GTE.</p></div>
+    <div class="card"><span class="tag t-blue">Vision</span><h3>🖼️ Image Generation — Diffusion</h3><p>Learn to reverse a noise-adding process. Start from random noise; iteratively denoise to produce images matching a text prompt. Examples: Stable Diffusion, DALL-E 3, Midjourney, Flux.</p></div>
+    <div class="card"><span class="tag t-yellow">Vision</span><h3>👁️ Vision Models</h3><p>CNN or ViT-based classifiers and detectors. Classify images (ImageNet), detect objects (YOLO), segment pixels (SAM). Foundational in medical imaging, autonomous driving, security.</p></div>
+    <div class="card"><span class="tag t-purple">Multimodal</span><h3>🎨 Vision-Language Models</h3><p>Combine image and text understanding in one model. Process images + text together. Examples: GPT-4V, Claude 3, Gemini, LLaVA. Can describe images, answer visual questions, read charts.</p></div>
+    <div class="card"><span class="tag t-green">Audio</span><h3>🎵 Speech & Audio Models</h3><p>Whisper (STT: audio → text), ElevenLabs (TTS: text → speech), Suno/Udio (music generation). Audio waveforms processed as spectrogram patches through transformer-like architectures.</p></div>
+    <div class="card"><span class="tag t-red">Reasoning</span><h3>🧮 Reasoning / Thinking Models</h3><p>Trained to produce long internal reasoning traces before answering. Trade latency for accuracy. Significantly outperform standard LLMs on maths, coding, science. Examples: o1, o3, DeepSeek R1.</p></div>
+    <div class="card"><span class="tag t-blue">Science</span><h3>🧬 Scientific AI</h3><p>Domain-specific models for science. AlphaFold 2 predicts protein 3D structure (Nobel Prize impact). AlphaCode competes at competitive programming. These combine domain expertise with LLM scale.</p></div>
+    <div class="card"><span class="tag t-yellow">Agents</span><h3>🤖 Agent Frameworks</h3><p>Not a model type but an orchestration layer. LLMs augmented with tools (code execution, web search, APIs), planning, and multi-step execution. Claude Code, AutoGPT, and similar systems.</p></div>
+    <div class="card"><span class="tag t-purple">RL</span><h3>🎮 Reinforcement Learning Models</h3><p>Learn optimal actions in environments through reward signals. AlphaGo, AlphaZero (games), OpenAI Five (Dota 2). Separate from LLMs but RL is used in RLHF for LLM alignment.</p></div>
+  </div>
+
+  <div class="callout purple">🚀 The trend in 2024–2025 is unification: frontier models like GPT-4o, Claude 3, and Gemini 1.5 are multimodal by design — natively processing text, images, audio, and video in a single model. Specialised single-modality models still excel in their specific domains, but general-purpose frontier models are closing the gap rapidly.</div>
+</div>
+
+</main>
+
+<script>
+// ═══════════════════════ NAVIGATION ═══════════════════════
+function showPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ═══════════════════════ ATTENTION DEMO ═══════════════════
+const SENTENCES = [
+  {
+    words: ['The','bank','by','the','river','flooded'],
+    attentions: {
+      'The': [0.15, 0.05, 0.05, 0.05, 0.05, 0.65],
+      'bank': [0.05, 0.3, 0.05, 0.05, 0.45, 0.1],
+      'by': [0.05, 0.1, 0.2, 0.05, 0.5, 0.1],
+      'the': [0.05, 0.05, 0.05, 0.2, 0.1, 0.55],
+      'river': [0.05, 0.35, 0.1, 0.05, 0.25, 0.2],
+      'flooded': [0.1, 0.2, 0.1, 0.05, 0.35, 0.2]
+    },
+    explanations: {
+      'The': '"The" attends strongly to "flooded" — determining which noun it introduces in context.',
+      'bank': '"bank" attends heavily to "river" (0.45) — the model resolves the ambiguity: this is a riverbank, not a financial bank.',
+      'by': '"by" attends to "river" — it\'s a preposition establishing location relative to the river.',
+      'the': '"the" attends to "flooded" — determining what noun it precedes.',
+      'river': '"river" attends back to "bank" — the model links these as semantically related in this context.',
+      'flooded': '"flooded" attends to "river" and "bank" — the verb relates to both the location and the subject.'
+    }
+  }
+];
+
+const sent = SENTENCES[0];
+const wordsEl = document.getElementById('attn-words');
+const barsEl = document.getElementById('attn-bars');
+const expEl = document.getElementById('attn-explanation');
+
+// Render word buttons
+sent.words.forEach(w => {
+  const btn = document.createElement('button');
+  btn.className = 'attn-word';
+  btn.textContent = w;
+  btn.onclick = () => selectWord(w);
+  wordsEl.appendChild(btn);
+});
+
+// Build grid labels
+const colLabels = document.createElement('div');
+colLabels.className = 'attn-row';
+colLabels.innerHTML = '<div class="attn-label">Attends to →</div>' +
+  sent.words.map(w=>`<div class="attn-cell-label" style="flex:1;text-align:center;font-size:.68rem;color:var(--text3)">${w}</div>`).join('');
+barsEl.appendChild(colLabels);
+
+sent.words.forEach(word => {
+  const row = document.createElement('div');
+  row.className = 'attn-row';
+  row.id = `row-${word}`;
+  row.innerHTML = `<div class="attn-label">${word}</div>` +
+    sent.attentions[word].map((v,i)=>
+      `<div class="attn-cell" id="cell-${word}-${i}" style="background:rgba(108,99,255,${v*0.9+0.05});border:1px solid rgba(108,99,255,${v*0.5})"></div>`
+    ).join('');
+  barsEl.appendChild(row);
+});
+
+function selectWord(w) {
+  document.querySelectorAll('.attn-word').forEach(b => {
+    b.classList.toggle('selected', b.textContent === w);
+  });
+  // Highlight the row
+  sent.words.forEach(word => {
+    const row = document.getElementById(`row-${word}`);
+    if (row) row.style.opacity = word === w ? '1' : '0.3';
+  });
+  expEl.innerHTML = `<strong>"${w}"</strong> — ${sent.explanations[w]}`;
+}
+
+// ═══════════════════════ NEURAL NETWORK VIZ ═══════════════
+const nnCanvas = document.getElementById('nn-canvas');
+const nnCtx = nnCanvas.getContext('2d');
+const layers = [[4],[6],[6],[3]]; // neurons per layer
+const layerNames = ['Input','Hidden 1','Hidden 2','Output'];
+const W = nnCanvas.width, H = nnCanvas.height;
+const layerX = [80, 240, 430, 590];
+let hoveredNeuron = null;
+
+function drawNN(highlight = null) {
+  nnCtx.clearRect(0,0,W,H);
+  const neurons = layers.map((l,li) => {
+    const n = l[0];
+    return Array.from({length:n},(_,ni)=>({
+      x: layerX[li],
+      y: H/2 - (n-1)*30 + ni*60,
+      li, ni
+    }));
+  });
+
+  // Draw connections
+  for(let li=0;li<neurons.length-1;li++){
+    for(const a of neurons[li]){
+      for(const b of neurons[li+1]){
+        const isHL = highlight && (
+          (a.li===highlight.li&&a.ni===highlight.ni) ||
+          (b.li===highlight.li&&b.ni===highlight.ni)
+        );
+        nnCtx.strokeStyle = isHL ? 'rgba(108,99,255,0.7)' : 'rgba(108,99,255,0.12)';
+        nnCtx.lineWidth = isHL ? 1.5 : 0.8;
+        nnCtx.beginPath();nnCtx.moveTo(a.x,a.y);nnCtx.lineTo(b.x,b.y);nnCtx.stroke();
+      }
+    }
+  }
+
+  // Draw neurons
+  for(const layer of neurons){
+    for(const n of layer){
+      const isHL = highlight && n.li===highlight.li && n.ni===highlight.ni;
+      const grad = nnCtx.createRadialGradient(n.x,n.y,2,n.x,n.y,16);
+      grad.addColorStop(0, isHL?'#a78bfa':'#6c63ff');
+      grad.addColorStop(1, isHL?'rgba(167,139,250,0.3)':'rgba(108,99,255,0.15)');
+      nnCtx.fillStyle = grad;
+      nnCtx.strokeStyle = isHL?'#a78bfa':'rgba(108,99,255,0.6)';
+      nnCtx.lineWidth = isHL?2:1;
+      nnCtx.beginPath();nnCtx.arc(n.x,n.y,16,0,Math.PI*2);
+      nnCtx.fill();nnCtx.stroke();
+    }
+  }
+
+  // Layer labels
+  layerNames.forEach((name,li)=>{
+    nnCtx.fillStyle = 'rgba(148,163,184,0.6)';
+    nnCtx.font='11px Inter,sans-serif';nnCtx.textAlign='center';
+    nnCtx.fillText(name, layerX[li], H-10);
+  });
+}
+
+drawNN();
+nnCanvas.addEventListener('mousemove', e => {
+  const rect = nnCanvas.getBoundingClientRect();
+  const mx=(e.clientX-rect.left)*(W/rect.width), my=(e.clientY-rect.top)*(H/rect.height);
+  let found=null;
+  for(let li=0;li<layers.length;li++){
+    const n=layers[li][0];
+    for(let ni=0;ni<n;ni++){
+      const nx=layerX[li], ny=H/2-(n-1)*30+ni*60;
+      if(Math.hypot(mx-nx,my-ny)<20){found={li,ni};break;}
+    }
+  }
+  if(found!==hoveredNeuron){hoveredNeuron=found;drawNN(found);}
+});
+nnCanvas.addEventListener('mouseleave',()=>{hoveredNeuron=null;drawNN();});
+
+// ═══════════════════════ TRAINING SIMULATION ═══════════════
+const tc = document.getElementById('train-canvas');
+const tx = tc.getContext('2d');
+let trainPoints=[],trainStep=0,trainTimer=null,isTraining=false;
+
+function resetTraining(){
+  clearInterval(trainTimer);isTraining=false;trainPoints=[];trainStep=0;
+  document.getElementById('t-step').textContent='0';
+  document.getElementById('t-loss').textContent='—';
+  document.getElementById('t-acc').textContent='—';
+  document.getElementById('train-btn').textContent='▶ Start Training';
+  document.getElementById('train-btn').disabled=false;
+  drawTrainChart();
+}
+
+function startTraining(){
+  if(isTraining){clearInterval(trainTimer);isTraining=false;document.getElementById('train-btn').textContent='▶ Resume';return;}
+  isTraining=true;
+  document.getElementById('train-btn').textContent='⏸ Pause';
+  trainTimer=setInterval(()=>{
+    trainStep++;
+    const loss=3.2*Math.exp(-trainStep*0.025)+0.35+Math.sin(trainStep*0.3)*0.08*(3.2*Math.exp(-trainStep*0.025)/3.2);
+    const acc=Math.min(98,5+92*(1-Math.exp(-trainStep*0.03))+Math.random()*2-1);
+    trainPoints.push({step:trainStep,loss,acc});
+    document.getElementById('t-step').textContent=trainStep;
+    document.getElementById('t-loss').textContent=loss.toFixed(3);
+    document.getElementById('t-acc').textContent=acc.toFixed(1)+'%';
+    drawTrainChart();
+    if(trainStep>=100){clearInterval(trainTimer);isTraining=false;document.getElementById('train-btn').disabled=true;document.getElementById('train-btn').textContent='✓ Complete';}
+  },80);
+}
+
+function drawTrainChart(){
+  const W=tc.width,H=tc.height;tx.clearRect(0,0,W,H);
+  const PAD={l:50,r:20,t:20,b:30},cW=W-PAD.l-PAD.r,cH=H-PAD.t-PAD.b;
+  // Grid
+  tx.strokeStyle='rgba(46,50,80,0.8)';tx.lineWidth=1;
+  for(let i=0;i<=4;i++){const y=PAD.t+i*(cH/4);tx.beginPath();tx.moveTo(PAD.l,y);tx.lineTo(W-PAD.r,y);tx.stroke();}
+  // Axis labels
+  tx.fillStyle='rgba(100,116,139,0.8)';tx.font='11px Inter,sans-serif';tx.textAlign='right';
+  ['3.5','2.5','1.5','0.5'].forEach((l,i)=>tx.fillText(l,PAD.l-6,PAD.t+i*(cH/4)+4));
+  tx.textAlign='center';tx.fillText('Training Step →',W/2,H-4);
+  if(!trainPoints.length){tx.fillStyle='rgba(100,116,139,0.5)';tx.textAlign='center';tx.font='13px Inter,sans-serif';tx.fillText('Press Start Training to begin',W/2,H/2);return;}
+  const maxStep=Math.max(100,trainStep);
+  // Loss curve
+  tx.strokeStyle='#6c63ff';tx.lineWidth=2;tx.beginPath();
+  trainPoints.forEach((p,i)=>{
+    const x=PAD.l+(p.step/maxStep)*cW,y=PAD.t+cH-((Math.max(0,Math.min(3.5,p.loss))/3.5)*cH);
+    i===0?tx.moveTo(x,y):tx.lineTo(x,y);
+  });tx.stroke();
+  // Accuracy line
+  tx.strokeStyle='#10b981';tx.lineWidth=1.5;tx.setLineDash([4,4]);tx.beginPath();
+  trainPoints.forEach((p,i)=>{
+    const x=PAD.l+(p.step/maxStep)*cW,y=PAD.t+cH-((p.acc/100)*cH);
+    i===0?tx.moveTo(x,y):tx.lineTo(x,y);
+  });tx.stroke();tx.setLineDash([]);
+  // Legend
+  tx.fillStyle='#6c63ff';tx.fillRect(PAD.l,PAD.t+5,12,3);
+  tx.fillStyle='rgba(148,163,184,0.8)';tx.font='10px Inter';tx.textAlign='left';tx.fillText('Loss',PAD.l+16,PAD.t+9);
+  tx.fillStyle='#10b981';tx.fillRect(PAD.l+60,PAD.t+5,12,3);
+  tx.fillStyle='rgba(148,163,184,0.8)';tx.fillText('Accuracy',PAD.l+76,PAD.t+9);
+}
+drawTrainChart();
+</script>
+
+<!-- FOOTER -->
+<footer role="contentinfo" style="padding:3rem 2rem;text-align:center;color:var(--text3);font-size:.83rem;border-top:1px solid var(--border);">
+  <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.9rem;">
+    <a href="index.html" style="color:var(--accent2);">← Back to All Modules</a>
+    <a href="terminology.html" style="color:var(--accent2);">AI Terminology</a>
+    <a href="core-ai.html" style="color:var(--accent2);">Core Architecture</a>
+    <a href="comparisons.html" style="color:var(--accent2);">Model Comparisons</a>
+    <a href="prompting.html" style="color:var(--accent2);">Prompt Engineering</a>
+    <a href="use-cases.html" style="color:var(--accent2);">Use Cases</a>
+    <a href="ai-integration.html" style="color:var(--accent2);">AI Integration</a>
+    <a href="enterprise-ai.html" style="color:var(--accent2);">Enterprise AI</a>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.9rem;">
+    <a href="about.html" style="color:var(--accent2);">About</a>
+    <a href="contact.html" style="color:var(--accent2);">Contact</a>
+    <a href="privacy-policy.html" style="color:var(--accent2);">Privacy Policy</a>
+  </div>
+  <div style="line-height:1.8;">
+    <strong style="color:var(--text2);">AI Literate</strong> — Free AI education for everyone.<br>
+    AI information changes rapidly — verify with official sources. Not affiliated with any AI company.<br>
+    <span>&copy; <span class="footer-yr"></span> AI Literate. All rights reserved.</span>
+  </div>
+</footer>
+<script>document.querySelectorAll('.footer-yr').forEach(e=>e.textContent=new Date().getFullYear());</script>
+
+</body>
+</html>

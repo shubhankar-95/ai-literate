@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>AI Prompting Guide: Zero-Shot, Chain-of-Thought, Few-Shot & More — AI Literate</title>
+<meta name="description" content="The complete AI prompting guide — zero-shot, few-shot, chain-of-thought, role prompting, structured output, and prompt chaining. With real copy-paste examples for beginner, intermediate, and advanced users, an interactive prompt builder, and common mistakes to avoid.">
+<meta name="keywords" content="AI prompting guide, how to prompt ChatGPT, chain of thought prompting, few-shot prompting, zero-shot prompting, system prompt, prompt engineering, best prompts Claude, AI prompt examples, prompt chaining, role prompting, structured output prompts">
+<meta name="robots" content="index, follow">
+<meta name="author" content="AI Literate">
+<meta property="og:title" content="AI Prompting Guide: Zero-Shot, Chain-of-Thought, Few-Shot & More">
+<meta property="og:description" content="Complete prompting guide with copy-paste examples, interactive prompt builder, and techniques for every skill level. Master AI prompting from beginner to expert.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ai-literate.online/prompting.html">
+<meta property="og:site_name" content="AI Literate">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Prompting Guide — Chain-of-Thought, Few-Shot & More">
+<meta name="twitter:description" content="The definitive prompting guide with real examples, interactive builder, and techniques for beginners through experts.">
+<link rel="canonical" href="https://ai-literate.online/prompting.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI Prompting Guide: Zero-Shot, Chain-of-Thought, Few-Shot and More",
+  "description": "Comprehensive AI prompting techniques guide with real copy-paste examples for every skill level.",
+  "author": {"@type": "Organization", "name": "AI Literate"},
+  "publisher": {"@type": "Organization", "name": "AI Literate", "url": "https://ai-literate.online"},
+  "url": "https://ai-literate.online/prompting.html",
+  "inLanguage": "en-US"
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0f1117;--surface:#1a1d2e;--surface2:#242840;--surface3:#2e3250;--accent:#6c63ff;--accent2:#a78bfa;--green:#10b981;--yellow:#f59e0b;--red:#ef4444;--blue:#3b82f6;--pink:#ec4899;--orange:#f97316;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--border:#2e3250;--r:12px}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+a{color:var(--accent2)}a:hover{text-decoration:underline}
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;background:rgba(15,17,23,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:1rem;overflow:hidden}
+.nav-back{display:flex;align-items:center;gap:.4rem;color:var(--text2);font-size:.85rem;text-decoration:none;padding:.35rem .8rem;border-radius:8px;border:1px solid var(--border);transition:all .2s;white-space:nowrap;flex-shrink:0}
+.nav-back:hover{border-color:var(--accent);color:var(--text);text-decoration:none}
+.nav-title{font-size:1rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap;flex-shrink:0}
+.nav-tabs{display:flex;gap:.2rem;overflow-x:auto;margin-left:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{padding:.3rem .8rem;border-radius:6px;border:1px solid transparent;background:transparent;color:var(--text3);font-size:.76rem;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .2s}
+.nav-tab:hover{color:var(--text2);border-color:var(--border)}
+.nav-tab.active{background:var(--surface2);color:var(--text);border-color:var(--border)}
+/* LAYOUT */
+main{padding-top:56px}
+.page{display:none;max-width:960px;margin:0 auto;padding:3rem 2rem 6rem}
+.page.active{display:block}
+/* HERO */
+.page-hero{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.page-label{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+.page-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.2;margin-bottom:.75rem}
+.page-desc{font-size:.95rem;color:var(--text2);max-width:680px;line-height:1.7}
+/* LEVEL SELECTOR */
+.level-bar{display:flex;gap:.5rem;margin-bottom:2rem;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:.3rem;width:fit-content}
+.level-btn{padding:.4rem 1.2rem;border-radius:999px;border:none;background:transparent;color:var(--text3);font-family:inherit;font-size:.82rem;cursor:pointer;font-weight:500;transition:all .2s}
+.level-btn.active{background:var(--accent);color:#fff;font-weight:600}
+/* PROMPT CARDS */
+.prompt-block{margin-bottom:2rem;border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+.prompt-block-header{padding:.7rem 1.1rem;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between}
+.ph-system{background:rgba(108,99,255,.18);color:var(--accent2)}
+.ph-user{background:rgba(59,130,246,.18);color:#93c5fd}
+.ph-assistant{background:rgba(16,185,129,.18);color:#34d399}
+.ph-bad{background:rgba(239,68,68,.12);color:#fca5a5}
+.ph-good{background:rgba(16,185,129,.12);color:#34d399}
+.ph-great{background:rgba(108,99,255,.15);color:var(--accent2)}
+.prompt-body{padding:1rem 1.1rem;background:var(--surface);font-size:.88rem;color:var(--text);line-height:1.7;white-space:pre-wrap;font-family:'Fira Code',monospace}
+.prompt-body.readable{font-family:'Inter',sans-serif;white-space:normal}
+/* COPY BTN */
+.copy-btn{padding:.2rem .7rem;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text3);font-size:.68rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.copy-btn:hover{border-color:var(--accent);color:var(--accent2)}
+.copy-btn.copied{border-color:var(--green);color:#34d399}
+/* SECTION HEADERS */
+h2.sh{font-size:1.25rem;font-weight:800;margin:2.5rem 0 1rem;display:flex;align-items:center;gap:.5rem}
+h2.sh::before{content:'';width:3px;height:1.2rem;background:var(--accent);border-radius:2px;display:inline-block}
+h3.sub{font-size:.95rem;font-weight:700;margin:1.5rem 0 .75rem;color:var(--text)}
+/* LEVEL CONTENT */
+.level-content{display:none}.level-content.show{display:block}
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem 1.5rem;margin-bottom:1rem}
+.card h3{font-size:.95rem;font-weight:700;margin-bottom:.5rem}
+.card p{font-size:.88rem;color:var(--text2);line-height:1.7;margin-bottom:.6rem}
+.card p:last-child{margin-bottom:0}
+.card p strong{color:var(--text)}
+/* TECHNIQUE GRID */
+.tech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-bottom:2rem}
+.tech-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;cursor:pointer;transition:all .2s;border-top:3px solid transparent}
+.tech-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.tc-1{border-top-color:var(--accent)}
+.tc-2{border-top-color:var(--green)}
+.tc-3{border-top-color:var(--blue)}
+.tc-4{border-top-color:var(--yellow)}
+.tc-5{border-top-color:var(--pink)}
+.tc-6{border-top-color:var(--orange)}
+.tech-card h4{font-size:.9rem;font-weight:700;margin-bottom:.35rem}
+.tech-card p{font-size:.8rem;color:var(--text2);line-height:1.5}
+/* CALLOUT */
+.callout{border-radius:var(--r);padding:.9rem 1.2rem;font-size:.87rem;line-height:1.7;margin:1rem 0}
+.cl-blue{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.25);color:#93c5fd}
+.cl-green{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:#6ee7b7}
+.cl-yellow{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#fcd34d}
+.cl-purple{background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.25);color:var(--accent2)}
+/* COMPARISON BLOCK */
+.compare-prompts{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.2rem 0}
+@media(max-width:640px){.compare-prompts{grid-template-columns:1fr}}
+/* TAGS */
+.tag{display:inline-block;padding:.2rem .6rem;border-radius:999px;font-size:.7rem;font-weight:600;margin-right:.35rem;margin-bottom:.35rem}
+.t-b{background:rgba(16,185,129,.12);color:#34d399;border:1px solid rgba(16,185,129,.25)}
+.t-i{background:rgba(245,158,11,.12);color:#fcd34d;border:1px solid rgba(245,158,11,.25)}
+.t-a{background:rgba(236,72,153,.12);color:#f9a8d4;border:1px solid rgba(236,72,153,.25)}
+/* INTERACTIVE BUILDER */
+#builder-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin:1.5rem 0}
+#builder-section h3{font-size:1rem;font-weight:700;margin-bottom:.5rem}
+#builder-section p.bd{font-size:.83rem;color:var(--text2);margin-bottom:1.25rem}
+.builder-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:600px){.builder-grid{grid-template-columns:1fr}}
+.builder-field{display:flex;flex-direction:column;gap:.4rem}
+.builder-field label{font-size:.75rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.06em}
+.builder-field select,.builder-field input,.builder-field textarea{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.55rem .9rem;color:var(--text);font-family:inherit;font-size:.85rem;outline:none;transition:border-color .2s;resize:none}
+.builder-field select:focus,.builder-field input:focus,.builder-field textarea:focus{border-color:var(--accent)}
+#build-btn{background:linear-gradient(135deg,var(--accent),#7c3aed);border:none;color:#fff;font-family:inherit;font-size:.88rem;font-weight:600;padding:.65rem 1.5rem;border-radius:8px;cursor:pointer;transition:all .2s;margin-top:.5rem}
+#build-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(108,99,255,.4)}
+#built-prompt{margin-top:1.25rem;display:none}
+#built-prompt .result-label{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);margin-bottom:.5rem}
+#built-prompt pre{background:#0d1117;border:1px solid var(--border);border-radius:var(--r);padding:1.1rem;font-family:'Fira Code',monospace;font-size:.82rem;white-space:pre-wrap;color:var(--text);line-height:1.7}
+/* MISTAKE GRID */
+.mistake-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.2rem 0}
+@media(max-width:560px){.mistake-grid{grid-template-columns:1fr}}
+.mistake-card{border-radius:var(--r);padding:1.1rem 1.25rem}
+.mc-bad{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2)}
+.mc-good{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2)}
+.mc-label{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem}
+.mc-label.bad{color:#fca5a5}.mc-label.good{color:#34d399}
+.mc-text{font-size:.83rem;line-height:1.6;color:var(--text2)}
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:2.5rem 0}
+/* TIMELINE */
+.timeline{position:relative;padding-left:2.2rem;margin:1.5rem 0}
+.timeline::before{content:'';position:absolute;left:.5rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),transparent)}
+.tl-item{position:relative;margin-bottom:1.5rem}
+.tl-dot{position:absolute;left:-1.95rem;top:.25rem;width:14px;height:14px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);box-shadow:0 0 8px rgba(108,99,255,.4)}
+.tl-item h4{font-size:.9rem;font-weight:700;margin-bottom:.2rem}
+.tl-item p{font-size:.83rem;color:var(--text2);line-height:1.5}
+.tl-item .tl-date{font-size:.72rem;color:var(--accent2);font-weight:600;margin-bottom:.15rem}
+@media(max-width:640px){.page{padding:2rem 1rem 4rem}}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://ai-literate.online/"},
+    {"@type":"ListItem","position":2,"name":"Prompting Guidelines","item":"https://ai-literate.online/prompting.html"}
+  ]
+}
+</script>
+</head>
+<body>
+
+<nav id="nav" aria-label="Main navigation">
+  <a href="index.html" style="font-size:1.05rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;">🤖 AI Literate</a>
+  <div style="display:flex;gap:1.5rem;margin-left:auto;align-items:center;">
+    <a href="index.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">All Modules</a>
+    <a href="about.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">About</a>
+    <a href="contact.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">Contact</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ══════════════ FOUNDATIONS ══════════════ -->
+<div class="page active" id="page-fundamentals">
+  <div class="page-hero">
+    <div class="page-label">Module 05 — Prompting Guidelines</div>
+    <h1 class="page-title">The Art & Science of Prompting</h1>
+    <p class="page-desc">Prompting is the primary skill for getting value from AI. A mediocre prompt gets mediocre output. A well-crafted prompt gets expert-level output — from the same model, in seconds. This guide teaches you how.</p>
+  </div>
+
+  <!-- Level selector -->
+  <div class="level-bar">
+    <button class="level-btn active" onclick="setLevel('beginner',this)">🟢 Beginner</button>
+    <button class="level-btn" onclick="setLevel('intermediate',this)">🟡 Intermediate</button>
+    <button class="level-btn" onclick="setLevel('advanced',this)">🔴 Advanced</button>
+  </div>
+
+  <!-- BEGINNER -->
+  <div class="level-content show" data-level="beginner">
+    <h2 class="sh">What is a Prompt?</h2>
+    <div class="card">
+      <p>A <strong>prompt</strong> is simply the text you type into an AI model. It's your instruction, question, or request. The AI reads your prompt and generates a response based on it. There are no hidden rules — the AI responds to what you write, nothing more.</p>
+      <p>The quality of your prompt directly determines the quality of the response. Think of it like giving instructions to a very smart intern on their first day — they're capable of incredible work, but they need clear, specific instructions to know exactly what you want.</p>
+    </div>
+    <h2 class="sh">The 5 Core Elements of a Good Prompt</h2>
+    <div class="card">
+      <p><strong>1. Task</strong> — What do you want the AI to do? Be specific. "Write" is vague. "Write a 300-word product description for a standing desk" is clear.</p>
+      <p><strong>2. Context</strong> — What background does the AI need? Who is the audience? What's the purpose? What constraints exist?</p>
+      <p><strong>3. Format</strong> — How should the output be structured? Bullet points, numbered list, paragraph, table, JSON, code? Specify it explicitly.</p>
+      <p><strong>4. Tone/Style</strong> — Formal or casual? Technical or plain English? First or third person? Specify the voice.</p>
+      <p><strong>5. Examples</strong> — If you have a specific style or format in mind, showing 1–2 examples ("like this:") is the fastest way to communicate it.</p>
+    </div>
+    <h2 class="sh">Your First Prompts — Simple Examples</h2>
+    <h3 class="sub">Before & After: Summarising</h3>
+    <div class="compare-prompts">
+      <div>
+        <div class="prompt-block">
+          <div class="prompt-block-header ph-bad"><span>❌ Too vague</span></div>
+          <div class="prompt-body">Summarize this article.</div>
+        </div>
+      </div>
+      <div>
+        <div class="prompt-block">
+          <div class="prompt-block-header ph-good"><span>✅ Clear and specific</span><button class="copy-btn" onclick="copyPrompt(this,'Summarize the following article in 3 bullet points. Each bullet should be one sentence. Write for a busy manager who has 30 seconds to read this. Focus on key decisions or actions needed, not background.\n\n[Paste article here]')">Copy</button></div>
+          <div class="prompt-body">Summarize the following article in 3 bullet points. Each bullet should be one sentence. Write for a busy manager who has 30 seconds to read this. Focus on key decisions or actions needed, not background.
+
+[Paste article here]</div>
+        </div>
+      </div>
+    </div>
+    <h3 class="sub">Before & After: Getting Explanations</h3>
+    <div class="compare-prompts">
+      <div>
+        <div class="prompt-block">
+          <div class="prompt-block-header ph-bad"><span>❌ Too vague</span></div>
+          <div class="prompt-body">Explain machine learning.</div>
+        </div>
+      </div>
+      <div>
+        <div class="prompt-block">
+          <div class="prompt-block-header ph-good"><span>✅ Targeted explanation</span><button class="copy-btn" onclick="copyPrompt(this,'Explain machine learning as if I\'m a smart 16-year-old who has never studied programming. Use one real-world analogy, avoid technical jargon, and keep it under 150 words.')">Copy</button></div>
+          <div class="prompt-body">Explain machine learning as if I'm a smart 16-year-old who has never studied programming. Use one real-world analogy, avoid technical jargon, and keep it under 150 words.</div>
+        </div>
+      </div>
+    </div>
+    <div class="callout cl-green">💡 <strong>Beginner tip:</strong> The single most impactful change you can make is adding "Write for [specific audience]" and "Format as [specific format]" to any prompt. These two additions alone dramatically improve most beginner prompts.</div>
+  </div>
+
+  <!-- INTERMEDIATE -->
+  <div class="level-content" data-level="intermediate">
+    <h2 class="sh">Building Mental Models for Prompting</h2>
+    <div class="card">
+      <p><strong>The context → instruction → constraint → format framework.</strong> Every effective prompt has these four components in some form. You don't need them all in every prompt, but the more complex the task, the more you need:</p>
+      <p><strong>Context:</strong> "You are a senior software engineer at a fintech startup. I'm building a REST API for payments."</p>
+      <p><strong>Instruction:</strong> "Review the following Python function and suggest improvements."</p>
+      <p><strong>Constraint:</strong> "Focus specifically on security vulnerabilities and performance. Don't rewrite the whole function."</p>
+      <p><strong>Format:</strong> "Give me a numbered list of issues, each with: (a) what the problem is, (b) why it matters, (c) the fix."</p>
+    </div>
+    <h2 class="sh">Role Prompting — Unlocking Expertise</h2>
+    <div class="card">
+      <p>Assigning a specific role activates domain-specific patterns in the model's training. The more specific the role, the more specialised the response:</p>
+      <p><strong>Generic:</strong> "You are a helpful assistant."</p>
+      <p><strong>Better:</strong> "You are an experienced Python developer."</p>
+      <p><strong>Best:</strong> "You are a senior Python backend engineer with 12 years of experience, specialising in high-performance APIs and distributed systems. You are known for writing clean, well-documented code and catching security issues others miss."</p>
+    </div>
+    <h2 class="sh">Intermediate Prompt Examples</h2>
+    <h3 class="sub">Email Writing — 3 Versions</h3>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>🟡 Version 1 — Intermediate (follow-up email)</span><button class="copy-btn" onclick="copyPrompt(this,'Write a professional follow-up email after a sales meeting. The meeting was last Tuesday with Sarah Chen, Head of Operations at TechCorp. We discussed implementing our project management software. She seemed interested but hadn\'t committed. Tone: warm and professional, not pushy. Length: 3 short paragraphs. Include: one specific detail from our conversation to show I was listening, a clear next step with a specific date/time offer.')">Copy</button></div>
+      <div class="prompt-body">Write a professional follow-up email after a sales meeting. The meeting was last Tuesday with Sarah Chen, Head of Operations at TechCorp. We discussed implementing our project management software. She seemed interested but hadn't committed. Tone: warm and professional, not pushy. Length: 3 short paragraphs. Include: one specific detail from our conversation to show I was listening, a clear next step with a specific date/time offer.</div>
+    </div>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>🟡 Version 2 — Intermediate (difficult email)</span><button class="copy-btn" onclick="copyPrompt(this,'Help me write an email declining a job offer graciously. I accepted another offer that was a better fit. I want to:\n- Express genuine gratitude (the process was excellent)\n- Be honest that I accepted elsewhere, without being specific about the competitor\n- Leave the door open for the future — this is a company I respect\n- Sound human, not like a template\nKeep it under 150 words. No fluff. First person, professional but warm tone.')">Copy</button></div>
+      <div class="prompt-body">Help me write an email declining a job offer graciously. I accepted another offer that was a better fit. I want to:
+- Express genuine gratitude (the process was excellent)
+- Be honest that I accepted elsewhere, without being specific about the competitor
+- Leave the door open for the future — this is a company I respect
+- Sound human, not like a template
+Keep it under 150 words. No fluff. First person, professional but warm tone.</div>
+    </div>
+    <div class="callout cl-purple">💡 <strong>Intermediate tip:</strong> Use bullet points inside your prompt to list requirements. The AI reads each bullet as a separate instruction, making complex multi-requirement prompts much more reliably executed.</div>
+  </div>
+
+  <!-- ADVANCED -->
+  <div class="level-content" data-level="advanced">
+    <h2 class="sh">Advanced Prompt Architecture</h2>
+    <div class="card">
+      <p><strong>System-User-Assistant separation.</strong> For API usage and production systems, separating instructions across message roles changes everything. The system prompt sets persistent rules; the user turn contains the task; the assistant turn can be "primed" with a partial response to steer the model.</p>
+      <p><strong>Prompt chaining.</strong> Break complex tasks into a pipeline of focused prompts. Prompt 1 extracts data. Prompt 2 analyses it. Prompt 3 formats the report. Each step is simpler, more reliable, and auditable. The output of each step becomes the input of the next.</p>
+      <p><strong>Self-consistency & verification.</strong> Ask the model to solve the same problem multiple ways, then compare. Or ask it to critique its own answer. This "meta-prompting" catches errors the first pass missed.</p>
+    </div>
+    <h2 class="sh">Production System Prompt Pattern</h2>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-system"><span>⚙️ SYSTEM PROMPT — Customer Support Agent</span><button class="copy-btn" onclick="copyPrompt(this,'You are Aria, a customer support agent for Luminary SaaS (project management software).\n\nPERSONA:\n- Warm, competent, and efficient\n- Use the customer\'s first name once you know it\n- Never be defensive or dismissive\n\nKNOWLEDGE BOUNDARIES:\n- You can help with: account issues, billing questions, feature explanations, basic troubleshooting, refund requests under $500\n- Escalate to human agent if: technical bugs, refunds over $500, legal complaints, customers who request a human 3+ times\n\nRESPONSE FORMAT:\n1. Acknowledge the issue in one sentence\n2. Ask one clarifying question OR provide the solution\n3. End with a clear next step or offer of further help\n\nTONE RULES:\n- Never say "I understand your frustration" (sounds scripted)\n- Never say "As an AI" — you are Aria\n- Use plain English, not corporate-speak\n- Maximum 4 sentences per response unless a step-by-step solution requires more\n\nIf you cannot resolve the issue, say: "I\'d like to connect you with our specialist team for this one. May I arrange a callback or would you prefer email?"')">Copy</button></div>
+      <div class="prompt-body readable">You are Aria, a customer support agent for Luminary SaaS (project management software).
+
+PERSONA:
+- Warm, competent, and efficient
+- Use the customer's first name once you know it
+- Never be defensive or dismissive
+
+KNOWLEDGE BOUNDARIES:
+- You can help with: account issues, billing questions, feature explanations, basic troubleshooting, refund requests under $500
+- Escalate to human agent if: technical bugs, refunds over $500, legal complaints, customers who request a human 3+ times
+
+RESPONSE FORMAT:
+1. Acknowledge the issue in one sentence
+2. Ask one clarifying question OR provide the solution
+3. End with a clear next step or offer of further help
+
+TONE RULES:
+- Never say "I understand your frustration" (sounds scripted)
+- Never say "As an AI" — you are Aria
+- Use plain English, not corporate-speak
+- Maximum 4 sentences per response unless a step-by-step solution requires more
+
+If you cannot resolve the issue, say: "I'd like to connect you with our specialist team for this one. May I arrange a callback or would you prefer email?"</div>
+    </div>
+    <div class="callout cl-purple">💡 <strong>Advanced tip:</strong> Explicit negative constraints ("never say X", "do not include Y") are often more powerful than positive instructions. Models trained to be helpful will add things you didn't ask for. Explicit negatives remove that noise.</div>
+  </div>
+</div>
+
+<!-- ══════════════ TECHNIQUES ══════════════ -->
+<div class="page" id="page-techniques">
+  <div class="page-hero">
+    <div class="page-label">Techniques</div>
+    <h1 class="page-title">Prompting Techniques — From Basic to Expert</h1>
+    <p class="page-desc">Each technique is shown with three versions — beginner, intermediate, and advanced — so you can see exactly how to apply it at your level.</p>
+  </div>
+
+  <!-- TECHNIQUE 1: ZERO-SHOT -->
+  <h2 class="sh">1. Zero-Shot Prompting</h2>
+  <div class="card">
+    <p><strong>What it is:</strong> Simply asking a question or giving a task with no examples. Works for common, well-defined tasks that don't require a specific format.</p>
+    <p><strong>When to use it:</strong> Quick questions, simple transformations, general knowledge. If the task is something the AI has almost certainly seen before, zero-shot is fine.</p>
+    <p><strong>When it fails:</strong> When you need a very specific output format, unusual output structure, or domain-specific style the model won't default to.</p>
+  </div>
+  <div class="prompt-block">
+    <div class="prompt-block-header ph-user"><span>🟢 Beginner zero-shot</span><button class="copy-btn" onclick="copyPrompt(this,'Translate the following to French:\n"The meeting has been rescheduled to Thursday at 3pm."')">Copy</button></div>
+    <div class="prompt-body">Translate the following to French:
+"The meeting has been rescheduled to Thursday at 3pm."</div>
+  </div>
+  <div class="prompt-block">
+    <div class="prompt-block-header ph-user"><span>🟡 Intermediate zero-shot (structured)</span><button class="copy-btn" onclick="copyPrompt(this,'Classify the following customer feedback into one category: Bug Report / Feature Request / Billing Issue / General Praise / Other.\nReturn only the category name, nothing else.\n\nFeedback: "Your app keeps logging me out every 10 minutes on iOS. Very frustrating!"')">Copy</button></div>
+    <div class="prompt-body">Classify the following customer feedback into one category: Bug Report / Feature Request / Billing Issue / General Praise / Other.
+Return only the category name, nothing else.
+
+Feedback: "Your app keeps logging me out every 10 minutes on iOS. Very frustrating!"</div>
+  </div>
+  <div class="prompt-block">
+    <div class="prompt-block-header ph-user"><span>🔴 Advanced zero-shot (structured JSON output)</span><button class="copy-btn" onclick="copyPrompt(this,'Extract information from the following job posting and return a JSON object with these exact fields: {"title": string, "company": string, "location": string, "remote": boolean, "salary_min": number|null, "salary_max": number|null, "required_skills": string[], "years_experience": number|null, "seniority_level": "junior"|"mid"|"senior"|"lead"|"executive"}\n\nReturn only the JSON object. No explanation.\n\nJob posting: [paste here]')">Copy</button></div>
+    <div class="prompt-body">Extract information from the following job posting and return a JSON object with these exact fields:
+{"title": string, "company": string, "location": string, "remote": boolean, "salary_min": number|null, "salary_max": number|null, "required_skills": string[], "years_experience": number|null, "seniority_level": "junior"|"mid"|"senior"|"lead"|"executive"}
+
+Return only the JSON object. No explanation.
+
+Job posting: [paste here]</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TECHNIQUE 2: FEW-SHOT -->
+  <h2 class="sh">2. Few-Shot Prompting</h2>
+  <div class="card">
+    <p><strong>What it is:</strong> Providing 2–5 examples of input → output before your actual task. The model learns the pattern from your examples and applies it to the new input. Most reliable way to control output format.</p>
+    <p><strong>When to use it:</strong> Whenever you need a very specific output format, tone, or style. When zero-shot gives you the wrong format 30%+ of the time.</p>
+    <p><strong>Key principle:</strong> Your examples are the specification. The model will match them exactly — so make your examples exactly what you want.</p>
+  </div>
+  <div class="prompt-block">
+    <div class="prompt-block-header ph-user"><span>🟢 Beginner few-shot (tone rewriting)</span><button class="copy-btn" onclick="copyPrompt(this,'Rewrite sentences to be more confident and direct. Remove weak hedging language.\n\nExamples:\nInput: "I was just wondering if maybe you could possibly take a look at this when you have time?"\nOutput: "Please review this when you\'re available."\n\nInput: "I\'m not sure if this is right, but I think the deadline might be Friday?"\nOutput: "The deadline is Friday."\n\nNow rewrite:\nInput: "I kind of feel like we might want to perhaps consider changing the approach a little bit, if that makes sense?"')">Copy</button></div>
+    <div class="prompt-body">Rewrite sentences to be more confident and direct. Remove weak hedging language.
+
+Examples:
+Input: "I was just wondering if maybe you could possibly take a look at this when you have time?"
+Output: "Please review this when you're available."
+
+Input: "I'm not sure if this is right, but I think the deadline might be Friday?"
+Output: "The deadline is Friday."
+
+Now rewrite:
+Input: "I kind of feel like we might want to perhaps consider changing the approach a little bit, if that makes sense?"</div>
+  </div>
+  <div class="prompt-block">
+    <div class="prompt-block-header ph-user"><span>🟡 Intermediate few-shot (product naming)</span><button class="copy-btn" onclick="copyPrompt(this,'Generate product names following this exact pattern: [Evocative word] + [Animal or nature element]. Names should feel premium, memorable, and 2 syllables each.\n\nExamples:\nProduct: Task management app → Name: SwiftHawk\nProduct: Password manager → Name: VaultBear  \nProduct: Email client → Name: CrispWren\nProduct: Cloud storage → Name: DriftWhale\n\nNow name:\nProduct: AI writing assistant')">Copy</button></div>
+    <div class="prompt-body">Generate product names following this exact pattern: [Evocative word] + [Animal or nature element]. Names should feel premium, memorable, and 2 syllables each.
+
+Examples:
+Product: Task management app → Name: SwiftHawk
+Product: Password manager → Name: VaultBear
+Product: Email client → Name: CrispWren
+Product: Cloud storage → Name: DriftWhale
+
+Now name:
+Product: AI writing assistant</div>
+  </div>
+  <div class="prompt-block">
+    <div class="prompt-block-header ph-user"><span>🔴 Advanced few-shot (data extraction schema)</span><button class="copy-btn" onclick="copyPrompt(this,'Parse contract clauses into structured objects. Follow the schema exactly.\n\nExample 1:\nClause: "Contractor shall deliver the final design assets within 30 days of project commencement. Late delivery incurs a 2% penalty per day."\nOutput: {"obligation": "deliver design assets", "party": "Contractor", "deadline_days": 30, "deadline_trigger": "project commencement", "penalty_type": "daily", "penalty_rate": "2%", "penalty_trigger": "late delivery"}\n\nExample 2:\nClause: "Client shall provide all required materials, brand guidelines, and approvals within 5 business days of each request."\nOutput: {"obligation": "provide materials and approvals", "party": "Client", "deadline_days": 5, "deadline_trigger": "each request", "deadline_type": "business days", "penalty_type": null, "penalty_rate": null}\n\nParse this clause:\n[Paste clause here]')">Copy</button></div>
+    <div class="prompt-body">Parse contract clauses into structured objects. Follow the schema exactly.
+
+Example 1:
+Clause: "Contractor shall deliver the final design assets within 30 days of project commencement. Late delivery incurs a 2% penalty per day."
+Output: {"obligation": "deliver design assets", "party": "Contractor", "deadline_days": 30, "deadline_trigger": "project commencement", "penalty_type": "daily", "penalty_rate": "2%", "penalty_trigger": "late delivery"}
+
+Example 2:
+Clause: "Client shall provide all required materials, brand guidelines, and approvals within 5 business days of each request."
+Output: {"obligation": "provide materials and approvals", "party": "Client", "deadline_days": 5, "deadline_trigger": "each request", "deadline_type": "business days", "penalty_type": null, "penalty_rate": null}
+
+Parse this clause:
+[Paste clause here]</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TECHNIQUE 3: CHAIN OF THOUGHT -->
+  <h2 class="sh">3. Chain-of-Thought (CoT) Prompting</h2>
+  <div class="card">
+    <p><strong>What it is:</strong> Asking the model to reason through a problem step by step before giving the final answer. Dramatically improves accuracy on maths, logic, and multi-step problems. The model "shows its work" — and the work is better than jumping straight to the answer.</p>
+    <p><strong>Why it works:</strong> LLMs generate tokens autoregressively. By generating reasoning steps first, each step provides context for the next — this chains good reasoning together. Without CoT, the model answers in "one shot" and is more likely to be confidently wrong.</p>
+    <p><strong>When to use it:</strong> Any problem with multiple steps: financial calculations, logical reasoning, strategic analysis, debugging, decision-making with tradeoffs. Add "Think step by step" or "Work through this carefully" to any hard prompt.</p>
+  </div>
+  <div class="prompt-block">
+    <div class="prompt-block-header ph-user"><span>🟢 Beginner CoT (maths)</span><button class="copy-btn" onclick="copyPrompt(this,'A store sells pencils for $0.15 each and pens for $0.80 each. If I buy 12 pencils and 7 pens, and pay with a $20 bill, how much change do I get?\n\nThink step by step, showing each calculation.')">Copy</button></div>
+    <div class="prompt-body">A store sells pencils for $0.15 each and pens for $0.80 each. If I buy 12 pencils and 7 pens, and pay with a $20 bill, how much change do I get?
+
+Think step by step, showing each calculation.</div>
+  </div>
+  <div class="prompt-block">
+    <div class="prompt-block-header ph-user"><span>🟡 Intermediate CoT (business decision)</span><button class="copy-btn" onclick="copyPrompt(this,'I run a 10-person software consultancy. A client wants us to build a large project for $200,000 fixed price. Estimated effort: 800–1200 hours (high uncertainty). Our average rate is $150/hour. Team is currently 75% utilised.\n\nReason through whether we should take this project:\n1. Calculate the financial scenarios (best case, worst case, expected)\n2. Assess the opportunity cost\n3. Identify the key risks\n4. Give a recommendation with the most important condition for accepting')">Copy</button></div>
+    <div class="prompt-body">I run a 10-person software consultancy. A client wants us to build a large project for $200,000 fixed price. Estimated effort: 800–1200 hours (high uncertainty). Our average rate is $150/hour. Team is currently 75% utilised.
+
+Reason through whether we should take this project:
+1. Calculate the financial scenarios (best case, worst case, expected)
+2. Assess the opportunity cost
+3. Identify the key risks
+4. Give a recommendation with the most important condition for accepting</div>
+  </div>
+  <div class="prompt-block">
+    <div class="prompt-block-header ph-user"><span>🔴 Advanced CoT (bug analysis)</span><button class="copy-btn" onclick="copyPrompt(this,'You are a senior software engineer debugging a production issue. Reason through this systematically.\n\nContext: Node.js API, ~50k req/day. Started seeing intermittent 502 errors (about 2% of requests) starting at 14:32 UTC yesterday. No deployments in the past 48h. Errors correlate weakly with high-traffic periods but not exclusively.\n\nLogs show: "Error: connect ETIMEDOUT" on database calls during failures. DB CPU is at 35%, memory 60%. App server CPU spikes to 90%+ during failure windows. Connection pool config: max 10 connections, timeout 5000ms.\n\nWork through:\n1. Form 3 distinct hypotheses for the root cause, from most to least likely\n2. For each hypothesis: what evidence supports it, what evidence contradicts it\n3. What 2-3 diagnostic steps would distinguish between the hypotheses\n4. Your most likely root cause and recommended immediate mitigation')">Copy</button></div>
+    <div class="prompt-body readable">You are a senior software engineer debugging a production issue. Reason through this systematically.
+
+Context: Node.js API, ~50k req/day. Started seeing intermittent 502 errors (about 2% of requests) starting at 14:32 UTC yesterday. No deployments in the past 48h. Errors correlate weakly with high-traffic periods but not exclusively.
+
+Logs show: "Error: connect ETIMEDOUT" on database calls during failures. DB CPU is at 35%, memory 60%. App server CPU spikes to 90%+ during failure windows. Connection pool config: max 10 connections, timeout 5000ms.
+
+Work through:
+1. Form 3 distinct hypotheses for the root cause, from most to least likely
+2. For each hypothesis: what evidence supports it, what evidence contradicts it
+3. What 2-3 diagnostic steps would distinguish between the hypotheses
+4. Your most likely root cause and recommended immediate mitigation</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TECHNIQUE 4: ROLE PROMPTING -->
+  <h2 class="sh">4. Role & Persona Prompting</h2>
+  <div class="card">
+    <p><strong>What it is:</strong> Assigning a specific identity, expertise, or persona to the model. This activates relevant domain knowledge and appropriate communication styles. The more specific the role, the more specialised and expert the output.</p>
+  </div>
+  <div class="prompt-block">
+    <div class="prompt-block-header ph-user"><span>🟢 Beginner role (teacher)</span><button class="copy-btn" onclick="copyPrompt(this,'You are a patient high school physics teacher. A student is confused about Newton\'s Third Law. Explain it clearly with two everyday examples they\'d relate to. No equations — just intuitive understanding.')">Copy</button></div>
+    <div class="prompt-body">You are a patient high school physics teacher. A student is confused about Newton's Third Law. Explain it clearly with two everyday examples they'd relate to. No equations — just intuitive understanding.</div>
+  </div>
+  <div class="prompt-block">
+    <div class="prompt-block-header ph-user"><span>🟡 Intermediate role (consultant)</span><button class="copy-btn" onclick="copyPrompt(this,'You are a McKinsey-trained strategy consultant with deep expertise in SaaS pricing. You are blunt, data-driven, and allergic to vague recommendations.\n\nMy startup has 500 customers at $49/month (flat fee). Some customers use 10x the infrastructure of others. Revenue is $294k ARR but growing slowly. Churn is 3% monthly.\n\nDiagnose the pricing problem and give me 3 concrete options to consider, with the trade-offs of each. Be direct.')">Copy</button></div>
+    <div class="prompt-body">You are a McKinsey-trained strategy consultant with deep expertise in SaaS pricing. You are blunt, data-driven, and allergic to vague recommendations.
+
+My startup has 500 customers at $49/month (flat fee). Some customers use 10x the infrastructure of others. Revenue is $294k ARR but growing slowly. Churn is 3% monthly.
+
+Diagnose the pricing problem and give me 3 concrete options to consider, with the trade-offs of each. Be direct.</div>
+  </div>
+  <div class="prompt-block">
+    <div class="prompt-block-header ph-user"><span>🔴 Advanced role (adversarial reviewer)</span><button class="copy-btn" onclick="copyPrompt(this,'You are a skeptical VC partner who has seen 2,000 pitch decks and funded 12. You are known for immediately identifying the one fatal flaw in a business model that founders are blind to. You are not unkind, but you are ruthlessly honest.\n\nReview my business model below. Your job is NOT to be balanced. Your job is to find the single most critical weakness that could kill this company if not addressed. Be specific, not generic. Cite the exact assumption or structure that fails.\n\nBusiness model: [describe your model]')">Copy</button></div>
+    <div class="prompt-body readable">You are a skeptical VC partner who has seen 2,000 pitch decks and funded 12. You are known for immediately identifying the one fatal flaw in a business model that founders are blind to. You are not unkind, but you are ruthlessly honest.
+
+Review my business model below. Your job is NOT to be balanced. Your job is to find the single most critical weakness that could kill this company if not addressed. Be specific, not generic. Cite the exact assumption or structure that fails.
+
+Business model: [describe your model]</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TECHNIQUE 5: STRUCTURED OUTPUT -->
+  <h2 class="sh">5. Structured Output Prompting</h2>
+  <div class="card">
+    <p><strong>What it is:</strong> Specifying the exact structure, format, or schema of the output. Essential when you need to use AI output programmatically or when format consistency matters.</p>
+    <p><strong>Key formats:</strong> JSON (for code/APIs), Markdown tables (for comparisons), XML (for document processing), numbered lists (for steps), specific templates (for reports).</p>
+  </div>
+  <div class="prompt-block">
+    <div class="prompt-block-header ph-user"><span>🟢 Beginner structured output (meeting notes)</span><button class="copy-btn" onclick="copyPrompt(this,'Convert the following meeting transcript into structured notes using this template:\n\n## Meeting Notes\n**Date:** [date]\n**Attendees:** [names]\n**Key Decisions:**\n- [decision 1]\n**Action Items:**\n- [ ] [owner]: [task] by [deadline]\n**Open Questions:**\n- [question]\n\nTranscript: [paste here]')">Copy</button></div>
+    <div class="prompt-body">Convert the following meeting transcript into structured notes using this template:
+
+## Meeting Notes
+**Date:** [date]
+**Attendees:** [names]
+**Key Decisions:**
+- [decision 1]
+**Action Items:**
+- [ ] [owner]: [task] by [deadline]
+**Open Questions:**
+- [question]
+
+Transcript: [paste here]</div>
+  </div>
+  <div class="prompt-block">
+    <div class="prompt-block-header ph-user"><span>🔴 Advanced structured output (API integration)</span><button class="copy-btn" onclick="copyPrompt(this,'Analyse the following customer review and return a JSON object with this exact schema. Return ONLY valid JSON, no explanation:\n{\n  "sentiment": "positive"|"neutral"|"negative",\n  "sentiment_score": -1.0 to 1.0,\n  "topics": ["topic1", "topic2"],\n  "issues": [{"category": string, "severity": "low"|"medium"|"high", "quote": string}],\n  "suggestions": [string],\n  "response_urgency": "none"|"low"|"high"|"immediate",\n  "summary": string (max 20 words)\n}\n\nReview: [paste review]')">Copy</button></div>
+    <div class="prompt-body">Analyse the following customer review and return a JSON object with this exact schema. Return ONLY valid JSON, no explanation:
+{
+  "sentiment": "positive"|"neutral"|"negative",
+  "sentiment_score": -1.0 to 1.0,
+  "topics": ["topic1", "topic2"],
+  "issues": [{"category": string, "severity": "low"|"medium"|"high", "quote": string}],
+  "suggestions": [string],
+  "response_urgency": "none"|"low"|"high"|"immediate",
+  "summary": string (max 20 words)
+}
+
+Review: [paste review]</div>
+  </div>
+</div>
+
+<!-- ══════════════ REAL EXAMPLES ══════════════ -->
+<div class="page" id="page-examples">
+  <div class="page-hero">
+    <div class="page-label">Real Examples</div>
+    <h1 class="page-title">Prompts for Every Use Case</h1>
+    <p class="page-desc">Copy-paste ready prompts for real work — each shown in simple, better, and expert versions. Click any tab to see prompts for that domain.</p>
+  </div>
+
+  <div class="level-bar">
+    <button class="level-btn active" onclick="setLevel('beginner',this)">🟢 Beginner</button>
+    <button class="level-btn" onclick="setLevel('intermediate',this)">🟡 Intermediate</button>
+    <button class="level-btn" onclick="setLevel('advanced',this)">🔴 Advanced</button>
+  </div>
+
+  <!-- BEGINNER EXAMPLES -->
+  <div class="level-content show" data-level="beginner">
+    <h2 class="sh">📝 Writing & Communication</h2>
+    <h3 class="sub">Rewrite a sentence to be more professional</h3>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>Copy & use</span><button class="copy-btn" onclick="copyPrompt(this,'Rewrite the following sentence to sound more professional and confident, without changing the core meaning. Keep it to one sentence.\n\nOriginal: [paste your sentence here]')">Copy</button></div>
+      <div class="prompt-body">Rewrite the following sentence to sound more professional and confident, without changing the core meaning. Keep it to one sentence.
+
+Original: [paste your sentence here]</div>
+    </div>
+    <h3 class="sub">Draft a quick apology email</h3>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>Copy & use</span><button class="copy-btn" onclick="copyPrompt(this,'Write a short, sincere apology email for missing a deadline. The deadline was yesterday, the task was a project update report for my manager. I was overwhelmed with another emergency. Tone: apologetic but professional, not grovelling. 3 sentences max.')">Copy</button></div>
+      <div class="prompt-body">Write a short, sincere apology email for missing a deadline. The deadline was yesterday, the task was a project update report for my manager. I was overwhelmed with another emergency. Tone: apologetic but professional, not grovelling. 3 sentences max.</div>
+    </div>
+    <h2 class="sh">🧠 Learning & Research</h2>
+    <h3 class="sub">Understand a complex topic quickly</h3>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>Copy & use</span><button class="copy-btn" onclick="copyPrompt(this,'Explain [TOPIC] to me in 5 bullet points. Assume I have no background in this area. Use simple language and one real-world example for each point. If there is a common misconception about this topic, include it as the last bullet.')">Copy</button></div>
+      <div class="prompt-body">Explain [TOPIC] to me in 5 bullet points. Assume I have no background in this area. Use simple language and one real-world example for each point. If there is a common misconception about this topic, include it as the last bullet.</div>
+    </div>
+    <h3 class="sub">Summarise a long document</h3>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>Copy & use</span><button class="copy-btn" onclick="copyPrompt(this,'Read the following document and give me:\n1. A one-sentence summary of what it is\n2. The 3 most important points\n3. Any action I need to take, if any\n4. One thing that surprised you or seems unusual\n\nDocument: [paste here]')">Copy</button></div>
+      <div class="prompt-body">Read the following document and give me:
+1. A one-sentence summary of what it is
+2. The 3 most important points
+3. Any action I need to take, if any
+4. One thing that surprised you or seems unusual
+
+Document: [paste here]</div>
+    </div>
+    <h2 class="sh">💻 Coding (No Experience Needed)</h2>
+    <h3 class="sub">Ask AI to explain code you don't understand</h3>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>Copy & use</span><button class="copy-btn" onclick="copyPrompt(this,'Explain what the following code does in plain English. Assume I\'m not a programmer. Break it down line by line. Tell me:\n- What it does overall (1 sentence)\n- What each line does (plain English)\n- Any potential problems with it\n\nCode:\n[paste code here]')">Copy</button></div>
+      <div class="prompt-body">Explain what the following code does in plain English. Assume I'm not a programmer. Break it down line by line. Tell me:
+- What it does overall (1 sentence)
+- What each line does (plain English)
+- Any potential problems with it
+
+Code:
+[paste code here]</div>
+    </div>
+  </div>
+
+  <!-- INTERMEDIATE EXAMPLES -->
+  <div class="level-content" data-level="intermediate">
+    <h2 class="sh">📊 Data & Analysis</h2>
+    <h3 class="sub">Analyse survey results</h3>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>Copy & use</span><button class="copy-btn" onclick="copyPrompt(this,'Analyse the following customer survey results. I need:\n1. Top 3 themes across all responses (not just frequency — look for underlying patterns)\n2. The most positive and most negative signals\n3. One insight that might not be obvious from reading the raw responses\n4. 2 specific questions I should ask in the next survey based on these results\n\nFormat: Clear headers, concise bullet points. No fluff.\n\nSurvey responses:\n[paste responses]')">Copy</button></div>
+      <div class="prompt-body">Analyse the following customer survey results. I need:
+1. Top 3 themes across all responses (not just frequency — look for underlying patterns)
+2. The most positive and most negative signals
+3. One insight that might not be obvious from reading the raw responses
+4. 2 specific questions I should ask in the next survey based on these results
+
+Format: Clear headers, concise bullet points. No fluff.
+
+Survey responses:
+[paste responses]</div>
+    </div>
+    <h2 class="sh">✍️ Content Creation</h2>
+    <h3 class="sub">Write a LinkedIn post (3 versions)</h3>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>Version A — Thought leadership</span><button class="copy-btn" onclick="copyPrompt(this,'Write a LinkedIn post about [TOPIC/LESSON LEARNED]. Requirements:\n- Hook in first line that stops the scroll (no "I\'m excited to share" — be specific and interesting)\n- 150–200 words\n- First person, conversational but professional\n- One specific data point or concrete example\n- End with a genuine question to drive comments\n- No emojis except one at the very start if appropriate\n- No generic motivational fluff')">Copy</button></div>
+      <div class="prompt-body">Write a LinkedIn post about [TOPIC/LESSON LEARNED]. Requirements:
+- Hook in first line that stops the scroll (no "I'm excited to share" — be specific and interesting)
+- 150–200 words
+- First person, conversational but professional
+- One specific data point or concrete example
+- End with a genuine question to drive comments
+- No emojis except one at the very start if appropriate
+- No generic motivational fluff</div>
+    </div>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>Version B — Story format</span><button class="copy-btn" onclick="copyPrompt(this,'Write a LinkedIn post in story format about a mistake I made professionally and what I learned. Topic: [YOUR STORY IN 2 SENTENCES].\n\nFormat: Short punchy paragraphs (1-2 sentences each). Start in the middle of the action. Structure: hook → tension → failure → turning point → lesson → practical takeaway. 200 words. End with one sentence that the reader can act on today.')">Copy</button></div>
+      <div class="prompt-body">Write a LinkedIn post in story format about a mistake I made professionally and what I learned. Topic: [YOUR STORY IN 2 SENTENCES].
+
+Format: Short punchy paragraphs (1-2 sentences each). Start in the middle of the action. Structure: hook → tension → failure → turning point → lesson → practical takeaway. 200 words. End with one sentence that the reader can act on today.</div>
+    </div>
+    <h2 class="sh">💻 Coding</h2>
+    <h3 class="sub">Request a complete, production-ready function</h3>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>Copy & use</span><button class="copy-btn" onclick="copyPrompt(this,'Write a Python function that:\n- Takes a list of dictionaries representing products: {id, name, price, quantity, category}\n- Filters by category (optional parameter)\n- Sorts by price (ascending) or quantity (ascending), specified by parameter\n- Returns the top N items (default: all)\n- Handles edge cases: empty list, invalid sort field, missing keys\n\nRequirements:\n- Full type hints\n- Google-style docstring with Args/Returns/Raises\n- Raise ValueError with descriptive messages for invalid inputs\n- One line of usage example in a comment at the bottom\n\nLanguage: Python 3.10+')">Copy</button></div>
+      <div class="prompt-body">Write a Python function that:
+- Takes a list of dictionaries representing products: {id, name, price, quantity, category}
+- Filters by category (optional parameter)
+- Sorts by price (ascending) or quantity (ascending), specified by parameter
+- Returns the top N items (default: all)
+- Handles edge cases: empty list, invalid sort field, missing keys
+
+Requirements:
+- Full type hints
+- Google-style docstring with Args/Returns/Raises
+- Raise ValueError with descriptive messages for invalid inputs
+- One line of usage example in a comment at the bottom
+
+Language: Python 3.10+</div>
+    </div>
+  </div>
+
+  <!-- ADVANCED EXAMPLES -->
+  <div class="level-content" data-level="advanced">
+    <h2 class="sh">🏗️ System Design & Architecture</h2>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>Complete architecture review prompt</span><button class="copy-btn" onclick="copyPrompt(this,'You are a senior distributed systems architect. Review the following system design and provide structured feedback.\n\nSystem: [describe your system]\nScale targets: [users/requests/data volume]\nConstraints: [budget, team size, existing stack]\n\nProvide:\n1. CRITICAL ISSUES — things that will definitely fail at scale (ranked by severity)\n2. DESIGN CONCERNS — architectural decisions that may cause problems (with probability estimate: low/medium/high)\n3. MISSING CONSIDERATIONS — what the design doesn\'t address that it should\n4. WHAT\'S GOOD — what the design gets right (be specific, not generic praise)\n5. RECOMMENDED CHANGES — ordered by impact/effort ratio (highest first)\n\nFor each recommended change: state the change, the problem it solves, the estimated effort (S/M/L), and any trade-offs introduced.')">Copy</button></div>
+      <div class="prompt-body readable">You are a senior distributed systems architect. Review the following system design and provide structured feedback.
+
+System: [describe your system]
+Scale targets: [users/requests/data volume]
+Constraints: [budget, team size, existing stack]
+
+Provide:
+1. CRITICAL ISSUES — things that will definitely fail at scale (ranked by severity)
+2. DESIGN CONCERNS — architectural decisions that may cause problems (with probability estimate: low/medium/high)
+3. MISSING CONSIDERATIONS — what the design doesn't address that it should
+4. WHAT'S GOOD — what the design gets right (be specific, not generic praise)
+5. RECOMMENDED CHANGES — ordered by impact/effort ratio (highest first)
+
+For each recommended change: state the change, the problem it solves, the estimated effort (S/M/L), and any trade-offs introduced.</div>
+    </div>
+    <h2 class="sh">🎯 Strategic Planning</h2>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>Competitive strategy deep dive</span><button class="copy-btn" onclick="copyPrompt(this,'Act as a strategic advisor. I\'m a founder building [product] for [market]. My main competitors are [A, B, C].\n\nI need a structured competitive analysis:\n\nPart 1 — COMPETITOR PROFILES (for each):\n- Their strongest 3 capabilities\n- Their 2 most significant weaknesses\n- What type of customer they serve best\n- Their likely 12-month strategic moves\n\nPart 2 — BATTLEGROUND ANALYSIS:\n- Where is the competition weakest right now? (specific gaps)\n- What would it take for a new entrant to win?\n- Which segment is most underserved?\n\nPart 3 — POSITIONING RECOMMENDATION:\n- One differentiation strategy that doesn\'t require outspending them\n- The specific customer segment that would be hardest for incumbents to copy\n- The first 3 moves I should make in the next 90 days\n\nBe specific, not generic. Challenge my assumptions if you think I\'m framing this wrong.')">Copy</button></div>
+      <div class="prompt-body readable">Act as a strategic advisor. I'm a founder building [product] for [market]. My main competitors are [A, B, C].
+
+I need a structured competitive analysis:
+
+Part 1 — COMPETITOR PROFILES (for each):
+- Their strongest 3 capabilities
+- Their 2 most significant weaknesses
+- What type of customer they serve best
+- Their likely 12-month strategic moves
+
+Part 2 — BATTLEGROUND ANALYSIS:
+- Where is the competition weakest right now? (specific gaps)
+- What would it take for a new entrant to win?
+- Which segment is most underserved?
+
+Part 3 — POSITIONING RECOMMENDATION:
+- One differentiation strategy that doesn't require outspending them
+- The specific customer segment that would be hardest for incumbents to copy
+- The first 3 moves I should make in the next 90 days
+
+Be specific, not generic. Challenge my assumptions if you think I'm framing this wrong.</div>
+    </div>
+    <h2 class="sh">🔗 Prompt Chaining Template</h2>
+    <div class="card">
+      <p><strong>Use this pattern for complex multi-step analysis.</strong> Run each prompt in sequence, passing the output as input to the next.</p>
+    </div>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>Step 1 of 3 — Extract</span><button class="copy-btn" onclick="copyPrompt(this,'Read the following [document/data]. Extract only the raw facts — no analysis, no interpretation. List them as numbered facts. Include numbers, dates, names, and specific claims. Flag anything uncertain with [UNCERTAIN].\n\n[Paste source material]')">Copy</button></div>
+      <div class="prompt-body">Read the following [document/data]. Extract only the raw facts — no analysis, no interpretation. List them as numbered facts. Include numbers, dates, names, and specific claims. Flag anything uncertain with [UNCERTAIN].
+
+[Paste source material]</div>
+    </div>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>Step 2 of 3 — Analyse</span><button class="copy-btn" onclick="copyPrompt(this,'Given these facts: [paste Step 1 output]\n\nNow analyse:\n1. What patterns emerge across multiple facts?\n2. What is the central tension or problem these facts reveal?\n3. What is missing — what facts would change the picture if we knew them?\n4. What are 3 interpretations of this data, from most to least generous?')">Copy</button></div>
+      <div class="prompt-body">Given these facts: [paste Step 1 output]
+
+Now analyse:
+1. What patterns emerge across multiple facts?
+2. What is the central tension or problem these facts reveal?
+3. What is missing — what facts would change the picture if we knew them?
+4. What are 3 interpretations of this data, from most to least generous?</div>
+    </div>
+    <div class="prompt-block">
+      <div class="prompt-block-header ph-user"><span>Step 3 of 3 — Synthesise</span><button class="copy-btn" onclick="copyPrompt(this,'Using the facts [Step 1 output] and analysis [Step 2 output], write a final executive brief:\n\n- Title: [descriptive, specific]\n- Situation (2 sentences): what is happening and why it matters\n- Key finding (1 sentence): the single most important insight\n- Implications (3 bullets): what this means for [audience]\n- Recommended action (1 sentence): the specific thing to do next\n- Confidence level: High/Medium/Low and why\n\nMax 250 words total.')">Copy</button></div>
+      <div class="prompt-body">Using the facts [Step 1 output] and analysis [Step 2 output], write a final executive brief:
+
+- Title: [descriptive, specific]
+- Situation (2 sentences): what is happening and why it matters
+- Key finding (1 sentence): the single most important insight
+- Implications (3 bullets): what this means for [audience]
+- Recommended action (1 sentence): the specific thing to do next
+- Confidence level: High/Medium/Low and why
+
+Max 250 words total.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PROMPT BUILDER ══════════════ -->
+<div class="page" id="page-builder">
+  <div class="page-hero">
+    <div class="page-label">Interactive Tool</div>
+    <h1 class="page-title">⚡ Prompt Builder</h1>
+    <p class="page-desc">Fill in the fields below and get a well-structured prompt generated for you. Works for any use case.</p>
+  </div>
+
+  <div id="builder-section">
+    <h3>Build Your Prompt</h3>
+    <p class="bd">Fill in what applies — leave blank what doesn't. The more detail you provide, the better the prompt.</p>
+    <div class="builder-grid">
+      <div class="builder-field">
+        <label>Your Role / Identity</label>
+        <input type="text" id="b-role" placeholder="e.g. senior product manager, teacher, startup founder"/>
+      </div>
+      <div class="builder-field">
+        <label>AI's Role / Persona</label>
+        <input type="text" id="b-ai-role" placeholder="e.g. expert UX designer, Python developer, business coach"/>
+      </div>
+      <div class="builder-field">
+        <label>Task / What you want done</label>
+        <input type="text" id="b-task" placeholder="e.g. review my landing page copy, write a function, analyse this data"/>
+      </div>
+      <div class="builder-field">
+        <label>Context / Background</label>
+        <input type="text" id="b-context" placeholder="e.g. B2B SaaS product, 500 users, early stage startup"/>
+      </div>
+      <div class="builder-field">
+        <label>Audience for the output</label>
+        <input type="text" id="b-audience" placeholder="e.g. non-technical CEO, junior developers, general public"/>
+      </div>
+      <div class="builder-field">
+        <label>Output format</label>
+        <select id="b-format">
+          <option value="">Not specified</option>
+          <option value="numbered list">Numbered list</option>
+          <option value="bullet points">Bullet points</option>
+          <option value="structured report with headers">Structured report with headers</option>
+          <option value="plain paragraphs">Plain paragraphs</option>
+          <option value="JSON object">JSON object</option>
+          <option value="Markdown table">Markdown table</option>
+          <option value="step-by-step guide">Step-by-step guide</option>
+          <option value="comparison table">Comparison table</option>
+        </select>
+      </div>
+      <div class="builder-field">
+        <label>Tone</label>
+        <select id="b-tone">
+          <option value="">Not specified</option>
+          <option value="professional and formal">Professional / Formal</option>
+          <option value="conversational and friendly">Conversational / Friendly</option>
+          <option value="technical and precise">Technical / Precise</option>
+          <option value="simple and plain">Simple / Plain English</option>
+          <option value="direct and blunt">Direct / Blunt</option>
+          <option value="warm and empathetic">Warm / Empathetic</option>
+        </select>
+      </div>
+      <div class="builder-field">
+        <label>Length constraint</label>
+        <input type="text" id="b-length" placeholder="e.g. under 200 words, 3 paragraphs, 5 bullets max"/>
+      </div>
+    </div>
+    <div class="builder-field" style="margin-bottom:1rem">
+      <label>What to avoid / NOT do</label>
+      <input type="text" id="b-avoid" placeholder="e.g. no jargon, don't rewrite everything, avoid recommendations without reasoning"/>
+    </div>
+    <div class="builder-field" style="margin-bottom:1rem">
+      <label>Reasoning instruction (for complex tasks)</label>
+      <select id="b-reasoning">
+        <option value="">None</option>
+        <option value="Think step by step before giving your final answer.">Think step by step</option>
+        <option value="Work through this carefully, showing your reasoning, then give the final answer.">Show reasoning then answer</option>
+        <option value="Consider multiple perspectives before concluding.">Consider multiple perspectives</option>
+        <option value="Identify any assumptions you're making.">Identify assumptions</option>
+      </select>
+    </div>
+    <button id="build-btn" onclick="buildPrompt()">⚡ Build My Prompt</button>
+    <div id="built-prompt">
+      <div class="result-label">Your Generated Prompt</div>
+      <pre id="built-output"></pre>
+      <button class="copy-btn" style="margin-top:.5rem;font-size:.8rem;padding:.4rem 1rem" onclick="copyRaw(document.getElementById('built-output').textContent)">📋 Copy Prompt</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ MISTAKES ══════════════ -->
+<div class="page" id="page-mistakes">
+  <div class="page-hero">
+    <div class="page-label">What Not to Do</div>
+    <h1 class="page-title">🚫 Common Prompting Mistakes</h1>
+    <p class="page-desc">These are the mistakes that turn powerful AI into mediocre AI. Each mistake is shown with the problem and the fix.</p>
+  </div>
+
+  <div class="mistake-grid" style="margin-bottom:2rem">
+    <div class="mistake-card mc-bad"><div class="mc-label bad">Mistake</div><div class="mc-text"><strong>Being too vague</strong><br/>Prompt: "Help me with my marketing." The AI doesn't know your product, audience, goal, budget, or timeline. It produces generic advice that helps no one.</div></div>
+    <div class="mistake-card mc-good"><div class="mc-label good">Fix</div><div class="mc-text"><strong>Add the 5 Ws</strong><br/>Who is the audience? What do you want them to do? What's the channel? What's the budget? What have you tried? The more specific, the more useful the response.</div></div>
+  </div>
+  <div class="mistake-grid" style="margin-bottom:2rem">
+    <div class="mistake-card mc-bad"><div class="mc-label bad">Mistake</div><div class="mc-text"><strong>Asking 10 things in one prompt</strong><br/>"Write a blog post, tweet, LinkedIn post, email sequence, and ad copy about our new product launch." Each task deserves its own prompt with specific requirements.</div></div>
+    <div class="mistake-card mc-good"><div class="mc-label good">Fix</div><div class="mc-text"><strong>One prompt, one task</strong><br/>Break your list into separate, focused prompts. Start with "Write the blog post." When happy with that, do: "Now write a tweet to promote that blog post." Quality compounds.</div></div>
+  </div>
+  <div class="mistake-grid" style="margin-bottom:2rem">
+    <div class="mistake-card mc-bad"><div class="mc-label bad">Mistake</div><div class="mc-text"><strong>Accepting the first response</strong><br/>The first response is rarely the best response. Most people read it, sigh, and move on. The real value of AI is in iteration: refine, push back, ask for alternatives.</div></div>
+    <div class="mistake-card mc-good"><div class="mc-label good">Fix</div><div class="mc-text"><strong>Iterate with specific feedback</strong><br/>"Make it 30% shorter." "The third point is wrong — here's why." "Give me 3 alternative versions of just the opening paragraph." Each iteration makes it better.</div></div>
+  </div>
+  <div class="mistake-grid" style="margin-bottom:2rem">
+    <div class="mistake-card mc-bad"><div class="mc-label bad">Mistake</div><div class="mc-text"><strong>Not specifying the format</strong><br/>Without format instructions, AI defaults to verbose, structured prose. You get a 500-word essay when you wanted 5 bullet points — and then you have to reformat everything.</div></div>
+    <div class="mistake-card mc-good"><div class="mc-label good">Fix</div><div class="mc-text"><strong>Always end with format instructions</strong><br/>Add to every prompt: "Format: [bullet list / numbered steps / plain paragraph / table / JSON]" and "Length: [under 100 words / 3 sections / 5 items]." Takes 5 seconds, saves 5 minutes.</div></div>
+  </div>
+  <div class="mistake-grid" style="margin-bottom:2rem">
+    <div class="mistake-card mc-bad"><div class="mc-label bad">Mistake</div><div class="mc-text"><strong>Trusting AI facts without verification</strong><br/>LLMs hallucinate statistics, citations, names, dates, and product specs. A number that looks real in an AI response may be completely fabricated — and it reads exactly like a real fact.</div></div>
+    <div class="mistake-card mc-good"><div class="mc-label good">Fix</div><div class="mc-text"><strong>Treat AI facts as drafts</strong><br/>Use AI to structure and write, but verify every specific fact, citation, statistic, and name from a primary source. Ask the AI "Are you certain about this? What's the source?" — if it hedges, verify.</div></div>
+  </div>
+  <div class="mistake-grid" style="margin-bottom:2rem">
+    <div class="mistake-card mc-bad"><div class="mc-label bad">Mistake</div><div class="mc-text"><strong>Over-prompting with irrelevant context</strong><br/>Adding paragraphs of background that don't affect the task dilutes focus and can introduce the "lost in the middle" problem — the AI attends less to key instructions when buried in noise.</div></div>
+    <div class="mistake-card mc-good"><div class="mc-label good">Fix</div><div class="mc-text"><strong>Context economy</strong><br/>Include only context that would change the output. Ask yourself: "If I removed this sentence, would the response be meaningfully different?" If not, cut it.</div></div>
+  </div>
+</div>
+
+<!-- ══════════════ FUTURE ══════════════ -->
+<div class="page" id="page-future">
+  <div class="page-hero">
+    <div class="page-label">What's Next</div>
+    <h1 class="page-title">🔮 The Future of Prompting</h1>
+    <p class="page-desc">Prompting as we know it is evolving rapidly. Here's where it came from, where it is, and where it's going — with data points and expert predictions.</p>
+  </div>
+
+  <h2 class="sh">Timeline: Prompting's Evolution</h2>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">2020</div><h4>GPT-3 & the Birth of Prompt Engineering</h4><p>GPT-3's in-context learning ability surprised its creators. Researchers discovered that changing a few words in the prompt could dramatically change capability. "Prompt engineering" emerged as a discipline — some optimised prompts manually, others used gradient descent (AutoPrompt). The term "prompt engineer" didn't yet exist.</p></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">2021</div><h4>Few-Shot Learning Goes Mainstream</h4><p>Papers demonstrate that structured few-shot prompts reliably unlock GPT-3 capabilities unavailable with zero-shot. OpenAI's Codex launches (GitHub Copilot's foundation), showing that code generation quality is dramatically sensitive to prompt structure. Early prompt engineering blogs appear.</p></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">2022 — Nov</div><h4>ChatGPT Changes Everything</h4><p>100 million users in 2 months. For the first time, hundreds of millions of people are writing prompts daily. A massive, unplanned real-world experiment in what prompts work. Community-driven prompt sharing explodes. "Prompt engineering" becomes a job title at major tech companies.</p></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">2023</div><h4>Chain-of-Thought & Systematic Techniques</h4><p>Wei et al.'s Chain-of-Thought paper (2022) goes mainstream. "Let's think step by step" becomes perhaps the most valuable 5-word addition to any hard prompt. Tree-of-Thought, ReAct, and Self-Consistency follow. Anthropic publishes its prompt engineering guide. Prompting moves from art toward science. Prompt marketplaces launch (PromptBase, etc.).</p></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">2024</div><h4>Instruction Following Improves; Prompting Gets Easier</h4><p>Claude 3, GPT-4o, and Gemini require less careful prompting than earlier models — they follow complex, multi-part instructions more reliably. The skill level required for "good enough" drops. But the ceiling rises: expert prompts with these models produce dramatically better outputs than average ones. Agent prompting emerges as a specialised skill.</p></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">2025–2026</div><h4>Reasoning Models & the Thinking Shift</h4><p>o1, o3, and DeepSeek R1 change prompting norms: for reasoning models, giving more intermediate steps and chain-of-thought instructions is less necessary (the model thinks internally). But specifying the desired reasoning framework ("consider adversarial cases", "check for edge cases") remains valuable. Prompt → plan → execute patterns dominate agent workflows.</p></div>
+  </div>
+
+  <h2 class="sh">Data Points — The Impact of Good Prompting</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:2rem">
+    <div class="card" style="text-align:center"><div style="font-size:2rem;font-weight:800;color:var(--accent)">40%</div><p style="font-size:.82rem">Improvement in task accuracy from chain-of-thought prompting on GSM8K math benchmark (Wei et al., 2022)</p></div>
+    <div class="card" style="text-align:center"><div style="font-size:2rem;font-weight:800;color:var(--green)">10x</div><p style="font-size:.82rem">Range in output quality between a basic and expert-level prompt on the same model — documented in multiple prompt engineering studies</p></div>
+    <div class="card" style="text-align:center"><div style="font-size:2rem;font-weight:800;color:var(--blue)">$30–$300k</div><p style="font-size:.82rem">Reported salary range for "Prompt Engineer" roles at major AI labs in 2023 (LinkedIn, Glassdoor data)</p></div>
+    <div class="card" style="text-align:center"><div style="font-size:2rem;font-weight:800;color:var(--yellow)">55%</div><p style="font-size:.82rem">Of knowledge workers reported using AI tools weekly in 2024 (Microsoft Work Trend Index, 2024)</p></div>
+    <div class="card" style="text-align:center"><div style="font-size:2rem;font-weight:800;color:var(--pink)">66%</div><p style="font-size:.82rem">Time savings on first-draft writing tasks with AI assistance vs. unassisted (Harvard Business School, 2023)</p></div>
+    <div class="card" style="text-align:center"><div style="font-size:2rem;font-weight:800;color:var(--orange)">26%</div><p style="font-size:.82rem">Higher quality outputs from AI-assisted workers (BCG consulting study, 2023) — but only for those who used AI well</p></div>
+  </div>
+
+  <h2 class="sh">What's Coming: The Future of Human-AI Interaction</h2>
+  <div class="card">
+    <h3>🧠 Prompting Will Become More Implicit</h3>
+    <p>Future AI systems will require less explicit instruction — they'll infer intent from context, prior interactions, and your personal preferences. Instead of "Write a professional email in my style for this audience", the system will know your style, audience, and constraints from your history. Explicit prompting will remain important for novel or high-stakes tasks, but routine work will increasingly be delegated with minimal instruction.</p>
+  </div>
+  <div class="card">
+    <h3>🤖 From Prompts to Goals</h3>
+    <p>Current prompting is task-level: "do this thing." As agentic AI matures, interaction shifts to goal-level: "make this outcome happen." You specify the desired end state; the AI plans and executes the steps. Human oversight shifts from task approval to goal-setting, checkpoint review, and constraint specification. This requires learning to specify goals and acceptance criteria clearly — a different skill from prompt writing.</p>
+  </div>
+  <div class="card">
+    <h3>📡 Multimodal Prompting</h3>
+    <p>Text prompting is just the beginning. Voice prompting (more natural, less precise), image prompting (sketch what you want), video prompting (show the AI a workflow instead of describing it), and gesture prompting are all active research areas. GPT-4o's voice mode and image input are early versions of what will become the primary interaction paradigm. Written prompts will remain important for precision work, especially in professional contexts.</p>
+  </div>
+  <div class="card">
+    <h3>🔬 Automated Prompt Optimisation</h3>
+    <p>Meta-prompting systems that automatically optimise prompts are already emerging. DSPy (Stanford), AutoPrompt, and similar frameworks treat prompts as parameters to be optimised — automatically trying thousands of variations to find what works best for a specific task. This shifts the skill from "write good prompts by hand" to "define good evaluation criteria" for automated optimisation. Both skills will matter.</p>
+  </div>
+
+  <div class="callout cl-blue">📖 Essential reading for staying current: <a href="https://www.promptingguide.ai/" target="_blank">Prompt Engineering Guide</a> · <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank">Anthropic Prompt Engineering</a> · <a href="https://arxiv.org/abs/2201.11903" target="_blank">Chain-of-Thought Paper (Wei et al., 2022)</a></div>
+</div>
+
+</main>
+
+<script>
+function showPage(n, btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+n).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function setLevel(level, btn) {
+  const page = btn.closest('.page');
+  page.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  page.querySelectorAll('.level-content').forEach(c=>{
+    c.classList.toggle('show', c.dataset.level===level);
+  });
+}
+
+function copyPrompt(btn, text) {
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='✓ Copied';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied')},2000);
+  });
+}
+function copyRaw(text) {
+  navigator.clipboard.writeText(text).then(()=>{
+    event.target.textContent='✓ Copied!';
+    setTimeout(()=>{event.target.textContent='📋 Copy Prompt'},2000);
+  });
+}
+
+function buildPrompt() {
+  const role = document.getElementById('b-role').value.trim();
+  const aiRole = document.getElementById('b-ai-role').value.trim();
+  const task = document.getElementById('b-task').value.trim();
+  const context = document.getElementById('b-context').value.trim();
+  const audience = document.getElementById('b-audience').value.trim();
+  const format = document.getElementById('b-format').value;
+  const tone = document.getElementById('b-tone').value;
+  const length = document.getElementById('b-length').value.trim();
+  const avoid = document.getElementById('b-avoid').value.trim();
+  const reasoning = document.getElementById('b-reasoning').value;
+
+  if(!task){alert('Please fill in at least the Task field.');return;}
+
+  let parts = [];
+  if(aiRole) parts.push(`You are ${aiRole}.`);
+  if(role) parts.push(`I am ${role}.`);
+  if(context) parts.push(`Context: ${context}`);
+  if(task) parts.push(`Task: ${task}`);
+  if(audience) parts.push(`Audience: ${audience}`);
+  if(reasoning) parts.push(reasoning);
+  if(tone || format || length) {
+    let output = [];
+    if(tone) output.push(`Tone: ${tone}`);
+    if(format) output.push(`Format: ${format}`);
+    if(length) output.push(`Length: ${length}`);
+    parts.push('Output requirements:\n- ' + output.join('\n- '));
+  }
+  if(avoid) parts.push(`Do NOT: ${avoid}`);
+
+  const result = parts.join('\n\n');
+  document.getElementById('built-output').textContent = result;
+  document.getElementById('built-prompt').style.display='block';
+  document.getElementById('built-prompt').scrollIntoView({behavior:'smooth'});
+}
+</script>
+
+<!-- FOOTER -->
+<footer role="contentinfo" style="padding:3rem 2rem;text-align:center;color:var(--text3);font-size:.83rem;border-top:1px solid var(--border);">
+  <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.9rem;">
+    <a href="index.html" style="color:var(--accent2);">← Back to All Modules</a>
+    <a href="terminology.html" style="color:var(--accent2);">AI Terminology</a>
+    <a href="core-ai.html" style="color:var(--accent2);">Core Architecture</a>
+    <a href="comparisons.html" style="color:var(--accent2);">Model Comparisons</a>
+    <a href="prompting.html" style="color:var(--accent2);">Prompt Engineering</a>
+    <a href="use-cases.html" style="color:var(--accent2);">Use Cases</a>
+    <a href="ai-integration.html" style="color:var(--accent2);">AI Integration</a>
+    <a href="enterprise-ai.html" style="color:var(--accent2);">Enterprise AI</a>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.9rem;">
+    <a href="about.html" style="color:var(--accent2);">About</a>
+    <a href="contact.html" style="color:var(--accent2);">Contact</a>
+    <a href="privacy-policy.html" style="color:var(--accent2);">Privacy Policy</a>
+  </div>
+  <div style="line-height:1.8;">
+    <strong style="color:var(--text2);">AI Literate</strong> — Free AI education for everyone.<br>
+    AI information changes rapidly — verify with official sources. Not affiliated with any AI company.<br>
+    <span>&copy; <span class="footer-yr"></span> AI Literate. All rights reserved.</span>
+  </div>
+</footer>
+<script>document.querySelectorAll('.footer-yr').forEach(e=>e.textContent=new Date().getFullYear());</script>
+
+</body>
+</html>

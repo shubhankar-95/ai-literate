@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Integration: MCP Servers, Orchestration, RAG & Multi-Agent Systems — AI Literate</title>
+<meta name="description" content="Learn how to integrate AI into real workflows using MCP servers, orchestration patterns, RAG pipelines, and multi-agent architectures. From connecting Postgres and GitHub to building autonomous research agents. With full code examples.">
+<meta name="keywords" content="MCP servers, Model Context Protocol, AI orchestration, RAG pipeline, multi-agent AI, LangChain tutorial, LlamaIndex guide, AI integration patterns, vector database, Pinecone, AI workflow, Claude MCP, agent orchestration, AI architecture">
+<meta name="robots" content="index, follow">
+<meta name="author" content="AI Literate">
+<meta property="og:title" content="AI Integration: MCP Servers, Orchestration, RAG & Multi-Agent Systems">
+<meta property="og:description" content="How to connect AI to your tools and data using MCP servers, build orchestrated multi-agent pipelines, implement RAG, and architect production AI systems. Beginner to advanced.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ai-literate.online/ai-integration.html">
+<meta property="og:site_name" content="AI Literate">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Integration: MCP, Orchestration, RAG — AI Literate">
+<meta name="twitter:description" content="Complete guide to AI integration: MCP servers, orchestrators, RAG, multi-agent systems, and production AI architectures with code examples.">
+<link rel="canonical" href="https://ai-literate.online/ai-integration.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "AI Integration: MCP Servers, Orchestration, RAG & Multi-Agent Systems",
+  "description": "Complete guide to integrating AI into real workflows using MCP servers, orchestration patterns, RAG pipelines, and multi-agent architectures.",
+  "author": {"@type": "Organization", "name": "AI Literate"},
+  "publisher": {"@type": "Organization", "name": "AI Literate", "url": "https://ai-literate.online"},
+  "url": "https://ai-literate.online/ai-integration.html",
+  "inLanguage": "en-US",
+  "keywords": "MCP servers, RAG, multi-agent, orchestration, LangChain, LlamaIndex, vector database"
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a28;--surface3:#22223a;
+  --border:#2a2a40;--accent:#3ecfcf;--accent2:#7c5cbf;--accent3:#5b8ef0;
+  --green:#3ecf8e;--yellow:#f0c040;--red:#ef5050;--orange:#f07040;
+  --text:#e8e8f0;--text2:#9090b0;--radius:12px;--radius-sm:8px;
+  --mono:'Fira Code',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;}
+
+.topnav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:20px;height:56px;}
+.nav-brand{font-weight:700;font-size:1rem;color:var(--accent);text-decoration:none;white-space:nowrap;}
+.nav-brand span{color:var(--text2);font-weight:400;}
+.nav-tabs{display:flex;gap:4px;overflow-x:auto;flex:1;}
+.nav-tab{padding:6px 14px;border-radius:var(--radius-sm);cursor:pointer;font-size:0.82rem;font-weight:500;color:var(--text2);border:none;background:none;white-space:nowrap;transition:all 0.2s;}
+.nav-tab:hover{background:var(--surface2);color:var(--text);}
+.nav-tab.active{background:var(--accent);color:#000;}
+.nav-back{font-size:0.82rem;color:var(--text2);text-decoration:none;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);transition:all 0.2s;white-space:nowrap;}
+.nav-back:hover{border-color:var(--accent);color:var(--accent);}
+
+.page{display:none;padding:40px 24px;max-width:1100px;margin:0 auto;}
+.page.active{display:block;}
+
+.hero{text-align:center;margin-bottom:48px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);padding:6px 14px;border-radius:40px;font-size:0.8rem;color:var(--accent);margin-bottom:20px;}
+.hero h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;margin-bottom:16px;}
+.hero h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero p{font-size:1.1rem;color:var(--text2);max-width:600px;margin:0 auto;}
+
+.level-bar{display:flex;gap:8px;margin-bottom:32px;padding:4px;background:var(--surface);border:1px solid var(--border);border-radius:40px;width:fit-content;}
+.level-btn{padding:8px 20px;border-radius:40px;border:none;cursor:pointer;font-size:0.85rem;font-weight:600;transition:all 0.2s;color:var(--text2);background:none;}
+.level-btn.active{background:var(--accent);color:#000;}
+[data-level]{display:none;}
+[data-level].show{display:block;}
+
+.section-title{font-size:1.5rem;font-weight:700;margin-bottom:8px;}
+.section-sub{color:var(--text2);margin-bottom:28px;}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;}
+.card-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.card-title{font-size:1.05rem;font-weight:700;}
+.card-sub{font-size:0.85rem;color:var(--text2);}
+.card p{color:var(--text2);font-size:0.9rem;line-height:1.7;margin-bottom:10px;}
+.card p:last-child{margin-bottom:0;}
+
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:24px;}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px;}
+
+.code-block{background:#0d0d18;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;margin:12px 0;position:relative;overflow-x:auto;}
+.code-block code{font-family:var(--mono);font-size:0.82rem;color:#c9d1d9;white-space:pre;display:block;}
+.comment{color:#6a9955;}
+.cmd{color:#79b8ff;}
+.flag{color:#ffab70;}
+.str{color:#9ecbff;}
+.kw{color:#f97583;}
+.copy-btn{position:absolute;top:8px;right:8px;padding:4px 10px;background:var(--surface3);border:1px solid var(--border);border-radius:6px;font-size:0.75rem;cursor:pointer;color:var(--text2);transition:all 0.2s;}
+.copy-btn:hover{background:var(--accent);color:#000;border-color:var(--accent);}
+
+.callout{padding:16px 20px;border-radius:var(--radius-sm);margin:16px 0;display:flex;gap:12px;align-items:flex-start;}
+.callout.tip{background:#0d2e20;border-left:3px solid var(--green);}
+.callout.warn{background:#2e1a0d;border-left:3px solid var(--orange);}
+.callout.info{background:#0d1a2e;border-left:3px solid var(--accent3);}
+.callout.accent{background:#0d2e2e;border-left:3px solid var(--accent);}
+.callout-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.callout p{font-size:0.87rem;color:var(--text2);margin:0;}
+.callout strong{color:var(--text);}
+
+/* ARCHITECTURE DIAGRAM */
+.arch-diagram{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:24px;font-family:var(--mono);font-size:0.82rem;overflow-x:auto;}
+.arch-diagram pre{color:#c9d1d9;white-space:pre;line-height:1.5;}
+
+/* MCP CARDS */
+.mcp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:24px;}
+.mcp-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:all 0.2s;}
+.mcp-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.mcp-icon{font-size:1.5rem;margin-bottom:8px;}
+.mcp-card h3{font-size:0.95rem;font-weight:700;margin-bottom:4px;}
+.mcp-card .mcp-pkg{font-family:var(--mono);font-size:0.75rem;color:var(--accent);margin-bottom:8px;}
+.mcp-card p{font-size:0.83rem;color:var(--text2);line-height:1.6;}
+.mcp-card .capability-list{margin-top:10px;display:flex;flex-direction:column;gap:4px;}
+.capability{font-size:0.8rem;color:var(--text2);display:flex;gap:6px;align-items:flex-start;}
+.capability::before{content:'→';color:var(--accent);flex-shrink:0;}
+
+/* FLOW DIAGRAM */
+.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:16px 0;}
+.flow-node{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 16px;font-size:0.82rem;font-weight:600;text-align:center;}
+.flow-node.user{border-color:var(--green);color:var(--green);}
+.flow-node.ai{border-color:var(--accent);color:var(--accent);}
+.flow-node.tool{border-color:var(--accent3);color:var(--accent3);}
+.flow-node.data{border-color:var(--yellow);color:var(--yellow);}
+.flow-arrow{color:var(--text2);font-size:1rem;}
+
+/* PATTERN CARDS */
+.pattern-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;border-left:3px solid var(--accent);}
+.pattern-card h3{font-size:1.1rem;font-weight:700;margin-bottom:4px;}
+.pattern-card .pattern-tag{display:inline-block;font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:4px;background:#0d2e2e;color:var(--accent);margin-bottom:10px;}
+.pattern-card p{font-size:0.88rem;color:var(--text2);line-height:1.7;margin-bottom:10px;}
+
+/* COMPARISON TABLE */
+.compare-table{width:100%;border-collapse:collapse;font-size:0.85rem;margin-bottom:24px;}
+.compare-table th{background:var(--surface2);padding:12px 16px;text-align:left;font-weight:600;color:var(--text2);border-bottom:2px solid var(--border);}
+.compare-table td{padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:top;}
+.compare-table tr:hover td{background:var(--surface);}
+.badge-green{background:#0d2e20;color:var(--green);padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:600;}
+.badge-yellow{background:#2e2a0d;color:var(--yellow);padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:600;}
+.badge-blue{background:#0d1a2e;color:var(--accent3);padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:600;}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:16px;}
+.step{display:flex;gap:20px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-weight:700;font-size:0.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-body h3{font-size:1rem;font-weight:700;margin-bottom:6px;}
+.step-body p{font-size:0.88rem;color:var(--text2);line-height:1.65;}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:32px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;}
+.stat-num{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-label{font-size:0.75rem;color:var(--text2);margin-top:4px;}
+
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--accent);}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://ai-literate.online/"},
+    {"@type":"ListItem","position":2,"name":"AI Integration & Architecture","item":"https://ai-literate.online/ai-integration.html"}
+  ]
+}
+</script>
+</head>
+<body>
+
+<nav id="nav" aria-label="Main navigation">
+  <a href="index.html" style="font-size:1.05rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;">🤖 AI Literate</a>
+  <div style="display:flex;gap:1.5rem;margin-left:auto;align-items:center;">
+    <a href="index.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">All Modules</a>
+    <a href="about.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">About</a>
+    <a href="contact.html" style="color:var(--text2);font-size:.85rem;font-weight:500;text-decoration:none;">Contact</a>
+  </div>
+</nav>
+
+<!-- ═══ OVERVIEW ═══ -->
+<div id="overview" class="page active">
+  <div class="hero">
+    <div class="hero-badge">🔌 Integration Layer</div>
+    <h1>AI <span>Integration</span></h1>
+    <p>How to connect AI to your tools, data, and workflows — from a single MCP server to a full multi-agent system.</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num">200+</div><div class="stat-label">MCP servers available (2025)</div></div>
+    <div class="stat-card"><div class="stat-num">10x</div><div class="stat-label">Value increase when AI is context-aware</div></div>
+    <div class="stat-card"><div class="stat-num">RAG</div><div class="stat-label">Dominant retrieval pattern</div></div>
+    <div class="stat-card"><div class="stat-num">Agents</div><div class="stat-label">The new unit of software</div></div>
+    <div class="stat-card"><div class="stat-num">MCP</div><div class="stat-label">Anthropic's open protocol</div></div>
+    <div class="stat-card"><div class="stat-num">2025</div><div class="stat-label">Year of the AI integration stack</div></div>
+  </div>
+
+  <div class="level-bar">
+    <button class="level-btn active" onclick="setLevel('beginner','overview')">🌱 Beginner</button>
+    <button class="level-btn" onclick="setLevel('intermediate','overview')">⚡ Intermediate</button>
+    <button class="level-btn" onclick="setLevel('advanced','overview')">🔥 Advanced</button>
+  </div>
+
+  <div data-level="beginner" data-section="overview" class="show">
+    <div class="section-title">What Does "Integrating AI" Mean?</div>
+    <div class="section-sub">The difference between using AI and embedding AI into your workflow.</div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d2e2e;">💡</div><div><div class="card-title">The Key Insight</div></div></div>
+      <p>A generic AI model like Claude knows a lot about the world — but it knows nothing about <em>your</em> world. It doesn't know your company's data, your codebase, your customers, or your internal processes.</p>
+      <p><strong>AI integration</strong> is the practice of giving AI access to YOUR context so it can do useful work with YOUR data, in YOUR systems, following YOUR rules.</p>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#2e0d0d;">❌</div><div><div class="card-title">Without integration</div></div></div>
+        <p>"Write a summary of our Q3 performance."</p>
+        <p>→ Claude makes up plausible-sounding numbers. Useless.</p>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#0d2e20;">✅</div><div><div class="card-title">With integration</div></div></div>
+        <p>"Write a summary of our Q3 performance."</p>
+        <p>→ Claude fetches real data from your BI tool via MCP, reads the actual numbers, writes an accurate summary. Valuable.</p>
+      </div>
+    </div>
+    <div class="callout accent"><div class="callout-icon">🎯</div><p><strong>The hierarchy:</strong> Generic AI → AI with your documents → AI with your data → AI with your tools → AI that can act on your behalf. Each step multiplies the value you get.</p></div>
+  </div>
+
+  <div data-level="intermediate" data-section="overview">
+    <div class="section-title">The AI Integration Stack</div>
+    <div class="section-sub">Five layers of AI integration, from simplest to most powerful.</div>
+    <div class="arch-diagram"><pre>
+┌─────────────────────────────────────────────────────────────┐
+│                    INTEGRATION LAYERS                        │
+├─────────────────────────────────────────────────────────────┤
+│  Level 5 │  AGENT NETWORKS         │  Multi-AI coordination  │
+│          │  Orchestrators + agents │  Autonomous pipelines   │
+├──────────┼─────────────────────────┼─────────────────────────┤
+│  Level 4 │  TOOL USE + MCP         │  AI can act on systems  │
+│          │  GitHub, Slack, DB, APIs │  Real-world effect      │
+├──────────┼─────────────────────────┼─────────────────────────┤
+│  Level 3 │  RAG + MEMORY           │  AI knows YOUR data     │
+│          │  Vector DBs, embeddings │  Long-term context      │
+├──────────┼─────────────────────────┼─────────────────────────┤
+│  Level 2 │  FINE-TUNING            │  AI speaks your style   │
+│          │  Custom model behavior  │  Domain expertise       │
+├──────────┼─────────────────────────┼─────────────────────────┤
+│  Level 1 │  PROMPTING + CONTEXT    │  AI understands YOU     │
+│          │  System prompts, CLAUDE.md │  Basic grounding     │
+└─────────────────────────────────────────────────────────────┘
+    Most teams start at Level 1 and climb as they prove value</pre></div>
+  </div>
+
+  <div data-level="advanced" data-section="overview">
+    <div class="section-title">Full Integration Architecture</div>
+    <div class="section-sub">Production-grade AI deployment patterns used by leading organizations.</div>
+    <div class="arch-diagram"><pre>
+┌─────────────────────────────────────────────────────────────────────┐
+│                   PRODUCTION AI INTEGRATION                          │
+│                                                                      │
+│  USER REQUEST                                                        │
+│       │                                                              │
+│       ▼                                                              │
+│  ┌─────────────┐     ┌──────────────────┐     ┌─────────────────┐  │
+│  │  API Gateway │────▶│  Orchestrator AI │────▶│  Tool Router    │  │
+│  │  + Auth      │     │  (Claude Opus)   │     │  (selects MCPs) │  │
+│  └─────────────┘     └──────────────────┘     └────────┬────────┘  │
+│                                │                         │           │
+│                                ▼                         ▼           │
+│                       ┌──────────────┐         ┌──────────────────┐│
+│                       │  RAG Engine  │         │   MCP SERVERS    ││
+│                       │  ─────────  │         │  ─────────────── ││
+│                       │  Embedding  │         │  • Postgres DB    ││
+│                       │  Search     │         │  • GitHub         ││
+│                       │  Re-ranking │         │  • Slack          ││
+│                       └──────┬───── ┘         │  • Salesforce     ││
+│                              │                 │  • Custom APIs    ││
+│                              ▼                 └──────────────────┘│
+│                       ┌──────────────┐                   │           │
+│                       │ Vector Store │                   ▼           │
+│                       │  (Pinecone,  │         ┌──────────────────┐│
+│                       │   Weaviate)  │         │  Sub-agents      ││
+│                       └─────────────┘         │  (specialized)   ││
+│                                                └──────────────────┘│
+└─────────────────────────────────────────────────────────────────────┘</pre></div>
+  </div>
+</div>
+
+<!-- ═══ MCP ═══ -->
+<div id="mcp" class="page">
+  <div class="hero">
+    <div class="hero-badge">🔌 Protocol</div>
+    <h1>Model Context <span>Protocol</span></h1>
+    <p>The open standard for connecting AI to any tool, database, or service. Built by Anthropic, supported everywhere.</p>
+  </div>
+
+  <div class="level-bar">
+    <button class="level-btn active" onclick="setLevel('beginner','mcp')">🌱 Beginner</button>
+    <button class="level-btn" onclick="setLevel('intermediate','mcp')">⚡ Intermediate</button>
+    <button class="level-btn" onclick="setLevel('advanced','mcp')">🔥 Advanced</button>
+  </div>
+
+  <div data-level="beginner" data-section="mcp" class="show">
+    <div class="section-title">What is MCP?</div>
+    <div class="section-sub">Think of MCP as a universal adapter — like USB-C for AI tools.</div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d2e2e;">🔌</div><div><div class="card-title">The USB-C Analogy</div></div></div>
+      <p>Before MCP, every AI integration was custom: a one-off connector between Claude and, say, GitHub. This required specialized code every time you wanted to connect a new tool. Time-consuming and brittle.</p>
+      <p><strong>MCP (Model Context Protocol)</strong> is a standard that lets any AI model connect to any tool that speaks the protocol. Claude + MCP = Claude can read your database, check your calendar, post to Slack, or query any API — as long as there's an MCP server for it. And there usually is.</p>
+    </div>
+    <div class="callout accent"><div class="callout-icon">🌐</div><p><strong>Open source:</strong> MCP is an open protocol (github.com/modelcontextprotocol). Anyone can build an MCP server, and hundreds already exist for every popular tool.</p></div>
+
+    <div class="section-title" style="margin-top:32px;">Popular MCP Servers</div>
+    <div class="mcp-grid">
+      <div class="mcp-card">
+        <div class="mcp-icon">🐙</div>
+        <h3>GitHub</h3>
+        <div class="mcp-pkg">@modelcontextprotocol/server-github</div>
+        <p>Claude reads/creates issues, PRs, and code. Reviews pull requests, manages releases.</p>
+        <div class="capability-list">
+          <div class="capability">Create and comment on issues</div>
+          <div class="capability">Review PRs with context</div>
+          <div class="capability">Search across all repos</div>
+        </div>
+      </div>
+      <div class="mcp-card">
+        <div class="mcp-icon">🗄️</div>
+        <h3>PostgreSQL</h3>
+        <div class="mcp-pkg">@modelcontextprotocol/server-postgres</div>
+        <p>Claude reads your database schema and runs queries directly. Write SQL from natural language.</p>
+        <div class="capability-list">
+          <div class="capability">Natural language → SQL queries</div>
+          <div class="capability">Schema exploration</div>
+          <div class="capability">Data analysis and reporting</div>
+        </div>
+      </div>
+      <div class="mcp-card">
+        <div class="mcp-icon">💬</div>
+        <h3>Slack</h3>
+        <div class="mcp-pkg">@modelcontextprotocol/server-slack</div>
+        <p>Claude reads channels, sends messages, and summarizes threads. Build AI-powered Slack bots.</p>
+        <div class="capability-list">
+          <div class="capability">Summarize channel history</div>
+          <div class="capability">Send messages and replies</div>
+          <div class="capability">Search conversations</div>
+        </div>
+      </div>
+      <div class="mcp-card">
+        <div class="mcp-icon">📁</div>
+        <h3>Filesystem</h3>
+        <div class="mcp-pkg">@modelcontextprotocol/server-filesystem</div>
+        <p>Claude reads and writes files in specified directories. Controlled file system access for agents.</p>
+        <div class="capability-list">
+          <div class="capability">Read/write files securely</div>
+          <div class="capability">Search file contents</div>
+          <div class="capability">Manage directory structure</div>
+        </div>
+      </div>
+      <div class="mcp-card">
+        <div class="mcp-icon">🌐</div>
+        <h3>Web Fetch</h3>
+        <div class="mcp-pkg">@modelcontextprotocol/server-fetch</div>
+        <p>Claude fetches web pages, parses content, and extracts structured data from live URLs.</p>
+        <div class="capability-list">
+          <div class="capability">Fetch and parse any URL</div>
+          <div class="capability">Extract structured data</div>
+          <div class="capability">Monitor web content</div>
+        </div>
+      </div>
+      <div class="mcp-card">
+        <div class="mcp-icon">🔍</div>
+        <h3>Brave Search</h3>
+        <div class="mcp-pkg">@modelcontextprotocol/server-brave-search</div>
+        <p>Real-time web search with current information. Claude can research any topic with up-to-date results.</p>
+        <div class="capability-list">
+          <div class="capability">Real-time web search</div>
+          <div class="capability">News and current events</div>
+          <div class="capability">Research automation</div>
+        </div>
+      </div>
+      <div class="mcp-card">
+        <div class="mcp-icon">📊</div>
+        <h3>Google Sheets</h3>
+        <div class="mcp-pkg">@anthropic-ai/mcp-google-sheets</div>
+        <p>Claude reads and writes to Google Sheets. Analyze data, generate reports, update spreadsheets.</p>
+        <div class="capability-list">
+          <div class="capability">Read sheet data as context</div>
+          <div class="capability">Write analysis results back</div>
+          <div class="capability">Create new sheets from data</div>
+        </div>
+      </div>
+      <div class="mcp-card">
+        <div class="mcp-icon">📧</div>
+        <h3>Gmail / Email</h3>
+        <div class="mcp-pkg">@anthropic-ai/mcp-gmail</div>
+        <p>Claude reads, drafts, and organizes emails. Triage inbox, draft replies, summarize threads.</p>
+        <div class="capability-list">
+          <div class="capability">Inbox summarization</div>
+          <div class="capability">Draft personalized replies</div>
+          <div class="capability">Email triage and labeling</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-level="intermediate" data-section="mcp">
+    <div class="section-title">Configuring MCP Servers</div>
+    <div class="section-sub">How to wire MCP servers into Claude Code and Claude Desktop.</div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d1a2e;">⚙️</div><div><div class="card-title">Claude Code — Project MCP Config</div></div></div>
+      <div class="code-block"><code><span class="comment">// .claude/mcp.json in your project root</span>
+{
+  <span class="str">"mcpServers"</span>: {
+    <span class="str">"postgres"</span>: {
+      <span class="str">"command"</span>: <span class="str">"npx"</span>,
+      <span class="str">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@modelcontextprotocol/server-postgres"</span>],
+      <span class="str">"env"</span>: {
+        <span class="str">"POSTGRES_CONNECTION_STRING"</span>: <span class="str">"${DATABASE_URL}"</span>
+      }
+    },
+    <span class="str">"github"</span>: {
+      <span class="str">"command"</span>: <span class="str">"npx"</span>,
+      <span class="str">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@modelcontextprotocol/server-github"</span>],
+      <span class="str">"env"</span>: {
+        <span class="str">"GITHUB_PERSONAL_ACCESS_TOKEN"</span>: <span class="str">"${GITHUB_TOKEN}"</span>
+      }
+    },
+    <span class="str">"slack"</span>: {
+      <span class="str">"command"</span>: <span class="str">"npx"</span>,
+      <span class="str">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@modelcontextprotocol/server-slack"</span>],
+      <span class="str">"env"</span>: {
+        <span class="str">"SLACK_BOT_TOKEN"</span>: <span class="str">"${SLACK_BOT_TOKEN}"</span>
+      }
+    }
+  }
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <div class="callout tip"><div class="callout-icon">🔒</div><p><strong>Security:</strong> Use <code style="font-family:var(--mono);">${ENV_VAR}</code> syntax for secrets — never hardcode API keys in mcp.json. Keep this file out of version control if it contains sensitive paths.</p></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d2e20;">🖥️</div><div><div class="card-title">Claude Desktop — Global MCP Config</div></div></div>
+      <div class="code-block"><code><span class="comment">// ~/Library/Application Support/Claude/claude_desktop_config.json (macOS)</span>
+<span class="comment">// %APPDATA%\Claude\claude_desktop_config.json (Windows)</span>
+{
+  <span class="str">"mcpServers"</span>: {
+    <span class="str">"filesystem"</span>: {
+      <span class="str">"command"</span>: <span class="str">"npx"</span>,
+      <span class="str">"args"</span>: [
+        <span class="str">"-y"</span>,
+        <span class="str">"@modelcontextprotocol/server-filesystem"</span>,
+        <span class="str">"/Users/you/Documents"</span>,  <span class="comment">// allowed directory</span>
+        <span class="str">"/Users/you/Projects"</span>
+      ]
+    },
+    <span class="str">"brave-search"</span>: {
+      <span class="str">"command"</span>: <span class="str">"npx"</span>,
+      <span class="str">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"@modelcontextprotocol/server-brave-search"</span>],
+      <span class="str">"env"</span>: {
+        <span class="str">"BRAVE_API_KEY"</span>: <span class="str">"your-brave-api-key"</span>
+      }
+    }
+  }
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    </div>
+  </div>
+
+  <div data-level="advanced" data-section="mcp">
+    <div class="section-title">Building a Custom MCP Server</div>
+    <div class="section-sub">Create your own MCP server to connect Claude to any internal API or data source.</div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#1a0d2e;">🏗️</div><div><div class="card-title">Custom MCP Server in TypeScript</div><div class="card-sub">Expose your internal API to Claude</div></div></div>
+      <div class="code-block"><code><span class="comment">// mcp-server/src/index.ts</span>
+<span class="kw">import</span> { Server } <span class="kw">from</span> <span class="str">"@modelcontextprotocol/sdk/server/index.js"</span>;
+<span class="kw">import</span> { StdioServerTransport } <span class="kw">from</span> <span class="str">"@modelcontextprotocol/sdk/server/stdio.js"</span>;
+<span class="kw">import</span> { CallToolRequestSchema, ListToolsRequestSchema } <span class="kw">from</span> <span class="str">"@modelcontextprotocol/sdk/types.js"</span>;
+
+<span class="kw">const</span> server = <span class="kw">new</span> Server(
+  { name: <span class="str">"my-company-mcp"</span>, version: <span class="str">"1.0.0"</span> },
+  { capabilities: { tools: {} } }
+);
+
+<span class="comment">// Define your tools</span>
+server.setRequestHandler(ListToolsRequestSchema, <span class="kw">async</span> () => ({
+  tools: [
+    {
+      name: <span class="str">"get_customer_data"</span>,
+      description: <span class="str">"Get customer info from CRM by email or ID"</span>,
+      inputSchema: {
+        type: <span class="str">"object"</span>,
+        properties: {
+          customer_id: { type: <span class="str">"string"</span>, description: <span class="str">"Customer ID or email"</span> }
+        },
+        required: [<span class="str">"customer_id"</span>]
+      }
+    },
+    {
+      name: <span class="str">"search_knowledge_base"</span>,
+      description: <span class="str">"Search internal docs and knowledge base"</span>,
+      inputSchema: {
+        type: <span class="str">"object"</span>,
+        properties: {
+          query: { type: <span class="str">"string"</span> },
+          limit: { type: <span class="str">"number"</span>, default: 5 }
+        },
+        required: [<span class="str">"query"</span>]
+      }
+    }
+  ]
+}));
+
+<span class="comment">// Handle tool calls</span>
+server.setRequestHandler(CallToolRequestSchema, <span class="kw">async</span> (request) => {
+  <span class="kw">if</span> (request.params.name === <span class="str">"get_customer_data"</span>) {
+    <span class="kw">const</span> { customer_id } = request.params.arguments <span class="kw">as</span> { customer_id: <span class="str">string</span> };
+    <span class="kw">const</span> data = <span class="kw">await</span> fetchFromCRM(customer_id); <span class="comment">// your internal API</span>
+    <span class="kw">return</span> { content: [{ type: <span class="str">"text"</span>, text: JSON.stringify(data) }] };
+  }
+  <span class="comment">// ... handle other tools</span>
+});
+
+<span class="kw">const</span> transport = <span class="kw">new</span> StdioServerTransport();
+<span class="kw">await</span> server.connect(transport);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    </div>
+    <div class="callout accent"><div class="callout-icon">🚀</div><p><strong>Real power:</strong> A custom MCP server connected to your CRM, internal knowledge base, and ticketing system turns Claude into an AI that actually knows your business — not just generic knowledge. This is the difference between a toy and a tool.</p></div>
+  </div>
+</div>
+
+<!-- ═══ ORCHESTRATION ═══ -->
+<div id="orchestration" class="page">
+  <div class="hero">
+    <div class="hero-badge">🎼 Multi-Agent</div>
+    <h1>AI <span>Orchestration</span></h1>
+    <p>How to coordinate multiple AI agents to tackle complex, multi-step tasks that no single agent can handle alone.</p>
+  </div>
+
+  <div class="level-bar">
+    <button class="level-btn active" onclick="setLevel('beginner','orch')">🌱 Beginner</button>
+    <button class="level-btn" onclick="setLevel('intermediate','orch')">⚡ Intermediate</button>
+    <button class="level-btn" onclick="setLevel('advanced','orch')">🔥 Advanced</button>
+  </div>
+
+  <div data-level="beginner" data-section="orch" class="show">
+    <div class="section-title">What is Agent Orchestration?</div>
+    <div class="section-sub">The analogy: one conductor directing many musicians.</div>
+    <div class="card">
+      <p>A single AI agent is great for focused tasks. But complex work often requires multiple specialized steps: research, then analysis, then writing, then review. <strong>Orchestration</strong> means coordinating multiple AI agents, each doing what it does best.</p>
+      <p>Think of it like a kitchen: there's a head chef (orchestrator) who assigns tasks to specialist chefs (sub-agents) — one handles prep, one handles the stove, one handles plating. The final dish is better than what any single chef could produce.</p>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d2e2e;">🎼</div><div><div class="card-title">Simple example: Research → Write → Review</div></div></div>
+      <div class="flow">
+        <div class="flow-node user">User Request</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node ai">Orchestrator<br><small>Plans the work</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node tool">Agent 1<br><small>Researches topic</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node tool">Agent 2<br><small>Writes draft</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node tool">Agent 3<br><small>Reviews & edits</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node data">Final Output</div>
+      </div>
+    </div>
+  </div>
+
+  <div data-level="intermediate" data-section="orch">
+    <div class="section-title">Orchestration Patterns</div>
+    <div class="section-sub">Common patterns for coordinating AI agents effectively.</div>
+
+    <div class="pattern-card">
+      <h3>🔄 Sequential Pipeline</h3>
+      <div class="pattern-tag">PATTERN 1</div>
+      <p>Agents execute one after another, each taking the previous output as input. Best for: content production, data transformation, document processing workflows.</p>
+      <div class="arch-diagram"><pre>Input → [Research Agent] → [Analysis Agent] → [Writing Agent] → [QA Agent] → Output</pre></div>
+      <div class="code-block"><code><span class="comment"># Claude Code prompt for sequential pipeline</span>
+<span class="str">"Complete this research report in 4 sequential steps:
+Step 1: Search for the top 5 recent papers on [topic] and summarize findings.
+Step 2: Identify the 3 most significant trends from your research.
+Step 3: Write a 500-word executive summary for C-suite audience.
+Step 4: Review your own draft: check for accuracy, clarity, missing data. Revise."</span></code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    </div>
+
+    <div class="pattern-card" style="border-left-color:var(--accent3);">
+      <h3>⚡ Parallel Fan-Out</h3>
+      <div class="pattern-tag" style="background:#0d1a2e;color:var(--accent3);">PATTERN 2</div>
+      <p>Orchestrator splits work across multiple agents simultaneously, then aggregates results. Best for: multi-source research, running tests in parallel, analyzing many documents at once.</p>
+      <div class="arch-diagram"><pre>             ┌→ [Agent: Analyze Competitor A] →┐
+Input → Orch ┼→ [Agent: Analyze Competitor B] →┼→ [Aggregator] → Report
+             └→ [Agent: Analyze Competitor C] →┘</pre></div>
+    </div>
+
+    <div class="pattern-card" style="border-left-color:var(--green);">
+      <h3>🔁 Iterative Loop</h3>
+      <div class="pattern-tag" style="background:#0d2e20;color:var(--green);">PATTERN 3</div>
+      <p>Agent runs, evaluates its own output, and iterates until a quality criterion is met. Best for: code generation (run + fix loop), document quality improvement, data cleaning.</p>
+      <div class="arch-diagram"><pre>Start → [Generate] → [Evaluate] → Pass? → Done
+                        ↑              ↓ Fail
+                        └──── [Revise] ←┘</pre></div>
+    </div>
+
+    <div class="pattern-card" style="border-left-color:var(--yellow);">
+      <h3>🧪 Specialist Routing</h3>
+      <div class="pattern-tag" style="background:#2e2a0d;color:var(--yellow);">PATTERN 4</div>
+      <p>Orchestrator classifies the request and routes it to the best specialist agent. Best for: customer support (billing → billing agent, tech support → tech agent), multi-domain Q&A systems.</p>
+      <div class="arch-diagram"><pre>Input → [Router/Classifier] → billing? → [Billing Agent]
+                           → tech?    → [Tech Support Agent]
+                           → legal?   → [Legal Compliance Agent]</pre></div>
+    </div>
+  </div>
+
+  <div data-level="advanced" data-section="orch">
+    <div class="section-title">Production Orchestration with LangChain / Custom</div>
+    <div class="section-sub">Full implementation of a multi-agent system.</div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d1a2e;">⚙️</div><div><div class="card-title">Multi-Agent Research Pipeline (Python + Anthropic SDK)</div></div></div>
+      <div class="code-block"><code><span class="kw">import</span> anthropic
+<span class="kw">import</span> asyncio
+
+client = anthropic.Anthropic()
+
+<span class="kw">async def</span> run_agent(system: <span class="str">str</span>, prompt: <span class="str">str</span>, model=<span class="str">"claude-sonnet-4-5"</span>) -> <span class="str">str</span>:
+    <span class="str">"""Run a single agent with given system prompt and task."""</span>
+    msg = client.messages.create(
+        model=model,
+        max_tokens=2000,
+        system=system,
+        messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: prompt}]
+    )
+    <span class="kw">return</span> msg.content[0].text
+
+<span class="kw">async def</span> research_pipeline(topic: <span class="str">str</span>) -> <span class="str">str</span>:
+    <span class="comment"># Step 1: Orchestrator plans</span>
+    plan = <span class="kw">await</span> run_agent(
+        system=<span class="str">"You are a research director. Break research tasks into 3 focused subtasks."</span>,
+        prompt=<span class="str">f"Create a research plan for: {topic}. Output as JSON list of subtasks."</span>,
+        model=<span class="str">"claude-opus-4-5"</span>  <span class="comment"># Use stronger model for orchestration</span>
+    )
+
+    <span class="comment"># Step 2: Run specialist agents in parallel</span>
+    tasks = [
+        run_agent(<span class="str">"You are a technical research specialist."</span>, <span class="str">f"Research: {subtask}"</span>)
+        <span class="kw">for</span> subtask <span class="kw">in</span> parse_plan(plan)
+    ]
+    results = <span class="kw">await</span> asyncio.gather(*tasks)  <span class="comment"># Parallel execution</span>
+
+    <span class="comment"># Step 3: Synthesis agent aggregates</span>
+    synthesis = <span class="kw">await</span> run_agent(
+        system=<span class="str">"You are a research synthesizer. Combine findings into a cohesive report."</span>,
+        prompt=<span class="str">f"Synthesize these research findings:\n{chr(10).join(results)}"</span>
+    )
+
+    <span class="comment"># Step 4: QA agent reviews</span>
+    final = <span class="kw">await</span> run_agent(
+        system=<span class="str">"You are a QA editor. Review for accuracy, completeness, and clarity."</span>,
+        prompt=<span class="str">f"Review and improve this report:\n{synthesis}"</span>
+    )
+
+    <span class="kw">return</span> final</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    </div>
+    <div class="callout tip"><div class="callout-icon">💡</div><p><strong>Model strategy:</strong> Use Claude Opus for orchestration (needs best reasoning to plan and coordinate) and Claude Sonnet for sub-agents (faster and cheaper for execution tasks). This keeps cost reasonable while maximizing quality.</p></div>
+  </div>
+</div>
+
+<!-- ═══ PATTERNS ═══ -->
+<div id="patterns" class="page">
+  <div class="hero">
+    <div class="hero-badge">🏗️ Design</div>
+    <h1>AI Architecture <span>Patterns</span></h1>
+    <p>Proven design patterns for building reliable, scalable AI-powered systems — from simple integrations to enterprise deployments.</p>
+  </div>
+
+  <div class="section-title">The Core Patterns</div>
+  <div class="section-sub">Every production AI system uses one or more of these foundational patterns.</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d2e2e;">📞</div><div><div class="card-title">1. Tool Use / Function Calling</div></div></div>
+      <p>AI decides when to call external tools (APIs, databases, functions) to get information or take actions. The model orchestrates the sequence of tool calls to complete a task.</p>
+      <p><strong>Use when:</strong> AI needs real-time data, needs to perform actions, or needs to compute something outside its training knowledge.</p>
+      <div class="callout accent" style="margin-top:12px;"><div class="callout-icon">💡</div><p>MCP servers are the modern way to provide tools to Claude. Each MCP server exposes a set of typed functions Claude can call.</p></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#1a0d2e;">📚</div><div><div class="card-title">2. RAG (Retrieval-Augmented Generation)</div></div></div>
+      <p>Before answering, the AI retrieves relevant documents from a knowledge base and uses them as context. Solves the problem of the AI not knowing your proprietary data.</p>
+      <p><strong>Use when:</strong> You have a large document corpus (policies, docs, past conversations) and need the AI to answer questions accurately from it.</p>
+      <div class="callout info" style="margin-top:12px;"><div class="callout-icon">📌</div><p>RAG prevents hallucination by giving the AI ground truth to cite. The key challenge is good retrieval — getting the RIGHT chunks, not just similar ones.</p></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#0d2e20;">🧠</div><div><div class="card-title">3. Memory Architecture</div></div></div>
+      <p>AI systems maintain different types of memory: in-context (current conversation), external (vector DB), episodic (past interactions), semantic (facts about the user).</p>
+      <p><strong>Use when:</strong> Building assistants that need to remember user preferences, past decisions, or accumulated knowledge across sessions.</p>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-icon" style="background:#2e2a0d;">🔒</div><div><div class="card-title">4. Human-in-the-Loop</div></div></div>
+      <p>AI proposes, human approves. Critical checkpoints where human judgment is required before AI proceeds. Prevents costly mistakes in irreversible actions.</p>
+      <p><strong>Use when:</strong> Actions have real-world consequences (sending emails, making purchases, modifying production data). Always build approval gates.</p>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:8px;">Pattern Comparison</div>
+  <table class="compare-table">
+    <tr><th>Pattern</th><th>Best For</th><th>Complexity</th><th>When to Start</th></tr>
+    <tr><td><strong>System Prompt</strong></td><td>Personality, tone, constraints</td><td><span class="badge-green">Low</span></td><td>Day 1</td></tr>
+    <tr><td><strong>RAG</strong></td><td>Knowledge-heavy Q&A, doc search</td><td><span class="badge-yellow">Medium</span></td><td>Week 2–4</td></tr>
+    <tr><td><strong>Tool Use / MCP</strong></td><td>Real-time data, actions on systems</td><td><span class="badge-yellow">Medium</span></td><td>Week 2–4</td></tr>
+    <tr><td><strong>Single Agent Loop</strong></td><td>Multi-step autonomous tasks</td><td><span class="badge-yellow">Medium</span></td><td>Month 1–2</td></tr>
+    <tr><td><strong>Multi-Agent Orchestration</strong></td><td>Complex, parallel, specialized work</td><td><span class="badge-blue">High</span></td><td>Month 3+</td></tr>
+    <tr><td><strong>Fine-tuning</strong></td><td>Style, domain terminology, format</td><td><span class="badge-blue">High</span></td><td>After proving value at scale</td></tr>
+  </table>
+
+  <div class="card">
+    <div class="card-head"><div class="card-icon" style="background:#0d2e2e;">📐</div><div><div class="card-title">Architecture Decision Framework</div><div class="card-sub">How to choose the right pattern for your use case</div></div></div>
+    <div class="arch-diagram"><pre>
+Do you need the AI to access YOUR data?
+├── No  → System prompt + prompting is enough
+└── Yes → How often does it change?
+         ├── Rarely (docs, policies) → RAG / vector search
+         └── Frequently (live DB, APIs) → Tool use / MCP
+
+Do you need AI to TAKE ACTIONS, not just answer?
+├── No  → Pure generation patterns are sufficient
+└── Yes → Do actions need human approval?
+         ├── Yes → Human-in-the-loop architecture
+         └── No  → Autonomous agent (with careful scope limits)
+
+Is the task too complex for one AI call?
+├── No  → Single-turn or conversational pattern
+└── Yes → Break into steps
+         ├── Sequential? → Pipeline pattern
+         ├── Parallel?   → Fan-out orchestration
+         └── Iterative?  → Loop with evaluator</pre></div>
+  </div>
+</div>
+
+<!-- ═══ RAG ═══ -->
+<div id="rag" class="page">
+  <div class="hero">
+    <div class="hero-badge">🔍 Retrieval</div>
+    <h1>RAG & <span>Memory</span></h1>
+    <p>How to make AI know your data — from basic document retrieval to long-term memory systems.</p>
+  </div>
+
+  <div class="level-bar">
+    <button class="level-btn active" onclick="setLevel('beginner','rag')">🌱 Beginner</button>
+    <button class="level-btn" onclick="setLevel('intermediate','rag')">⚡ Intermediate</button>
+    <button class="level-btn" onclick="setLevel('advanced','rag')">🔥 Advanced</button>
+  </div>
+
+  <div data-level="beginner" data-section="rag" class="show">
+    <div class="section-title">Why AI Needs Retrieval</div>
+    <div class="section-sub">The fundamental problem RAG solves.</div>
+    <div class="card">
+      <p>Claude knows a lot about the world up to its training cutoff, but it knows nothing about:</p>
+      <p>• Your internal documentation · Your product specifications · Your customer data · Your past project notes · Anything that happened after its training cutoff</p>
+      <p><strong>RAG (Retrieval-Augmented Generation)</strong> solves this: before Claude answers, your system retrieves the most relevant documents from your knowledge base and includes them in the context. Claude then answers based on YOUR data, not just training.</p>
+    </div>
+    <div class="arch-diagram"><pre>
+WITHOUT RAG:   User Question → Claude → Answer (from training only)
+
+WITH RAG:      User Question → Search KB → Find relevant docs
+                                              ↓
+                              Question + Relevant Docs → Claude → Grounded Answer</pre></div>
+  </div>
+
+  <div data-level="intermediate" data-section="rag">
+    <div class="section-title">Building a Basic RAG System</div>
+    <div class="section-sub">The four components every RAG system needs.</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Chunk your documents</h3>
+          <p>Split large documents into smaller chunks (typically 256–512 tokens). Each chunk should be semantically coherent — don't split mid-sentence or mid-thought. Overlap chunks slightly to avoid losing context at boundaries.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Embed chunks as vectors</h3>
+          <p>Use an embedding model (like OpenAI text-embedding-3-small or Voyage AI) to convert each chunk into a vector — a mathematical representation of its meaning. Similar chunks will have similar vectors.</p>
+          <div class="code-block"><code><span class="comment"># Using Anthropic's partner Voyage AI for embeddings</span>
+<span class="kw">import</span> voyageai
+vo = voyageai.Client()
+embeddings = vo.embed(chunks, model=<span class="str">"voyage-3"</span>).embeddings</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Store in a vector database</h3>
+          <p>Popular options: <strong>Pinecone</strong> (managed, easy), <strong>Weaviate</strong> (open source, powerful), <strong>Chroma</strong> (local dev), <strong>pgvector</strong> (if you already use Postgres). At small scale, even a JSON file works.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Retrieve and generate</h3>
+          <p>At query time: embed the user's question, find the most similar chunks (cosine similarity), include them in Claude's context, and ask Claude to answer using those chunks.</p>
+          <div class="code-block"><code><span class="comment"># At query time:</span>
+query_embedding = embed(user_question)
+relevant_chunks = vector_db.search(query_embedding, top_k=5)
+context = <span class="str">"\n\n"</span>.join(relevant_chunks)
+
+response = claude.messages.create(
+  system=<span class="str">"Answer based on the context provided. If unsure, say so."</span>,
+  messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: <span class="str">f"Context:\n{context}\n\nQuestion: {user_question}"</span>}]
+)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-level="advanced" data-section="rag">
+    <div class="section-title">Advanced RAG: Beyond Basic Retrieval</div>
+    <div class="section-sub">Techniques that dramatically improve RAG quality in production.</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#0d2e2e;">🎯</div><div><div class="card-title">Hybrid Search</div></div></div>
+        <p>Combine vector similarity search (semantic) with BM25 keyword search (lexical). Vector search finds conceptually similar content; keyword search finds exact matches. Combining both dramatically improves recall.</p>
+        <div class="code-block" style="margin-top:10px;"><code><span class="comment"># Reciprocal Rank Fusion combines both</span>
+vector_results = vector_search(query)
+keyword_results = bm25_search(query)
+combined = reciprocal_rank_fusion(
+  vector_results, keyword_results
+)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#1a0d2e;">🔁</div><div><div class="card-title">Re-ranking</div></div></div>
+        <p>After initial retrieval, use a re-ranker model to re-score the top-N results by how well they actually answer the query. Cohere Rerank or a cross-encoder model identifies the truly relevant chunks.</p>
+        <div class="code-block" style="margin-top:10px;"><code>results = retrieve(query, top_k=20)
+<span class="comment"># Re-rank narrows to the best 5</span>
+reranked = cohere.rerank(query, results, top_n=5)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#0d2e20;">🧩</div><div><div class="card-title">Query Decomposition</div></div></div>
+        <p>For complex questions, have Claude break the query into sub-questions, retrieve for each, then synthesize. A question like "Compare our Q3 to Q2 and explain the difference" needs multiple retrieval passes.</p>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-icon" style="background:#2e2a0d;">💾</div><div><div class="card-title">Contextual Memory</div></div></div>
+        <p>For long-running assistants: store conversation summaries, user preferences, and past decisions in a memory store. Each new conversation retrieves relevant memories to maintain context without sending the full history.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BUILD YOUR OWN ═══ -->
+<div id="build" class="page">
+  <div class="hero">
+    <div class="hero-badge">🛠️ Hands-On</div>
+    <h1>Build Your Own <span>AI System</span></h1>
+    <p>Step-by-step guides for building real AI-powered applications from scratch.</p>
+  </div>
+
+  <div class="section-title">Project 1: Company Knowledge Bot</div>
+  <div class="section-sub">A Slack bot that answers questions from your internal docs — built in a weekend.</div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Collect your documents</h3><p>Gather: company handbook, product docs, past meeting notes, onboarding materials, FAQs. Export to plain text or Markdown. Aim for 100–500 documents to start.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Build the RAG pipeline</h3><p>Use LlamaIndex or LangChain to handle chunking + embedding + storage. Connect to Chroma (local) or Pinecone (cloud). Load your documents with 5 lines of code using pre-built loaders.</p><div class="code-block"><code><span class="kw">from</span> llama_index.core <span class="kw">import</span> VectorStoreIndex, SimpleDirectoryReader
+docs = SimpleDirectoryReader(<span class="str">"./company-docs"</span>).load_data()
+index = VectorStoreIndex.from_documents(docs)
+query_engine = index.as_query_engine(llm=Anthropic(model=<span class="str">"claude-sonnet-4-5"</span>))</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>Add a Slack interface</h3><p>Use Slack's Bolt framework. When a user @mentions the bot, send their message to the query engine, stream the response back. Add to any channel in minutes.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><h3>Deploy and monitor</h3><p>Deploy on Railway, Render, or AWS Lambda. Log every query and response. Review weekly — bad answers reveal gaps in your docs. Add missing content to the knowledge base.</p></div></div>
+  </div>
+
+  <div class="section-title" style="margin-top:36px;">Project 2: Automated Research Agent</div>
+  <div class="section-sub">An agent that researches topics, synthesizes information, and produces reports — fully automated.</div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>Define the research brief template</h3><p>What sections does your ideal research report have? Define this as your system prompt. "You are a research analyst. Always structure reports as: Executive Summary → Key Findings → Evidence → Recommendations → Sources."</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>Give Claude web research tools</h3><p>Connect the Brave Search MCP server and Web Fetch MCP server. Claude can now search the web and read pages — actual current information, not just training data.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>Build the iterative loop</h3><p>Agent searches → reads sources → identifies gaps → searches more → synthesizes → self-reviews → outputs final report. The loop terminates when Claude decides it has enough evidence.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><h3>Schedule and distribute</h3><p>Trigger the agent on a schedule (weekly competitive analysis, daily news digest). Auto-post results to Slack, email, or a shared Google Doc via MCP connectors.</p></div></div>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-icon">🎯</div>
+    <p><strong>Start small, prove value, expand.</strong> Your first AI integration should solve a painful problem for a small team (3–5 people) and deliver clear time savings. Once proven, scaling to the whole organization becomes much easier — you have evidence, champions, and a working template.</p>
+  </div>
+
+  <div class="card" style="margin-top:24px;">
+    <div class="card-head"><div class="card-icon" style="background:#0d1a2e;">📚</div><div><div class="card-title">Essential Resources</div></div></div>
+    <div class="grid-2">
+      <div>
+        <p style="font-size:0.85rem;color:var(--text2);"><strong style="color:var(--text);">Anthropic API Docs</strong><br>docs.anthropic.com — Tool use, streaming, prompt caching, vision.</p>
+        <p style="font-size:0.85rem;color:var(--text2);margin-top:10px;"><strong style="color:var(--text);">MCP Repository</strong><br>github.com/modelcontextprotocol — All official MCP servers + protocol spec.</p>
+        <p style="font-size:0.85rem;color:var(--text2);margin-top:10px;"><strong style="color:var(--text);">LlamaIndex</strong><br>llamaindex.ai — Best framework for RAG and document-connected AI.</p>
+      </div>
+      <div>
+        <p style="font-size:0.85rem;color:var(--text2);"><strong style="color:var(--text);">LangChain</strong><br>python.langchain.com — Comprehensive agent and chain framework.</p>
+        <p style="font-size:0.85rem;color:var(--text2);margin-top:10px;"><strong style="color:var(--text);">Pinecone</strong><br>pinecone.io — Managed vector database for production RAG.</p>
+        <p style="font-size:0.85rem;color:var(--text2);margin-top:10px;"><strong style="color:var(--text);">Voyage AI</strong><br>voyageai.com — Best-in-class embedding models, Anthropic partner.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function setLevel(level, section) {
+  const page = document.querySelector('.page.active');
+  page.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  page.querySelectorAll('[data-level]').forEach(el=>{
+    if(!el.dataset.section || el.dataset.section===section){
+      el.classList.toggle('show', el.dataset.level===level);
+    }
+  });
+}
+
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code');
+  navigator.clipboard.writeText(code.innerText).then(()=>{
+    btn.textContent='Copied!';
+    setTimeout(()=>btn.textContent='Copy',2000);
+  });
+}
+</script>
+
+<!-- FOOTER -->
+<footer role="contentinfo" style="padding:3rem 2rem;text-align:center;color:var(--text3);font-size:.83rem;border-top:1px solid var(--border);">
+  <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.9rem;">
+    <a href="index.html" style="color:var(--accent2);">← Back to All Modules</a>
+    <a href="terminology.html" style="color:var(--accent2);">AI Terminology</a>
+    <a href="core-ai.html" style="color:var(--accent2);">Core Architecture</a>
+    <a href="comparisons.html" style="color:var(--accent2);">Model Comparisons</a>
+    <a href="prompting.html" style="color:var(--accent2);">Prompt Engineering</a>
+    <a href="use-cases.html" style="color:var(--accent2);">Use Cases</a>
+    <a href="ai-integration.html" style="color:var(--accent2);">AI Integration</a>
+    <a href="enterprise-ai.html" style="color:var(--accent2);">Enterprise AI</a>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-bottom:.9rem;">
+    <a href="about.html" style="color:var(--accent2);">About</a>
+    <a href="contact.html" style="color:var(--accent2);">Contact</a>
+    <a href="privacy-policy.html" style="color:var(--accent2);">Privacy Policy</a>
+  </div>
+  <div style="line-height:1.8;">
+    <strong style="color:var(--text2);">AI Literate</strong> — Free AI education for everyone.<br>
+    AI information changes rapidly — verify with official sources. Not affiliated with any AI company.<br>
+    <span>&copy; <span class="footer-yr"></span> AI Literate. All rights reserved.</span>
+  </div>
+</footer>
+<script>document.querySelectorAll('.footer-yr').forEach(e=>e.textContent=new Date().getFullYear());</script>
+
+</body>
+</html>

@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI Literate — From Zero to Fluent</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0f1117;--surface:#1a1d2e;--surface2:#242840;--surface3:#2e3250;
+  --accent:#6c63ff;--accent2:#a78bfa;--green:#10b981;--yellow:#f59e0b;
+  --red:#ef4444;--blue:#3b82f6;--pink:#ec4899;--orange:#f97316;
+  --text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
+  --border:#2e3250;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
+/* ── NAV ── */
+#topnav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,17,23,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-brand{font-size:1.15rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap}
+.nav-links{display:flex;gap:.2rem;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{padding:.35rem .75rem;border-radius:6px;font-size:.82rem;color:var(--text2);white-space:nowrap;transition:all .2s}
+.nav-links a:hover,.nav-links a.active{background:var(--surface2);color:var(--text);text-decoration:none}
+/* ── LAYOUT ── */
+main{padding-top:60px}
+.section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+/* ── HERO ── */
+#hero{min-height:92vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(108,99,255,.18) 0%,transparent 70%)}
+.hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--surface2);border:1px solid var(--border);padding:.35rem 1rem;border-radius:999px;font-size:.8rem;color:var(--accent2);margin-bottom:1.5rem}
+h1.hero-title{font-size:clamp(2.2rem,6vw,4rem);font-weight:800;line-height:1.15;margin-bottom:1.2rem;background:linear-gradient(135deg,#fff 30%,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:1.1rem;color:var(--text2);max-width:600px;margin:0 auto 2.5rem}
+.hero-pills{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-bottom:3rem}
+.pill{padding:.4rem 1rem;border-radius:999px;border:1px solid var(--border);font-size:.8rem;color:var(--text2);cursor:pointer;transition:all .2s}
+.pill:hover{border-color:var(--accent);color:var(--accent2)}
+.hero-cta{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,var(--accent),#7c3aed);padding:.8rem 2rem;border-radius:999px;font-weight:600;color:#fff;cursor:pointer;transition:transform .2s,box-shadow .2s;border:none;font-size:1rem}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(108,99,255,.4)}
+/* ── SECTION HEADERS ── */
+.sec-label{font-size:.75rem;font-weight:600;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;margin-bottom:.5rem}
+.sec-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;margin-bottom:.75rem}
+.sec-desc{color:var(--text2);font-size:1rem;max-width:600px;margin-bottom:2.5rem}
+/* ── CARDS ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;transition:border-color .2s,transform .2s}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card h3{font-size:1rem;font-weight:600;margin-bottom:.5rem}
+.card p{font-size:.9rem;color:var(--text2)}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem}
+/* ── TAGS ── */
+.tag{display:inline-block;padding:.2rem .65rem;border-radius:999px;font-size:.72rem;font-weight:600;margin-bottom:.75rem}
+.tag-purple{background:rgba(108,99,255,.15);color:var(--accent2);border:1px solid rgba(108,99,255,.3)}
+.tag-green{background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.3)}
+.tag-yellow{background:rgba(245,158,11,.15);color:#fcd34d;border:1px solid rgba(245,158,11,.3)}
+.tag-blue{background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.3)}
+.tag-red{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.3)}
+.tag-pink{background:rgba(236,72,153,.15);color:#f9a8d4;border:1px solid rgba(236,72,153,.3)}
+/* ── SEARCH ── */
+.search-wrap{position:relative;margin-bottom:2rem}
+.search-wrap input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.8rem 1rem .8rem 3rem;color:var(--text);font-size:.95rem;outline:none;transition:border-color .2s;font-family:inherit}
+.search-wrap input:focus{border-color:var(--accent)}
+.search-icon{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--text3);font-size:1rem}
+/* ── TERM CARDS ── */
+.term-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+.term-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;cursor:pointer;transition:all .2s}
+.term-card:hover{border-color:var(--accent);background:var(--surface2)}
+.term-card .term-word{font-size:1rem;font-weight:700;margin-bottom:.3rem}
+.term-card .term-short{font-size:.85rem;color:var(--text2);margin-bottom:.6rem}
+.term-card .term-detail{font-size:.82rem;color:var(--text3);display:none;margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--border)}
+.term-card.open .term-detail{display:block}
+.term-card .term-ref{font-size:.75rem;margin-top:.5rem}
+/* ── TABS ── */
+.tabs{display:flex;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap}
+.tab-btn{padding:.5rem 1.2rem;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-family:inherit;font-size:.85rem;transition:all .2s}
+.tab-btn:hover,.tab-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.tab-panel{display:none}.tab-panel.active{display:block}
+/* ── ARCH STEPS ── */
+.steps{counter-reset:step}
+.step{display:flex;gap:1.2rem;padding:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:1rem;counter-increment:step}
+.step-num{width:36px;height:36px;min-width:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;color:#fff}
+.step-body h4{font-size:.95rem;font-weight:600;margin-bottom:.3rem}
+.step-body p{font-size:.85rem;color:var(--text2)}
+/* ── COMPARE TABLE ── */
+.compare-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border)}
+table.compare{width:100%;border-collapse:collapse;font-size:.85rem}
+table.compare th{background:var(--surface2);padding:.9rem 1.2rem;text-align:left;font-weight:600;color:var(--text2);white-space:nowrap}
+table.compare td{padding:.8rem 1.2rem;border-top:1px solid var(--border);vertical-align:top}
+table.compare tr:hover td{background:var(--surface2)}
+table.compare td:first-child{font-weight:600;color:var(--text)}
+.badge{display:inline-block;padding:.15rem .6rem;border-radius:4px;font-size:.72rem;font-weight:600;white-space:nowrap}
+.b-green{background:rgba(16,185,129,.2);color:#34d399}
+.b-blue{background:rgba(59,130,246,.2);color:#93c5fd}
+.b-yellow{background:rgba(245,158,11,.2);color:#fcd34d}
+.b-purple{background:rgba(108,99,255,.2);color:var(--accent2)}
+.b-red{background:rgba(239,68,68,.2);color:#fca5a5}
+/* ── CODE BLOCKS ── */
+pre{background:#0d1117;border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;overflow-x:auto;font-family:'Fira Code',monospace;font-size:.82rem;line-height:1.7;margin:1rem 0}
+code.inline{background:var(--surface2);padding:.15rem .45rem;border-radius:4px;font-family:'Fira Code',monospace;font-size:.82rem;color:#a78bfa}
+.code-label{font-size:.72rem;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem;font-weight:600}
+/* ── PROMPT EXAMPLE ── */
+.prompt-box{border-radius:var(--radius);overflow:hidden;margin:1.2rem 0;border:1px solid var(--border)}
+.prompt-header{padding:.6rem 1rem;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.prompt-header.sys{background:rgba(108,99,255,.2);color:var(--accent2)}
+.prompt-header.user{background:rgba(59,130,246,.2);color:#93c5fd}
+.prompt-header.assistant{background:rgba(16,185,129,.2);color:#34d399}
+.prompt-body{padding:1rem;background:var(--surface);font-size:.88rem;color:var(--text2);line-height:1.6}
+/* ── USE CASE CARDS ── */
+.uc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;position:relative;overflow:hidden;transition:all .2s}
+.uc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.uc-card:nth-child(1)::before{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.uc-card:nth-child(2)::before{background:linear-gradient(90deg,var(--green),#34d399)}
+.uc-card:nth-child(3)::before{background:linear-gradient(90deg,var(--blue),#60a5fa)}
+.uc-card:nth-child(4)::before{background:linear-gradient(90deg,var(--yellow),#fcd34d)}
+.uc-card:nth-child(5)::before{background:linear-gradient(90deg,var(--pink),#f9a8d4)}
+.uc-card:nth-child(6)::before{background:linear-gradient(90deg,var(--orange),#fdba74)}
+.uc-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+.uc-icon{font-size:2rem;margin-bottom:.75rem}
+.uc-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem}
+.uc-card p{font-size:.85rem;color:var(--text2);margin-bottom:.75rem}
+.uc-examples{list-style:none;display:flex;flex-direction:column;gap:.3rem}
+.uc-examples li{font-size:.82rem;color:var(--text3);padding-left:1rem;position:relative}
+.uc-examples li::before{content:'→';position:absolute;left:0;color:var(--accent)}
+/* ── PROGRESS BAR ── */
+#progress-bar{position:fixed;top:60px;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;z-index:99;transition:width .1s}
+/* ── BACK TO TOP ── */
+#btt{position:fixed;bottom:2rem;right:2rem;width:44px;height:44px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;color:#fff;font-size:1.1rem;box-shadow:var(--shadow);opacity:0;transition:opacity .3s;z-index:99}
+#btt.show{opacity:1}
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--border);margin:1rem 0}
+/* ── ALERT ── */
+.info-box{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);border-radius:var(--radius);padding:1rem 1.25rem;font-size:.88rem;color:#93c5fd;margin:1rem 0}
+.warn-box{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);border-radius:var(--radius);padding:1rem 1.25rem;font-size:.88rem;color:#fcd34d;margin:1rem 0}
+/* ── FOOTER ── */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;color:var(--text3);font-size:.85rem}
+footer a{color:var(--accent2)}
+/* ── MOBILE ── */
+@media(max-width:640px){
+  .nav-links{gap:.1rem}.nav-links a{padding:.3rem .5rem;font-size:.75rem}
+  .section{padding:4rem 1.2rem}
+  .term-grid{grid-template-columns:1fr}
+}
+/* ── ANIMATIONS ── */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s}
+.fade-in.visible{opacity:1;transform:none}
+/* ── HIGHLIGHT ── */
+mark{background:rgba(108,99,255,.3);color:var(--text);border-radius:2px;padding:0 .1em}
+/* Claude Code Timeline */
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:.45rem;top:0;bottom:0;width:2px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:1.5rem}
+.tl-dot{position:absolute;left:-1.8rem;top:.3rem;width:14px;height:14px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tl-item h4{font-size:.95rem;font-weight:600;margin-bottom:.3rem}
+.tl-item p{font-size:.85rem;color:var(--text2)}
+/* Prompt tip  */
+.tip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-top:1.5rem}
+.tip-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem}
+.tip-card .tip-icon{font-size:1.5rem;margin-bottom:.6rem}
+.tip-card h4{font-size:.9rem;font-weight:600;margin-bottom:.4rem}
+.tip-card p{font-size:.82rem;color:var(--text2)}
+/* Model logo colors */
+.model-gpt{color:#10a37f}.model-claude{color:#c17c2a}.model-gemini{color:#4285f4}.model-llama{color:#0467df}.model-mistral{color:#f97316}
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div id="progress-bar"></div>
+
+<!-- Top Navigation -->
+<nav id="topnav">
+  <div class="nav-brand">🤖 AI Literate</div>
+  <div class="nav-links">
+    <a href="#terminology" class="nav-link">Terminology</a>
+    <a href="#core-ai" class="nav-link">Core AI</a>
+    <a href="#comparisons" class="nav-link">Model Comparison</a>
+    <a href="#claude-code" class="nav-link">Claude Code</a>
+    <a href="#prompting" class="nav-link">Prompting</a>
+    <a href="#usecases" class="nav-link">Use Cases</a>
+  </div>
+</nav>
+
+<!-- Back to Top -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<main>
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-badge">✨ From Zero to AI-Fluent</div>
+  <h1 class="hero-title">Understand AI —<br/>No Jargon Required</h1>
+  <p class="hero-sub">Your complete, beginner-friendly guide to AI terminology, models, tools, and how to actually use them — with plain English explanations and real references.</p>
+  <div class="hero-pills">
+    <span class="pill" onclick="scrollTo('#terminology')">📖 Terminology</span>
+    <span class="pill" onclick="scrollTo('#core-ai')">🧠 Core AI</span>
+    <span class="pill" onclick="scrollTo('#comparisons')">⚖️ Model Comparison</span>
+    <span class="pill" onclick="scrollTo('#claude-code')">💻 Claude Code</span>
+    <span class="pill" onclick="scrollTo('#prompting')">✍️ Prompting</span>
+    <span class="pill" onclick="scrollTo('#usecases')">🚀 Use Cases</span>
+  </div>
+  <button class="hero-cta" onclick="document.getElementById('terminology').scrollIntoView({behavior:'smooth'})">
+    Start Learning →
+  </button>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 1 — TERMINOLOGY
+════════════════════════════════════════════════ -->
+<section id="terminology" class="section">
+  <p class="sec-label">Section 01</p>
+  <h2 class="sec-title">AI Terminology</h2>
+  <p class="sec-desc">Hover any card to expand the full explanation. Search to find a specific term.</p>
+
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="term-search" placeholder="Search terms… e.g. LLM, token, fine-tuning" oninput="filterTerms(this.value)"/>
+  </div>
+
+  <div class="term-grid" id="term-grid">
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="ai artificial intelligence">
+      <span class="tag tag-purple">Foundation</span>
+      <div class="term-word">🤖 Artificial Intelligence (AI)</div>
+      <div class="term-short">Machines that mimic human thinking.</div>
+      <div class="term-detail">AI is the broad field of making computers perform tasks that normally require human intelligence — like understanding language, recognising images, or making decisions. Think of it as the parent category for everything else on this page.
+        <div class="term-ref">📖 <a href="https://www.ibm.com/topics/artificial-intelligence" target="_blank">IBM — What is AI?</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="machine learning ml">
+      <span class="tag tag-blue">Foundation</span>
+      <div class="term-word">📊 Machine Learning (ML)</div>
+      <div class="term-short">Teaching machines by showing them examples.</div>
+      <div class="term-detail">Instead of manually writing every rule, you feed the computer thousands of examples and it learns patterns on its own. A spam filter learns what spam looks like by studying millions of emails — nobody wrote explicit rules.
+        <div class="term-ref">📖 <a href="https://developers.google.com/machine-learning/crash-course" target="_blank">Google — ML Crash Course</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="deep learning neural network dl">
+      <span class="tag tag-green">Foundation</span>
+      <div class="term-word">🕸️ Deep Learning (DL)</div>
+      <div class="term-short">ML using brain-inspired layered networks.</div>
+      <div class="term-detail">A subfield of ML that uses Neural Networks with many layers ("deep"). Each layer learns progressively more abstract features. Layer 1 might learn edges in an image; layer 10 might recognise faces. This powers image recognition, voice assistants, and LLMs.
+        <div class="term-ref">📖 <a href="https://www.deeplearning.ai/" target="_blank">DeepLearning.AI — Courses</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="llm large language model gpt claude">
+      <span class="tag tag-purple">Key Concept</span>
+      <div class="term-word">💬 Large Language Model (LLM)</div>
+      <div class="term-short">AI trained on massive text to understand & generate language.</div>
+      <div class="term-detail">An LLM is trained on billions of words from the internet, books, and code. It learns statistical patterns so well that it can write essays, answer questions, translate languages, and write software. GPT-4, Claude, and Gemini are all LLMs. "Large" refers to the enormous number of parameters (weights).
+        <div class="term-ref">📖 <a href="https://arxiv.org/abs/2307.06435" target="_blank">arXiv — A Survey of LLMs</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="transformer architecture attention">
+      <span class="tag tag-blue">Architecture</span>
+      <div class="term-word">⚡ Transformer</div>
+      <div class="term-short">The architecture behind modern AI.</div>
+      <div class="term-detail">Introduced in the 2017 paper "Attention Is All You Need", the Transformer is the neural network design that powers nearly every modern AI. Its key innovation is the "attention mechanism" — a way for the model to consider every word in context of every other word simultaneously, rather than reading left-to-right sequentially.
+        <div class="term-ref">📖 <a href="https://arxiv.org/abs/1706.03762" target="_blank">Vaswani et al. (2017) — Attention Is All You Need</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="token tokenisation text">
+      <span class="tag tag-yellow">Core</span>
+      <div class="term-word">🧩 Token</div>
+      <div class="term-short">The basic unit of text an AI reads.</div>
+      <div class="term-detail">LLMs don't read characters or whole words — they read tokens. A token is roughly 3-4 characters or ¾ of a word. "ChatGPT" = 2 tokens; "Hello, how are you?" ≈ 6 tokens. Pricing and context limits are measured in tokens. Think of them as pieces of a word-puzzle that the AI reassembles.
+        <div class="term-ref">📖 <a href="https://platform.openai.com/tokenizer" target="_blank">OpenAI Tokenizer — Try it live</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="context window memory length">
+      <span class="tag tag-blue">Core</span>
+      <div class="term-word">🗂️ Context Window</div>
+      <div class="term-short">How much text an AI can "see" at once.</div>
+      <div class="term-detail">The context window is the maximum number of tokens an AI can process in one conversation — its working memory. If a model has a 200K token context window, it can read roughly 150,000 words at once. Older models had 4K tokens; Claude 3.5 has 200K. Information outside the window is "forgotten".
+        <div class="term-ref">📖 <a href="https://docs.anthropic.com/en/docs/about-claude/models" target="_blank">Anthropic — Claude Model Overview</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="parameters weights model size">
+      <span class="tag tag-green">Technical</span>
+      <div class="term-word">🔢 Parameters</div>
+      <div class="term-short">The "knobs" inside a model that store knowledge.</div>
+      <div class="term-detail">Parameters are numerical values inside the neural network that get adjusted during training. A model with more parameters can, in theory, store more knowledge and handle more complex tasks. GPT-3 had 175 billion parameters. Numbers like "70B" or "7B" in model names refer to parameter count. More parameters = bigger model = more compute needed.
+        <div class="term-ref">📖 <a href="https://huggingface.co/docs/transformers/index" target="_blank">HuggingFace — Transformers Docs</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="training pre-training dataset">
+      <span class="tag tag-purple">Process</span>
+      <div class="term-word">🏋️ Training</div>
+      <div class="term-short">The process of teaching a model on data.</div>
+      <div class="term-detail">Training means feeding the model massive amounts of text and repeatedly adjusting its parameters to minimise prediction errors. Pre-training is the initial phase on broad internet data. It takes thousands of GPUs running for months and costs tens of millions of dollars. Once trained, the model's weights are "frozen" (fixed).
+        <div class="term-ref">📖 <a href="https://www.coursera.org/learn/generative-ai-with-llms" target="_blank">Coursera — Generative AI with LLMs</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="fine-tuning rlhf instruction tuning">
+      <span class="tag tag-yellow">Process</span>
+      <div class="term-word">🎯 Fine-Tuning</div>
+      <div class="term-short">Extra training to specialise a general model.</div>
+      <div class="term-detail">After pre-training, models are fine-tuned on curated, task-specific datasets. For chat models, this includes RLHF (Reinforcement Learning from Human Feedback) — where human raters score responses, and the model learns to generate preferred answers. This is why ChatGPT gives helpful, polite answers rather than raw internet-scraped text.
+        <div class="term-ref">📖 <a href="https://arxiv.org/abs/2203.02155" target="_blank">Ouyang et al. (2022) — InstructGPT (RLHF)</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="inference deployment generation">
+      <span class="tag tag-blue">Process</span>
+      <div class="term-word">⚙️ Inference</div>
+      <div class="term-short">Running a trained model to get outputs.</div>
+      <div class="term-detail">Inference is what happens when you type a message and the AI responds — the model uses its trained weights to generate output. This is different from training. Inference is much cheaper, but still requires significant GPU compute for large models. Many companies use specialised inference hardware (like NVIDIA A100s) to keep response times fast.
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="prompt prompt engineering input">
+      <span class="tag tag-green">Interaction</span>
+      <div class="term-word">✍️ Prompt</div>
+      <div class="term-short">The instruction you give an AI.</div>
+      <div class="term-detail">A prompt is the text input you send to an AI model. The quality of your prompt dramatically affects output quality. "Write a story" gives mediocre results. "Write a 500-word tense thriller set in Tokyo, told in first person, with a plot twist in the final paragraph" gives great results. Prompt engineering is the art of crafting effective prompts.
+        <div class="term-ref">📖 <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank">Anthropic — Prompt Engineering Guide</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="temperature creativity randomness">
+      <span class="tag tag-yellow">Parameter</span>
+      <div class="term-word">🌡️ Temperature</div>
+      <div class="term-short">Controls how random/creative the AI is.</div>
+      <div class="term-detail">Temperature (0.0 – 2.0) controls how deterministic the output is. At temperature=0 the model always picks the most likely next token (predictable, factual). At temperature=1.5+ it becomes wild and creative (more randomness). For coding tasks, use low temperature. For brainstorming or creative writing, use higher temperature.
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="hallucination confabulation mistake wrong">
+      <span class="tag tag-red">Limitation</span>
+      <div class="term-word">👻 Hallucination</div>
+      <div class="term-short">When an AI confidently makes things up.</div>
+      <div class="term-detail">LLMs sometimes generate plausible-sounding but factually incorrect information — fake citations, wrong dates, invented people. This isn't lying; the model doesn't have intent. It's a statistical artefact: the model generates the most likely-sounding continuation, which isn't always the true one. Always verify critical facts from AI outputs.
+        <div class="term-ref">📖 <a href="https://arxiv.org/abs/2202.03629" target="_blank">Ji et al. — Survey of Hallucination in NLG</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="embedding vector similarity semantic">
+      <span class="tag tag-blue">Technical</span>
+      <div class="term-word">📐 Embeddings</div>
+      <div class="term-short">Turning text into numbers that capture meaning.</div>
+      <div class="term-detail">An embedding converts a word, sentence, or document into a list of numbers (a vector) where similar meanings end up close together in vector space. "king" - "man" + "woman" ≈ "queen". Embeddings power semantic search, recommendation systems, and RAG (Retrieval-Augmented Generation).
+        <div class="term-ref">📖 <a href="https://platform.openai.com/docs/guides/embeddings" target="_blank">OpenAI — Embeddings Guide</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="rag retrieval augmented generation knowledge">
+      <span class="tag tag-purple">Technique</span>
+      <div class="term-word">🔍 RAG (Retrieval-Augmented Generation)</div>
+      <div class="term-short">Giving an AI fresh info before it answers.</div>
+      <div class="term-detail">RAG solves the "outdated knowledge" and hallucination problem. Before answering, the system searches a database (like company docs) for relevant passages and injects them into the prompt as context. The model then answers grounded in that retrieved information, not just its training data. Used heavily in enterprise AI chatbots.
+        <div class="term-ref">📖 <a href="https://arxiv.org/abs/2005.11401" target="_blank">Lewis et al. (2020) — RAG Paper</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="multimodal vision image audio">
+      <span class="tag tag-green">Capability</span>
+      <div class="term-word">🎨 Multimodal AI</div>
+      <div class="term-short">AI that understands both text AND images/audio.</div>
+      <div class="term-detail">A multimodal model can process multiple types of input — text, images, audio, video, and even code. GPT-4o, Claude 3, and Gemini Ultra are multimodal. You can send a photo of a receipt and ask the AI to extract totals, or share a chart and ask for analysis. This dramatically expands what AI can do.
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="agent agentic tool use autonomous">
+      <span class="tag tag-pink">Advanced</span>
+      <div class="term-word">🤝 AI Agent</div>
+      <div class="term-short">An AI that can take actions, not just answer.</div>
+      <div class="term-detail">An AI agent doesn't just answer questions — it takes actions: browsing the web, writing and running code, managing files, calling APIs, and completing multi-step goals. It plans, acts, observes results, and tries again. Claude Code is an AI agent for software development. Agents are the frontier of current AI capabilities.
+        <div class="term-ref">📖 <a href="https://www.anthropic.com/research/building-effective-agents" target="_blank">Anthropic — Building Effective Agents</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="nlp natural language processing text">
+      <span class="tag tag-yellow">Field</span>
+      <div class="term-word">🗣️ NLP (Natural Language Processing)</div>
+      <div class="term-short">The AI field focused on human language.</div>
+      <div class="term-detail">NLP is the subfield of AI dedicated to understanding and generating human language. Classic NLP tasks: sentiment analysis, named entity recognition, machine translation. LLMs essentially solved many NLP tasks by training on enough text data. ChatGPT, Claude, and Gemini are all NLP systems at their core.
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="gpu compute hardware training">
+      <span class="tag tag-blue">Infrastructure</span>
+      <div class="term-word">🖥️ GPU & Compute</div>
+      <div class="term-short">The specialised hardware that powers AI.</div>
+      <div class="term-detail">Graphics Processing Units (GPUs) — originally for gaming — are ideal for AI because they can perform thousands of parallel calculations. Training large models requires clusters of thousands of GPUs running for months (costing $50M+). NVIDIA dominates the AI chip market. Cloud providers (AWS, Google, Azure) rent GPU time by the hour.
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="system prompt context instructions role">
+      <span class="tag tag-purple">Prompting</span>
+      <div class="term-word">⚙️ System Prompt</div>
+      <div class="term-short">Hidden instructions that set the AI's behaviour.</div>
+      <div class="term-detail">A system prompt is a set of instructions given to the AI before the conversation starts — setting its persona, rules, and context. "You are a customer support agent for Acme Corp. Only answer questions about our products. Be concise." Users usually don't see system prompts, but they heavily influence model behaviour.
+        <div class="term-ref">📖 <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/system-prompts" target="_blank">Anthropic — System Prompts</a></div>
+      </div>
+    </div>
+
+    <div class="term-card" onclick="toggleTerm(this)" data-tags="open source llama mistral weights">
+      <span class="tag tag-green">Ecosystem</span>
+      <div class="term-word">🔓 Open-Source Models</div>
+      <div class="term-short">AI models anyone can download and run.</div>
+      <div class="term-detail">Unlike closed models (GPT-4, Claude), open-source models like Meta's Llama 3 and Mistral release their weights publicly. Anyone can download, run, and fine-tune them. Advantages: privacy, customisation, no API costs. Disadvantages: requires hardware to run, typically less capable than frontier closed models. HuggingFace hosts thousands of open models.
+        <div class="term-ref">📖 <a href="https://huggingface.co/models" target="_blank">HuggingFace — Model Hub</a></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 2 — CORE AI COMPONENTS
+════════════════════════════════════════════════ -->
+<section id="core-ai" class="section" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);max-width:100%;padding:5rem 0">
+<div style="max-width:1100px;margin:0 auto;padding:0 2rem">
+  <p class="sec-label">Section 02</p>
+  <h2 class="sec-title">Core AI Components & Models</h2>
+  <p class="sec-desc">How the technology actually works, explained simply.</p>
+
+  <div class="tabs" id="core-tabs">
+    <button class="tab-btn active" onclick="switchTab('core-tabs','core-content','arch')">🏛️ Architecture</button>
+    <button class="tab-btn" onclick="switchTab('core-tabs','core-content','nn')">🕸️ Neural Networks</button>
+    <button class="tab-btn" onclick="switchTab('core-tabs','core-content','training')">🏋️ How Training Works</button>
+    <button class="tab-btn" onclick="switchTab('core-tabs','core-content','types')">📦 Model Types</button>
+  </div>
+
+  <div id="core-content">
+  <!-- Architecture -->
+  <div class="tab-panel active" data-panel="arch">
+    <div class="info-box">💡 The Transformer architecture (2017) is the backbone of virtually every modern AI. Understanding it gives you a mental model of <em>why</em> these systems work.</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Tokenisation — Splitting text into pieces</h4>
+          <p>Your input sentence is first broken into tokens. "The cat sat" → ["The", " cat", " sat"]. Each token is mapped to a unique number ID. This is the raw input the model receives.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Embeddings — Converting IDs to meaning vectors</h4>
+          <p>Each token ID is looked up in an embedding table, producing a dense numerical vector (e.g. 4096 numbers). This vector encodes the word's semantic meaning in a high-dimensional space.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Positional Encoding — Adding word order</h4>
+          <p>Since Transformers process all tokens simultaneously (unlike RNNs), positional information is injected into each embedding — telling the model "this token is at position 5."</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Self-Attention — Every word sees every other word</h4>
+          <p>This is the magic. Each token computes "how relevant is every other token to me?" For the word "bank" in "I went to the river bank", attention weights tell the model to focus on "river" not "money". This creates context-aware representations.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>Feed-Forward Layers — Transforming representations</h4>
+          <p>After attention, each token's representation passes through a feed-forward network (basically two linear transformations with a non-linearity). This adds capacity for complex computation.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h4>Stacking Layers — Going "Deep"</h4>
+          <p>Steps 4–5 repeat 32, 80, or even 128 times (the "depth"). Each layer refines understanding. Lower layers learn syntax; higher layers learn semantics and reasoning. GPT-4 reportedly has ~120 layers.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <h4>Output — Predicting the next token</h4>
+          <p>The final layer produces probability scores for every possible next token. The model samples from this distribution (influenced by temperature). It then outputs one token, appends it to the input, and repeats — this is called "autoregressive" generation.</p>
+        </div>
+      </div>
+    </div>
+    <div class="info-box" style="margin-top:1.5rem">📖 Reference: <a href="https://arxiv.org/abs/1706.03762" target="_blank">Vaswani et al., "Attention Is All You Need" (2017)</a> — The original Transformer paper with only 8 authors that changed AI forever.</div>
+  </div>
+
+  <!-- Neural Networks -->
+  <div class="tab-panel" data-panel="nn">
+    <div class="grid-2">
+      <div class="card">
+        <span class="tag tag-blue">Basics</span>
+        <h3>🧠 What is a Neural Network?</h3>
+        <p>Inspired by the brain, a neural network is layers of interconnected "neurons". Each connection has a weight (a number). Input passes through layers, gets multiplied by weights, transformed, and produces output. Training = finding the right weights.</p>
+      </div>
+      <div class="card">
+        <span class="tag tag-green">Learning</span>
+        <h3>📉 Backpropagation</h3>
+        <p>After a forward pass, the model calculates how wrong its prediction was (loss). Backpropagation computes how much each weight contributed to the error and adjusts it via gradient descent. Repeat millions of times = learning.</p>
+      </div>
+      <div class="card">
+        <span class="tag tag-purple">Design</span>
+        <h3>🔁 Attention Mechanism</h3>
+        <p>Attention lets any part of the network directly access any other part. It computes three matrices — Query (what am I looking for?), Key (what do I contain?), Value (what information do I hold?) — and combines them. Multi-head attention does this in parallel with different "views".</p>
+      </div>
+      <div class="card">
+        <span class="tag tag-yellow">Scale</span>
+        <h3>📈 Scaling Laws</h3>
+        <p>Kaplan et al. (2020) showed that model capability improves predictably with more parameters, more data, and more compute — following smooth power laws. This insight drove the "race to scale" and the creation of GPT-3, GPT-4, and their successors.</p>
+        <div class="term-ref" style="margin-top:.5rem;font-size:.75rem">📖 <a href="https://arxiv.org/abs/2001.08361" target="_blank">Scaling Laws for Neural Language Models (2020)</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Training -->
+  <div class="tab-panel" data-panel="training">
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Pre-training — Reading the internet</h4><p>The model sees trillions of tokens from web pages, books, Wikipedia, GitHub, and more. It learns to predict the next word. Simple task, profound result: to predict well, it must learn grammar, facts, reasoning, and code. This phase is the most expensive — weeks on 10,000+ GPUs.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Supervised Fine-Tuning (SFT)</h4><p>Human contractors write ideal question-answer pairs. The model is fine-tuned on these examples to follow instructions. This is where it transitions from "predict the next word" to "be a helpful assistant". Requires far less data and compute than pre-training.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><h4>RLHF — Learning from human preferences</h4><p>Human raters compare two model outputs and pick the better one. A "reward model" is trained to predict these preferences. The LLM is then fine-tuned using RL to maximise the reward model's score. This makes outputs more helpful, harmless, and honest.</p>
+        <div class="term-ref" style="margin-top:.5rem;font-size:.75rem">📖 <a href="https://arxiv.org/abs/2203.02155" target="_blank">InstructGPT Paper — RLHF for LLMs</a></div>
+      </div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Constitutional AI (Claude's approach)</h4><p>Anthropic's technique for Claude: instead of only human feedback, a set of AI principles ("constitution") guides model behaviour. The model critiques its own outputs and revises them, scaling alignment more efficiently. Enables safer, more consistent behaviour.</p>
+        <div class="term-ref" style="margin-top:.5rem;font-size:.75rem">📖 <a href="https://arxiv.org/abs/2212.08073" target="_blank">Anthropic — Constitutional AI (2022)</a></div>
+      </div></div>
+    </div>
+  </div>
+
+  <!-- Model Types -->
+  <div class="tab-panel" data-panel="types">
+    <div class="grid-2">
+      <div class="card"><span class="tag tag-purple">Text</span><h3>📝 Language Models (LLMs)</h3><p>Trained to understand and generate text. Examples: GPT-4, Claude 3, Gemini, Llama 3. Powers chatbots, coding assistants, document analysis, summarisation, and more.</p></div>
+      <div class="card"><span class="tag tag-pink">Image</span><h3>🎨 Diffusion Models</h3><p>Generate images by learning to "denoise" random noise. Examples: Stable Diffusion, DALL-E 3, Midjourney. They start with noise and iteratively remove it to reveal a coherent image matching your prompt.</p></div>
+      <div class="card"><span class="tag tag-green">Audio</span><h3>🎵 Audio Models</h3><p>Whisper (OpenAI) transcribes speech. ElevenLabs and Suno generate realistic voices and music. These models are trained on audio waveforms rather than text tokens, but similar transformer principles apply.</p></div>
+      <div class="card"><span class="tag tag-blue">Code</span><h3>💻 Code Models</h3><p>Trained heavily on GitHub repositories. Examples: GitHub Copilot, Claude for code, Codestral. Can write, review, debug, and explain code in dozens of programming languages. Often faster and more accurate than a general LLM for pure coding tasks.</p></div>
+      <div class="card"><span class="tag tag-yellow">Vision</span><h3>👁️ Vision Models</h3><p>Classify images (ResNet, Vision Transformer), detect objects (YOLO), or segment images (SAM by Meta). LLMs like GPT-4V and Claude 3 combine language + vision in a single multimodal model.</p></div>
+      <div class="card"><span class="tag tag-red">Reasoning</span><h3>🧮 Reasoning Models</h3><p>Models optimised to "think before answering" using chain-of-thought and extended inference. Examples: OpenAI o1/o3, DeepSeek R1. Trade response speed for accuracy on complex maths and logic problems.</p></div>
+    </div>
+  </div>
+  </div><!-- /core-content -->
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 3 — MODEL COMPARISON
+════════════════════════════════════════════════ -->
+<section id="comparisons" class="section">
+  <p class="sec-label">Section 03</p>
+  <h2 class="sec-title">AI Model Comparison</h2>
+  <p class="sec-desc">The major players, their strengths, and when to use each one.</p>
+
+  <!-- Summary Cards -->
+  <div class="grid-3" style="margin-bottom:2.5rem">
+    <div class="card" style="border-top:3px solid #10a37f">
+      <div style="font-size:1.5rem;margin-bottom:.5rem">🟢</div>
+      <h3 class="model-gpt">ChatGPT / GPT-4o</h3>
+      <span class="tag tag-green">OpenAI</span>
+      <p style="margin-top:.5rem">Most widely used. Strong all-rounder with image generation (DALL-E), voice mode, and browsing. Best ecosystem & plugins.</p>
+    </div>
+    <div class="card" style="border-top:3px solid #c17c2a">
+      <div style="font-size:1.5rem;margin-bottom:.5rem">🟠</div>
+      <h3 class="model-claude">Claude 3.5 Sonnet</h3>
+      <span class="tag tag-yellow">Anthropic</span>
+      <p style="margin-top:.5rem">Best for long documents (200K context), coding, nuanced writing, and safety. Excels at following complex instructions precisely.</p>
+    </div>
+    <div class="card" style="border-top:3px solid #4285f4">
+      <div style="font-size:1.5rem;margin-bottom:.5rem">🔵</div>
+      <h3 class="model-gemini">Gemini 1.5 Pro</h3>
+      <span class="tag tag-blue">Google DeepMind</span>
+      <p style="margin-top:.5rem">Best for multimodal tasks with video, audio, images. 1M token context. Deeply integrated with Google services (Docs, Gmail).</p>
+    </div>
+    <div class="card" style="border-top:3px solid #0467df">
+      <div style="font-size:1.5rem;margin-bottom:.5rem">🦙</div>
+      <h3 class="model-llama">Llama 3 (70B/405B)</h3>
+      <span class="tag tag-blue">Meta (Open Source)</span>
+      <p style="margin-top:.5rem">Free, open-source, can run locally. Great for privacy-sensitive tasks. The 405B version rivals GPT-4 on many benchmarks.</p>
+    </div>
+    <div class="card" style="border-top:3px solid #f97316">
+      <div style="font-size:1.5rem;margin-bottom:.5rem">🌪️</div>
+      <h3 class="model-mistral">Mistral / Mixtral</h3>
+      <span class="tag tag-purple">Mistral AI</span>
+      <p style="margin-top:.5rem">Efficient open-source models from France. Mixtral 8x7B uses a Mixture-of-Experts architecture for strong performance at lower compute cost.</p>
+    </div>
+    <div class="card" style="border-top:3px solid #ef4444">
+      <div style="font-size:1.5rem;margin-bottom:.5rem">🧮</div>
+      <h3 style="color:#fca5a5">OpenAI o1 / o3</h3>
+      <span class="tag tag-red">OpenAI</span>
+      <p style="margin-top:.5rem">Specialised for complex reasoning, maths, and science. "Thinks" before answering. Slower but dramatically more accurate on hard problems.</p>
+    </div>
+  </div>
+
+  <!-- Comparison Table -->
+  <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem">📊 Head-to-Head Comparison</h3>
+  <div class="compare-wrap">
+    <table class="compare">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Context Window</th>
+          <th>Best For</th>
+          <th>Strengths</th>
+          <th>Limitations</th>
+          <th>Pricing (Input)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="model-gpt">GPT-4o</td>
+          <td>128K tokens</td>
+          <td>General use, images, voice</td>
+          <td><span class="badge b-green">Ecosystem</span> <span class="badge b-green">Multimodal</span></td>
+          <td>Can be verbose; pricier than older models</td>
+          <td>$5 / 1M tokens</td>
+        </tr>
+        <tr>
+          <td class="model-gpt">GPT-4o mini</td>
+          <td>128K tokens</td>
+          <td>Fast, cheap everyday tasks</td>
+          <td><span class="badge b-blue">Speed</span> <span class="badge b-blue">Cost</span></td>
+          <td>Less capable than full GPT-4o on hard tasks</td>
+          <td>$0.15 / 1M tokens</td>
+        </tr>
+        <tr>
+          <td class="model-claude">Claude 3.5 Sonnet</td>
+          <td>200K tokens</td>
+          <td>Coding, documents, analysis</td>
+          <td><span class="badge b-yellow">Long context</span> <span class="badge b-yellow">Coding</span></td>
+          <td>No image generation; no real-time web</td>
+          <td>$3 / 1M tokens</td>
+        </tr>
+        <tr>
+          <td class="model-claude">Claude 3 Haiku</td>
+          <td>200K tokens</td>
+          <td>Fast, cheap summaries</td>
+          <td><span class="badge b-blue">Speed</span> <span class="badge b-blue">Cost</span></td>
+          <td>Less nuanced than Sonnet/Opus</td>
+          <td>$0.25 / 1M tokens</td>
+        </tr>
+        <tr>
+          <td class="model-gemini">Gemini 1.5 Pro</td>
+          <td>1M tokens</td>
+          <td>Video, audio, long docs</td>
+          <td><span class="badge b-blue">Context size</span> <span class="badge b-green">Multimodal</span></td>
+          <td>Slower; Google ecosystem lock-in</td>
+          <td>$3.50 / 1M tokens</td>
+        </tr>
+        <tr>
+          <td class="model-gemini">Gemini 2.0 Flash</td>
+          <td>1M tokens</td>
+          <td>Fast, Google-integrated tasks</td>
+          <td><span class="badge b-blue">Speed</span> <span class="badge b-green">Free tier</span></td>
+          <td>Newer; still maturing</td>
+          <td>$0.10 / 1M tokens</td>
+        </tr>
+        <tr>
+          <td class="model-llama">Llama 3.1 405B</td>
+          <td>128K tokens</td>
+          <td>Privacy, self-hosted, research</td>
+          <td><span class="badge b-purple">Open-source</span> <span class="badge b-purple">Free weights</span></td>
+          <td>Needs significant GPU infrastructure</td>
+          <td>Free (self-host)</td>
+        </tr>
+        <tr>
+          <td style="color:#fca5a5">o1 / o3-mini</td>
+          <td>128K tokens</td>
+          <td>Maths, science, logic</td>
+          <td><span class="badge b-red">Reasoning</span> <span class="badge b-red">Accuracy</span></td>
+          <td>Slow; expensive; over-thinks simple tasks</td>
+          <td>$15 / 1M tokens</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="warn-box" style="margin-top:1.5rem">⚠️ Pricing and specs change frequently. Always check official docs: <a href="https://openai.com/pricing" target="_blank">OpenAI Pricing</a> · <a href="https://www.anthropic.com/pricing" target="_blank">Anthropic Pricing</a> · <a href="https://ai.google.dev/pricing" target="_blank">Google AI Pricing</a></div>
+
+  <!-- When to use what -->
+  <h3 style="font-size:1.1rem;font-weight:600;margin-top:2.5rem;margin-bottom:1rem">🎯 Which Model Should You Use?</h3>
+  <div class="grid-2">
+    <div class="card"><h3>For coding & long documents</h3><p>Use <strong>Claude 3.5 Sonnet</strong> — best instruction-following, longest context, excellent at reading entire codebases or lengthy PDFs.</p></div>
+    <div class="card"><h3>For everyday chatting & images</h3><p>Use <strong>GPT-4o</strong> — most polished UX, built-in image generation with DALL-E, voice mode, and the widest tool/plugin ecosystem.</p></div>
+    <div class="card"><h3>For video, audio, Google Workspace</h3><p>Use <strong>Gemini 1.5 Pro</strong> — native integration with YouTube, Google Drive, Gmail. Unmatched context for multimedia.</p></div>
+    <div class="card"><h3>For hard maths / science problems</h3><p>Use <strong>OpenAI o1 or o3</strong> — slower but far more accurate on problems requiring multi-step logical reasoning.</p></div>
+    <div class="card"><h3>For privacy / running offline</h3><p>Use <strong>Llama 3 or Mistral</strong> via Ollama or LM Studio on your local machine. No data leaves your computer.</p></div>
+    <div class="card"><h3>For high-volume, cheap tasks</h3><p>Use <strong>GPT-4o mini</strong>, <strong>Claude Haiku</strong>, or <strong>Gemini Flash</strong> — 10-50x cheaper than flagship models for summarisation, classification, or routing.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 4 — CLAUDE CODE
+════════════════════════════════════════════════ -->
+<section id="claude-code" class="section" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);max-width:100%;padding:5rem 0">
+<div style="max-width:1100px;margin:0 auto;padding:0 2rem">
+  <p class="sec-label">Section 04</p>
+  <h2 class="sec-title">How to Use Claude Code</h2>
+  <p class="sec-desc">Claude Code is Anthropic's agentic coding tool — an AI that operates directly in your terminal and can autonomously write, edit, test, and explain code.</p>
+
+  <div class="info-box">🤖 Claude Code is not just a chat interface. It's an agent that can read your files, run terminal commands, edit your codebase, and complete multi-step programming tasks — all from the command line.</div>
+
+  <div class="tabs" id="cc-tabs">
+    <button class="tab-btn active" onclick="switchTab('cc-tabs','cc-content','install')">⚙️ Installation</button>
+    <button class="tab-btn" onclick="switchTab('cc-tabs','cc-content','basics')">🚀 Basic Usage</button>
+    <button class="tab-btn" onclick="switchTab('cc-tabs','cc-content','commands')">📋 Key Commands</button>
+    <button class="tab-btn" onclick="switchTab('cc-tabs','cc-content','tips')">💡 Pro Tips</button>
+  </div>
+
+  <div id="cc-content">
+  <!-- Install -->
+  <div class="tab-panel active" data-panel="install">
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot"></div><h4>1. Prerequisites</h4><p>You need Node.js 18+ and an Anthropic API key. Get one free at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></p></div>
+      <div class="tl-item"><div class="tl-dot"></div><h4>2. Install via npm</h4>
+        <div class="code-label">Terminal</div>
+        <pre>npm install -g @anthropic-ai/claude-code</pre>
+      </div>
+      <div class="tl-item"><div class="tl-dot"></div><h4>3. Set your API key</h4>
+        <div class="code-label">Terminal</div>
+        <pre>export ANTHROPIC_API_KEY="your-api-key-here"
+# Add to ~/.bashrc or ~/.zshrc to make it permanent</pre>
+      </div>
+      <div class="tl-item"><div class="tl-dot"></div><h4>4. Run it in your project folder</h4>
+        <div class="code-label">Terminal</div>
+        <pre>cd my-project
+claude</pre>
+      </div>
+      <div class="tl-item"><div class="tl-dot"></div><h4>5. You're in! Start chatting with your codebase.</h4><p>Claude Code now has access to your project files. Ask it anything about the code or give it tasks.</p></div>
+    </div>
+    <div class="info-box" style="margin-top:1.5rem">📖 Official docs: <a href="https://docs.anthropic.com/en/docs/claude-code" target="_blank">docs.anthropic.com/en/docs/claude-code</a></div>
+  </div>
+
+  <!-- Basics -->
+  <div class="tab-panel" data-panel="basics">
+    <p style="color:var(--text2);margin-bottom:1.5rem">Once inside Claude Code, you simply type what you want in plain English. Here are real examples:</p>
+    <div class="code-label">Ask questions about your code</div>
+    <pre><span style="color:#6c63ff">You:</span> What does the auth.js file do?
+<span style="color:#10b981">Claude:</span> auth.js implements JWT-based authentication. It exports three functions:
+  - generateToken(userId) — creates a signed JWT valid for 24h
+  - verifyToken(token) — validates and decodes a JWT
+  - middleware() — Express middleware that protects routes...</pre>
+
+    <div class="code-label" style="margin-top:1rem">Give it coding tasks</div>
+    <pre><span style="color:#6c63ff">You:</span> Add input validation to the createUser function in users.js
+<span style="color:#10b981">Claude:</span> I'll add validation for email format, password strength, and required fields.
+  [Reading users.js...]
+  [Editing users.js — adding Joi validation schema...]
+  Done. I added validation that checks:
+  ✓ email is a valid format
+  ✓ password is 8+ characters with a number
+  ✓ name is required and under 100 chars</pre>
+
+    <div class="code-label" style="margin-top:1rem">Debug errors</div>
+    <pre><span style="color:#6c63ff">You:</span> I'm getting "Cannot read properties of undefined (reading 'map')" in Dashboard.jsx
+<span style="color:#10b981">Claude:</span> The issue is on line 42. You're calling .map() on `userData.items` before
+  the API call resolves. Fix: add optional chaining:
+  {userData?.items?.map(item => ...)}
+  [Editing Dashboard.jsx...]</pre>
+  </div>
+
+  <!-- Commands -->
+  <div class="tab-panel" data-panel="commands">
+    <div class="grid-2">
+      <div class="card"><span class="tag tag-purple">Navigation</span><h3><code class="inline">/help</code></h3><p>Shows all available slash commands and keyboard shortcuts.</p></div>
+      <div class="card"><span class="tag tag-blue">Context</span><h3><code class="inline">/add file.js</code></h3><p>Explicitly adds a file to the conversation context. Claude will read it thoroughly.</p></div>
+      <div class="card"><span class="tag tag-green">Memory</span><h3><code class="inline">/memory</code></h3><p>View and manage what Claude remembers about your project from previous sessions.</p></div>
+      <div class="card"><span class="tag tag-yellow">Control</span><h3><code class="inline">/clear</code></h3><p>Clears the current conversation context. Useful when starting a different task.</p></div>
+      <div class="card"><span class="tag tag-red">Safety</span><h3><code class="inline">Escape key</code></h3><p>Cancels the current Claude action mid-execution. Always available as a kill switch.</p></div>
+      <div class="card"><span class="tag tag-pink">Terminal</span><h3><code class="inline">! command</code></h3><p>Prefix with ! to run a shell command directly, e.g. <code class="inline">!git status</code></p></div>
+    </div>
+
+    <h3 style="font-size:1rem;font-weight:600;margin:1.5rem 0 .75rem">Useful Task Patterns</h3>
+    <pre><span style="color:#94a3b8"># Explain the whole codebase</span>
+Give me a high-level overview of how this project is structured
+
+<span style="color:#94a3b8"># Write tests</span>
+Write unit tests for the payment.js module using Jest
+
+<span style="color:#94a3b8"># Code review</span>
+Review my PR changes in git diff and identify any bugs or improvements
+
+<span style="color:#94a3b8"># Refactor</span>
+Refactor the getUserData function to use async/await instead of callbacks
+
+<span style="color:#94a3b8"># Documentation</span>
+Add JSDoc comments to all exported functions in utils.js</pre>
+  </div>
+
+  <!-- Tips -->
+  <div class="tab-panel" data-panel="tips">
+    <div class="tip-grid">
+      <div class="tip-card"><div class="tip-icon">📁</div><h4>Start from the project root</h4><p>Always run <code class="inline">claude</code> from your project root so it can see all files and understand the full structure.</p></div>
+      <div class="tip-card"><div class="tip-icon">📝</div><h4>Use CLAUDE.md</h4><p>Create a <code class="inline">CLAUDE.md</code> file in your repo root with project conventions, tech stack, and important notes. Claude reads this automatically.</p></div>
+      <div class="tip-card"><div class="tip-icon">🎯</div><h4>Be specific with tasks</h4><p>Instead of "fix the bug", say "the login endpoint returns 500 when email is missing — add validation and return 400 with a message".</p></div>
+      <div class="tip-card"><div class="tip-icon">⚡</div><h4>Use shift+enter for multi-line</h4><p>For complex prompts, use Shift+Enter to add newlines before sending.</p></div>
+      <div class="tip-card"><div class="tip-icon">🔍</div><h4>Review diffs before accepting</h4><p>Claude shows a diff before making changes. Always review it — you can ask Claude to adjust before confirming.</p></div>
+      <div class="tip-card"><div class="tip-icon">🧪</div><h4>Ask it to test its own changes</h4><p>"Make the change, then run the tests to verify it works." Claude can run <code class="inline">npm test</code> and fix failures automatically.</p></div>
+    </div>
+    <div class="info-box" style="margin-top:1.5rem">📖 <a href="https://docs.anthropic.com/en/docs/claude-code/best-practices" target="_blank">Claude Code Best Practices — Official Docs</a></div>
+  </div>
+  </div><!-- /cc-content -->
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 5 — PROMPTING
+════════════════════════════════════════════════ -->
+<section id="prompting" class="section">
+  <p class="sec-label">Section 05</p>
+  <h2 class="sec-title">Prompting Guidelines</h2>
+  <p class="sec-desc">The quality of your prompt determines the quality of your output. These techniques work across ChatGPT, Claude, and Gemini.</p>
+
+  <div class="tabs" id="prompt-tabs">
+    <button class="tab-btn active" onclick="switchTab('prompt-tabs','prompt-content','fundamentals')">🏗️ Fundamentals</button>
+    <button class="tab-btn" onclick="switchTab('prompt-tabs','prompt-content','techniques')">🔧 Techniques</button>
+    <button class="tab-btn" onclick="switchTab('prompt-tabs','prompt-content','examples')">📋 Before & After</button>
+    <button class="tab-btn" onclick="switchTab('prompt-tabs','prompt-content','mistakes')">🚫 Mistakes to Avoid</button>
+  </div>
+
+  <div id="prompt-content">
+  <!-- Fundamentals -->
+  <div class="tab-panel active" data-panel="fundamentals">
+    <div class="tip-grid">
+      <div class="tip-card"><div class="tip-icon">🎭</div><h4>Give it a role</h4><p>Start with "You are a senior Python developer…" or "You are a UX designer…". Roles activate domain-specific knowledge and tone.</p></div>
+      <div class="tip-card"><div class="tip-icon">🎯</div><h4>Be specific about the output</h4><p>Specify format, length, tone, audience. "Write a 3-sentence summary for a non-technical CEO" is better than "summarise this".</p></div>
+      <div class="tip-card"><div class="tip-icon">📚</div><h4>Provide context</h4><p>Include relevant background. The more context the AI has, the more tailored its answer. Paste in error messages, code snippets, or relevant documents.</p></div>
+      <div class="tip-card"><div class="tip-icon">✅</div><h4>Show examples (few-shot)</h4><p>Give 1–3 examples of your desired input/output format before your actual request. This is the single most reliable way to control output format.</p></div>
+      <div class="tip-card"><div class="tip-icon">🔢</div><h4>Ask for step-by-step reasoning</h4><p>Add "Think step by step" or "Work through this carefully before giving the final answer". This dramatically improves accuracy on complex tasks.</p></div>
+      <div class="tip-card"><div class="tip-icon">🔄</div><h4>Iterate, don't restart</h4><p>Start simple, see the output, then refine: "Make it shorter", "Add more technical detail", "Change the tone to casual". Prompting is a conversation.</p></div>
+    </div>
+  </div>
+
+  <!-- Techniques -->
+  <div class="tab-panel" data-panel="techniques">
+    <div class="grid-2">
+      <div class="card"><span class="tag tag-blue">Technique</span><h3>Zero-Shot Prompting</h3><p>Ask directly with no examples. Works for simple, common tasks. "Translate this to Spanish: Hello, world." Best for straightforward requests where the task is well-understood.</p></div>
+      <div class="card"><span class="tag tag-green">Technique</span><h3>Few-Shot Prompting</h3><p>Provide 2-5 examples of input → output before your actual request. Dramatically improves consistency. Used when you want a very specific output format the model might not default to.</p></div>
+      <div class="card"><span class="tag tag-purple">Technique</span><h3>Chain-of-Thought (CoT)</h3><p>Ask the model to reason step-by-step before answering. "Let's think through this step by step." Shown to dramatically improve maths, logic, and multi-step reasoning accuracy.</p>
+        <div class="term-ref" style="margin-top:.5rem;font-size:.75rem">📖 <a href="https://arxiv.org/abs/2201.11903" target="_blank">Wei et al. (2022) — Chain-of-Thought Prompting</a></div>
+      </div>
+      <div class="card"><span class="tag tag-yellow">Technique</span><h3>Role / Persona Prompting</h3><p>Assign a specific identity: "You are an expert SQL database administrator with 15 years of experience optimising PostgreSQL." Strong personas improve depth and accuracy in specialised domains.</p></div>
+      <div class="card"><span class="tag tag-pink">Technique</span><h3>Structured Output Prompting</h3><p>Specify exact output format: "Return your answer as a JSON object with keys: title, summary, tags, difficulty_level." Useful for integrating AI output into code or spreadsheets.</p></div>
+      <div class="card"><span class="tag tag-red">Technique</span><h3>Self-Consistency</h3><p>Ask the model to solve the same problem multiple times and pick the most common answer, or ask it to critique its own output: "Now review your answer and identify any errors."</p></div>
+    </div>
+  </div>
+
+  <!-- Examples -->
+  <div class="tab-panel" data-panel="examples">
+    <h3 style="font-size:1rem;font-weight:600;margin-bottom:1.2rem">❌ Weak vs ✅ Strong Prompts</h3>
+
+    <div style="margin-bottom:2rem">
+      <p style="font-size:.8rem;color:var(--text3);margin-bottom:.5rem;text-transform:uppercase;font-weight:600;letter-spacing:.05em">Example 1 — Summarisation</p>
+      <div class="prompt-box">
+        <div class="prompt-header user">❌ Weak Prompt</div>
+        <div class="prompt-body">Summarise this article.</div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-header assistant">✅ Strong Prompt</div>
+        <div class="prompt-body">Summarise the following article in exactly 3 bullet points. Each bullet should be one sentence. Write for a busy executive who has 30 seconds to read this. Focus on business impact, not technical details.<br/><br/>[Article text here]</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:2rem">
+      <p style="font-size:.8rem;color:var(--text3);margin-bottom:.5rem;text-transform:uppercase;font-weight:600;letter-spacing:.05em">Example 2 — Code Generation</p>
+      <div class="prompt-box">
+        <div class="prompt-header user">❌ Weak Prompt</div>
+        <div class="prompt-body">Write a login function in Python.</div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-header assistant">✅ Strong Prompt</div>
+        <div class="prompt-body">You are a senior Python backend developer. Write a login() function for a FastAPI app that:<br/>
+- Accepts email (str) and password (str) as parameters<br/>
+- Queries a PostgreSQL database via SQLAlchemy ORM<br/>
+- Uses bcrypt for password hashing<br/>
+- Returns a JWT token on success, raises HTTPException 401 on failure<br/>
+- Includes docstring and type hints<br/>
+Do not use any external auth libraries. Include example usage in a comment.</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:2rem">
+      <p style="font-size:.8rem;color:var(--text3);margin-bottom:.5rem;text-transform:uppercase;font-weight:600;letter-spacing:.05em">Example 3 — System Prompt + User Turn</p>
+      <div class="prompt-box">
+        <div class="prompt-header sys">⚙️ System Prompt</div>
+        <div class="prompt-body">You are Alex, a friendly customer support agent for TechFlow SaaS. You help users with billing, account issues, and basic troubleshooting. Be warm, concise, and always offer to escalate to a human if you can't resolve the issue. Never make up pricing — if you don't know, say so.</div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-header user">👤 User</div>
+        <div class="prompt-body">I was charged twice this month!</div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-header assistant">🤖 Claude (as Alex)</div>
+        <div class="prompt-body">Hi! I'm so sorry to hear that — a double charge is definitely something we want to fix right away. Could you share the email address on your account? I'll pull up your billing history and get this sorted for you. If needed, I can escalate to our billing team to process a refund same-day.</div>
+      </div>
+    </div>
+    <div class="info-box">📖 Official guides: <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank">Anthropic Prompt Engineering</a> · <a href="https://www.promptingguide.ai/" target="_blank">Prompt Engineering Guide (community)</a></div>
+  </div>
+
+  <!-- Mistakes -->
+  <div class="tab-panel" data-panel="mistakes">
+    <div class="grid-2">
+      <div class="card" style="border-left:3px solid var(--red)"><h3>🚫 Being too vague</h3><p>"Help me with my business" → the AI has no idea what you need. Always specify the task, format, and audience.</p></div>
+      <div class="card" style="border-left:3px solid var(--red)"><h3>🚫 Asking too many things at once</h3><p>10 different questions in one prompt dilutes focus. Break complex tasks into separate, focused prompts or use numbered steps.</p></div>
+      <div class="card" style="border-left:3px solid var(--red)"><h3>🚫 Not providing context</h3><p>"Fix this code" without sharing the code. Or "write about our company" without describing what the company does.</p></div>
+      <div class="card" style="border-left:3px solid var(--red)"><h3>🚫 Treating first output as final</h3><p>The best outputs come from iteration. Always refine: "Make it shorter / more formal / add an example / fix the third point."</p></div>
+      <div class="card" style="border-left:3px solid var(--red)"><h3>🚫 Blindly trusting facts</h3><p>LLMs hallucinate. Never trust names, dates, citations, statistics, or legal/medical claims without verifying from a primary source.</p></div>
+      <div class="card" style="border-left:3px solid var(--red)"><h3>🚫 Not specifying output format</h3><p>Without format instructions, AI defaults to verbose paragraphs. Specify: "Return as a numbered list", "Use markdown headers", "JSON with these fields".</p></div>
+    </div>
+  </div>
+  </div><!-- /prompt-content -->
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 6 — USE CASES
+════════════════════════════════════════════════ -->
+<section id="usecases" class="section" style="background:var(--surface);border-top:1px solid var(--border);max-width:100%;padding:5rem 0">
+<div style="max-width:1100px;margin:0 auto;padding:0 2rem">
+  <p class="sec-label">Section 06</p>
+  <h2 class="sec-title">Real-World Use Cases</h2>
+  <p class="sec-desc">How individuals and businesses are using AI today — with concrete examples.</p>
+
+  <div class="grid-2" style="margin-bottom:2.5rem">
+    <div class="uc-card">
+      <div class="uc-icon">💻</div>
+      <h3>Software Development</h3>
+      <p>From writing boilerplate to reviewing entire codebases, AI has become a force-multiplier for developers.</p>
+      <ul class="uc-examples">
+        <li>Generate unit tests from function signatures</li>
+        <li>Explain legacy code written by someone else</li>
+        <li>Debug cryptic error messages instantly</li>
+        <li>Refactor messy code to clean patterns</li>
+        <li>Write SQL queries from plain English descriptions</li>
+        <li>Document APIs and write README files</li>
+      </ul>
+    </div>
+    <div class="uc-card">
+      <div class="uc-icon">✍️</div>
+      <h3>Writing & Content</h3>
+      <p>AI is a skilled writing partner that can draft, edit, rewrite, and adapt tone for any audience.</p>
+      <ul class="uc-examples">
+        <li>Draft blog posts, LinkedIn articles, newsletters</li>
+        <li>Rewrite text at different reading levels</li>
+        <li>Generate 10 headline variations for A/B testing</li>
+        <li>Translate content into multiple languages</li>
+        <li>Turn bullet points into polished prose</li>
+        <li>Proofread and suggest style improvements</li>
+      </ul>
+    </div>
+    <div class="uc-card">
+      <div class="uc-icon">🔬</div>
+      <h3>Research & Analysis</h3>
+      <p>AI excels at synthesising large amounts of information and surfacing key insights quickly.</p>
+      <ul class="uc-examples">
+        <li>Summarise long research papers into key points</li>
+        <li>Compare pros/cons of multiple options</li>
+        <li>Ask questions about uploaded PDFs or reports</li>
+        <li>Generate literature review outlines</li>
+        <li>Explain complex scientific concepts simply</li>
+        <li>Identify gaps in arguments or evidence</li>
+      </ul>
+    </div>
+    <div class="uc-card">
+      <div class="uc-icon">📊</div>
+      <h3>Data & Business Analysis</h3>
+      <p>AI can help non-technical users do data work that previously required an analyst.</p>
+      <ul class="uc-examples">
+        <li>Analyse CSV data and spot trends</li>
+        <li>Write Python/R code for data visualisation</li>
+        <li>Generate a business insights report from raw numbers</li>
+        <li>Create financial models and formulas</li>
+        <li>Clean and normalise messy datasets</li>
+        <li>Build dashboards using natural language</li>
+      </ul>
+    </div>
+    <div class="uc-card">
+      <div class="uc-icon">🎓</div>
+      <h3>Education & Learning</h3>
+      <p>AI can be a personalised tutor that meets you exactly at your level and learning pace.</p>
+      <ul class="uc-examples">
+        <li>Explain any concept in simple, plain English</li>
+        <li>Create practice problems and quiz questions</li>
+        <li>Give feedback on essays and essays drafts</li>
+        <li>Learn a new programming language interactively</li>
+        <li>Generate study guides and flashcards</li>
+        <li>Tutor you through maths problems step by step</li>
+      </ul>
+    </div>
+    <div class="uc-card">
+      <div class="uc-icon">🛠️</div>
+      <h3>Productivity & Automation</h3>
+      <p>Delegate repetitive cognitive tasks to AI and reclaim hours every week.</p>
+      <ul class="uc-examples">
+        <li>Summarise long email threads in seconds</li>
+        <li>Draft replies in your tone and style</li>
+        <li>Create project plans and task breakdowns</li>
+        <li>Build automation scripts (Python, bash, PowerShell)</li>
+        <li>Extract key info from contracts or invoices</li>
+        <li>Prepare meeting agendas and follow-up notes</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Prompt Starters -->
+  <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem">🚀 Copy-Paste Prompt Starters</h3>
+  <div class="grid-2">
+    <div class="card">
+      <span class="tag tag-blue">Productivity</span>
+      <h3>Summarise an email thread</h3>
+      <pre style="font-size:.78rem;margin-top:.75rem">"Summarise the following email thread in 3 bullet points.
+Highlight: (1) what was decided, (2) what action items
+exist, (3) who is responsible. Thread: [paste here]"</pre>
+    </div>
+    <div class="card">
+      <span class="tag tag-green">Coding</span>
+      <h3>Debug an error</h3>
+      <pre style="font-size:.78rem;margin-top:.75rem">"I'm getting this error in my [language] code: [error].
+Here is the relevant code: [paste code].
+Explain why this error occurs and give me the fixed version."</pre>
+    </div>
+    <div class="card">
+      <span class="tag tag-purple">Learning</span>
+      <h3>Explain anything simply</h3>
+      <pre style="font-size:.78rem;margin-top:.75rem">"Explain [concept] as if I'm a smart 15-year-old with no
+background in the subject. Use one real-world analogy
+and avoid jargon. Keep it under 200 words."</pre>
+    </div>
+    <div class="card">
+      <span class="tag tag-yellow">Writing</span>
+      <h3>Improve your writing</h3>
+      <pre style="font-size:.78rem;margin-top:.75rem">"Rewrite the following paragraph to be clearer, more
+concise, and professional. Keep the same key points
+but remove filler words. Original: [paste here]"</pre>
+    </div>
+  </div>
+
+  <div class="info-box" style="margin-top:2rem">📖 More resources: <a href="https://www.anthropic.com/use-cases" target="_blank">Anthropic Use Cases</a> · <a href="https://openai.com/use-cases" target="_blank">OpenAI Use Cases</a> · <a href="https://ai.google/responsibility/responsible-ai-practices/" target="_blank">Google Responsible AI</a></div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════ -->
+<footer>
+  <div style="font-size:1.5rem;margin-bottom:.5rem">🤖</div>
+  <div style="font-weight:600;font-size:.95rem;color:var(--text2);margin-bottom:.5rem">AI Literate</div>
+  <div style="margin-bottom:1rem">Built to make AI accessible to everyone.</div>
+  <div style="display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;margin-bottom:1rem">
+    <a href="https://docs.anthropic.com" target="_blank">Anthropic Docs</a>
+    <a href="https://platform.openai.com/docs" target="_blank">OpenAI Docs</a>
+    <a href="https://ai.google.dev/docs" target="_blank">Google AI Docs</a>
+    <a href="https://huggingface.co/docs" target="_blank">HuggingFace Docs</a>
+    <a href="https://www.promptingguide.ai" target="_blank">Prompting Guide</a>
+    <a href="https://arxiv.org/cs.AI" target="_blank">AI Research (arXiv)</a>
+  </div>
+  <div style="color:var(--text3);font-size:.78rem">Information may become outdated as AI moves fast. Always check official documentation for current specs and pricing.</div>
+</footer>
+
+</main>
+
+<script>
+// ── Tab switching ──
+function switchTab(tabGroupId, contentId, panel) {
+  const tabs = document.getElementById(tabGroupId);
+  const content = document.getElementById(contentId);
+  tabs.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    const panels = content.querySelectorAll('.tab-panel');
+    btn.classList.toggle('active', panels[i]?.dataset.panel === panel);
+  });
+  content.querySelectorAll('.tab-panel').forEach(p => {
+    p.classList.toggle('active', p.dataset.panel === panel);
+  });
+}
+
+// ── Toggle term card ──
+function toggleTerm(el) {
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.term-card').forEach(c => c.classList.remove('open'));
+  if (!wasOpen) el.classList.add('open');
+}
+
+// ── Filter terms ──
+function filterTerms(query) {
+  const q = query.toLowerCase();
+  document.querySelectorAll('.term-card').forEach(card => {
+    const text = (card.innerText + card.dataset.tags).toLowerCase();
+    card.style.display = text.includes(q) ? '' : 'none';
+  });
+}
+
+// ── Progress bar ──
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('progress-bar').style.width = (scrolled/total*100) + '%';
+  document.getElementById('btt').classList.toggle('show', scrolled > 300);
+  // Active nav link
+  const sections = ['hero','terminology','core-ai','comparisons','claude-code','prompting','usecases'];
+  let current = 'hero';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 80) current = id;
+  });
+  document.querySelectorAll('.nav-link').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#'+current);
+  });
+});
+
+// ── Hero pills scroll ──
+function scrollTo(hash) {
+  const el = document.querySelector(hash);
+  if(el) el.scrollIntoView({behavior:'smooth'});
+}
+
+// ── Fade-in observer ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:0.1});
+document.querySelectorAll('.card,.step,.tl-item,.uc-card,.term-card').forEach(el => {
+  el.classList.add('fade-in');
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
